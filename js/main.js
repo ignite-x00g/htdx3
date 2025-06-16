@@ -9,11 +9,21 @@ document.addEventListener("DOMContentLoaded", () => {
   const langToggleMobile  = document.getElementById("language-toggle-mobile");
 
   function updateLanguage(lang) {
+    const attr = (lang === "en") ? "data-en" : "data-es";
     const translatableElements = document.querySelectorAll("[data-en]");
     translatableElements.forEach((el) => {
-      el.textContent = (lang === "en")
-        ? el.getAttribute("data-en")
-        : el.getAttribute("data-es");
+      const translation = el.getAttribute(attr);
+      if (!translation) return;
+
+      // Update placeholder if applicable
+      if (el.hasAttribute("placeholder")) {
+        el.setAttribute("placeholder", translation);
+      }
+
+      // Update text content for non-input elements
+      if (el.tagName !== "INPUT" && el.tagName !== "TEXTAREA") {
+        el.textContent = translation;
+      }
     });
   }
 
