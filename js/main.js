@@ -178,35 +178,18 @@ document.addEventListener("DOMContentLoaded", () => {
   // ================================================================
   const employmentTypeToggle = document.getElementById('employment-type-toggle');
   const employmentTypeCheckboxes = document.getElementById('employment-type-checkboxes');
+  const employmentDone = document.getElementById('employment-done');
 
-  if (employmentTypeToggle && employmentTypeCheckboxes) {
+  if (employmentTypeToggle && employmentTypeCheckboxes && employmentDone) {
     employmentTypeToggle.addEventListener('click', () => {
-      const isExpanded = employmentTypeToggle.getAttribute('aria-expanded') === 'true';
-      employmentTypeCheckboxes.style.display = isExpanded ? 'none' : 'block'; // Or 'grid' if it's a grid container
-      employmentTypeToggle.setAttribute('aria-expanded', !isExpanded);
-
-      // Update button text (span inside the button)
-      const buttonTextSpan = employmentTypeToggle.querySelector('span');
-      if (buttonTextSpan) {
-        if (!isExpanded) {
-          buttonTextSpan.setAttribute('data-en', 'Hide Options');
-          buttonTextSpan.setAttribute('data-es', 'Ocultar Opciones');
-        } else {
-          buttonTextSpan.setAttribute('data-en', 'Show Options');
-          buttonTextSpan.setAttribute('data-es', 'Mostrar Opciones');
-        }
-        // Update text based on current language
-        const currentLang = document.body.getAttribute('lang') || 'en';
-        buttonTextSpan.textContent = buttonTextSpan.getAttribute(currentLang === 'en' ? 'data-en' : 'data-es');
-      }
+      employmentTypeCheckboxes.style.display = 'block';
+      employmentTypeToggle.setAttribute('aria-expanded', 'true');
     });
 
-    // Ensure initial button text is correct based on language (if Show Options is default)
-    const initialButtonTextSpan = employmentTypeToggle.querySelector('span');
-    if (initialButtonTextSpan) {
-        const currentLang = document.body.getAttribute('lang') || 'en';
-        initialButtonTextSpan.textContent = initialButtonTextSpan.getAttribute(currentLang === 'en' ? 'data-en' : 'data-es');
-    }
+    employmentDone.addEventListener('click', () => {
+      employmentTypeCheckboxes.style.display = 'none';
+      employmentTypeToggle.setAttribute('aria-expanded', 'false');
+    });
   }
 
   // =======================================================================================
@@ -415,17 +398,18 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Collapsible Areas of Interest for Join Us form
-  // const areasTrigger = document.getElementById('join-areas-trigger');
-  // const areasOptions = document.getElementById('join-areas-options');
-  // if (areasTrigger && areasOptions) {
-  //   areasTrigger.addEventListener('click', () => {
-  //     const isExpanded = areasTrigger.getAttribute('aria-expanded') === 'true';
-  //     areasTrigger.setAttribute('aria-expanded', !isExpanded);
-  //     areasOptions.style.display = isExpanded ? 'none' : 'block';
-  //     const arrow = areasTrigger.querySelector('.arrow-down');
-  //     if (arrow) {
-  //       arrow.textContent = isExpanded ? '▼' : '▲';
-  //     }
-  //   });
-  // }
+  const areasTrigger = document.getElementById('join-areas-trigger');
+  const areasOptions = document.getElementById('join-areas-options');
+  const areasDone = document.getElementById('areas-done');
+  if (areasTrigger && areasOptions && areasDone) {
+    areasTrigger.addEventListener('click', () => {
+      areasOptions.style.display = 'block';
+      areasTrigger.setAttribute('aria-expanded', 'true');
+    });
+
+    areasDone.addEventListener('click', () => {
+      areasOptions.style.display = 'none';
+      areasTrigger.setAttribute('aria-expanded', 'false');
+    });
+  }
 });
