@@ -182,8 +182,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (employmentTypeToggle && employmentTypeCheckboxes && employmentDone) {
     employmentTypeToggle.addEventListener('click', () => {
-      employmentTypeCheckboxes.style.display = 'block';
-      employmentTypeToggle.setAttribute('aria-expanded', 'true');
+      const isExpanded = employmentTypeToggle.getAttribute('aria-expanded') === 'true';
+      if (isExpanded) {
+        employmentTypeCheckboxes.style.display = 'none';
+        employmentTypeToggle.setAttribute('aria-expanded', 'false');
+      } else {
+        employmentTypeCheckboxes.style.display = 'block';
+        employmentTypeToggle.setAttribute('aria-expanded', 'true');
+      }
     });
 
     employmentDone.addEventListener('click', () => {
@@ -403,8 +409,14 @@ document.addEventListener("DOMContentLoaded", () => {
   const areasDone = document.getElementById('areas-done');
   if (areasTrigger && areasOptions && areasDone) {
     areasTrigger.addEventListener('click', () => {
-      areasOptions.style.display = 'block';
-      areasTrigger.setAttribute('aria-expanded', 'true');
+      const isExpanded = areasTrigger.getAttribute('aria-expanded') === 'true';
+      if (isExpanded) {
+        areasOptions.style.display = 'none';
+        areasTrigger.setAttribute('aria-expanded', 'false');
+      } else {
+        areasOptions.style.display = 'block';
+        areasTrigger.setAttribute('aria-expanded', 'true');
+      }
     });
 
     areasDone.addEventListener('click', () => {
