@@ -234,9 +234,21 @@ document.addEventListener("DOMContentLoaded", () => {
     joinForm.addEventListener('submit', (e) => {
       e.preventDefault();
 
+      const submitBtn = joinForm.querySelector('.submit-button');
+      let originalText = '';
+      if (submitBtn) {
+        originalText = submitBtn.textContent;
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Submitting...';
+      }
+
       const honey = document.getElementById('honeypot-join');
       if (honey && honey.value) {
         alert('Submission blocked.');
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = originalText;
+        }
         return;
       }
 
@@ -288,14 +300,26 @@ document.addEventListener("DOMContentLoaded", () => {
             } else {
               alert('Submission failed: ' + (data.message || 'Unknown error') + (data.details ? ' Details: ' + JSON.stringify(data.details) : ''));
             }
+            if (submitBtn) {
+              submitBtn.disabled = false;
+              submitBtn.textContent = originalText;
+            }
           })
           .catch(error => {
             console.error('Error submitting Join Us form:', error);
             alert('An error occurred while submitting the Join Us form. Please try again.');
+            if (submitBtn) {
+              submitBtn.disabled = false;
+              submitBtn.textContent = originalText;
+            }
           });
         }).catch(error => {
           console.error("Error executing reCAPTCHA for Join Us:", error);
           alert("Error with reCAPTCHA. Please try again.");
+          if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.textContent = originalText;
+          }
         });
       });
 
@@ -308,9 +332,21 @@ document.addEventListener("DOMContentLoaded", () => {
     contactForm.addEventListener('submit', (e) => {
       e.preventDefault();
 
+      const submitBtn = contactForm.querySelector('.submit-button');
+      let originalText = '';
+      if (submitBtn) {
+        originalText = submitBtn.textContent;
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Submitting...';
+      }
+
       const honey = document.getElementById('honeypot-contact');
       if (honey && honey.value) {
         alert('Submission blocked.');
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = originalText;
+        }
         return;
       }
       if (typeof grecaptcha === 'undefined' || typeof grecaptcha.execute === 'undefined') {
@@ -353,14 +389,26 @@ document.addEventListener("DOMContentLoaded", () => {
             } else {
               alert('Submission failed: ' + (data.message || 'Unknown error') + (data.details ? ' Details: ' + JSON.stringify(data.details) : ''));
             }
+            if (submitBtn) {
+              submitBtn.disabled = false;
+              submitBtn.textContent = originalText;
+            }
           })
           .catch(error => {
             console.error('Error submitting Contact Us form:', error);
             alert('An error occurred while submitting the Contact Us form. Please try again.');
+            if (submitBtn) {
+              submitBtn.disabled = false;
+              submitBtn.textContent = originalText;
+            }
           });
         }).catch(error => {
           console.error("Error executing reCAPTCHA for Contact Us:", error);
           alert("Error with reCAPTCHA. Please try again.");
+          if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.textContent = originalText;
+          }
         });
       });
     });
