@@ -87,39 +87,39 @@ document.addEventListener("DOMContentLoaded", () => {
   // ================================================================
   // Right-Side Main Menu: Open/Close
   // =================================================================
-  const menuOpenBtn = document.getElementById('menu-open');
-  const menuCloseBtn = document.getElementById('menu-close');
-  const rightSideMenu = document.getElementById('rightSideMenu');
+  // const menuOpenBtn = document.getElementById('menu-open');
+  // const menuCloseBtn = document.getElementById('menu-close');
+  // const rightSideMenu = document.getElementById('rightSideMenu');
 
-  if (menuOpenBtn && menuCloseBtn && rightSideMenu) {
-    menuOpenBtn.addEventListener('click', () => {
-      rightSideMenu.classList.add('open');
-    });
-    menuCloseBtn.addEventListener('click', () => {
-      rightSideMenu.classList.remove('open');
-    });
-  }
+  // if (menuOpenBtn && menuCloseBtn && rightSideMenu) {
+  //   menuOpenBtn.addEventListener('click', () => {
+  //     rightSideMenu.classList.add('open');
+  //   });
+  //   menuCloseBtn.addEventListener('click', () => {
+  //     rightSideMenu.classList.remove('open');
+  //   });
+  // }
 
   // ================================================================
   // Services Sub-Menu: Slide Up
   // =================================================================
-  const servicesTrigger = document.querySelector('.services-trigger button');
-  const servicesSubMenu = document.getElementById('servicesSubMenu');
+  // const servicesTrigger = document.querySelector('.services-trigger button');
+  // const servicesSubMenu = document.getElementById('servicesSubMenu');
 
-  if (servicesTrigger && servicesSubMenu) {
-    servicesTrigger.addEventListener('click', (e) => {
-      e.stopPropagation();
-      servicesSubMenu.classList.toggle('open');
-    });
+  // if (servicesTrigger && servicesSubMenu) {
+  //   servicesTrigger.addEventListener('click', (e) => {
+  //     e.stopPropagation();
+  //     servicesSubMenu.classList.toggle('open');
+  //   });
 
-    document.addEventListener('click', (evt) => {
-      const clickInsideTrigger = servicesTrigger.contains(evt.target);
-      const clickInsideSubMenu = servicesSubMenu.contains(evt.target);
-      if (!clickInsideTrigger && !clickInsideSubMenu) {
-        servicesSubMenu.classList.remove('open');
-      }
-    });
-  }
+  //   document.addEventListener('click', (evt) => {
+  //     const clickInsideTrigger = servicesTrigger.contains(evt.target);
+  //     const clickInsideSubMenu = servicesSubMenu.contains(evt.target);
+  //     if (!clickInsideTrigger && !clickInsideSubMenu) {
+  //       servicesSubMenu.classList.remove('open');
+  //     }
+  //   });
+  // }
 
   // ================================================================
   // Modals (Join Us & Contact Us)
@@ -236,7 +236,7 @@ document.addEventListener("DOMContentLoaded", () => {
           return;
       }
       grecaptcha.ready(() => {
-        grecaptcha.execute('6LfFOV0rAAAAAP2NYL8f1hPyfpsc-MiPx9n02THp', { action: 'join_us_submit' }).then((token) => {
+        grecaptcha.execute('6LfAOV0rAAAAAPBGgn2swZWj5SjANoQ4rUH6XIMz', { action: 'join_us_submit' }).then((token) => {
           console.log('Join Us ReCAPTCHA token:', token);
 
           const name = sanitizeInput(document.getElementById("join-name").value);
@@ -357,17 +357,17 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Collapsible Areas of Interest for Join Us form
-  const areasTrigger = document.getElementById('join-areas-trigger');
-  const areasOptions = document.getElementById('join-areas-options');
-  if (areasTrigger && areasOptions) {
-    areasTrigger.addEventListener('click', () => {
-      const isExpanded = areasTrigger.getAttribute('aria-expanded') === 'true';
-      areasTrigger.setAttribute('aria-expanded', !isExpanded);
-      areasOptions.style.display = isExpanded ? 'none' : 'block';
-      const arrow = areasTrigger.querySelector('.arrow-down');
-      if (arrow) {
-        arrow.textContent = isExpanded ? '▼' : '▲';
-      }
-    });
-  }
+  // const areasTrigger = document.getElementById('join-areas-trigger');
+  // const areasOptions = document.getElementById('join-areas-options');
+  // if (areasTrigger && areasOptions) {
+  //   areasTrigger.addEventListener('click', () => {
+  //     const isExpanded = areasTrigger.getAttribute('aria-expanded') === 'true';
+  //     areasTrigger.setAttribute('aria-expanded', !isExpanded);
+  //     areasOptions.style.display = isExpanded ? 'none' : 'block';
+  //     const arrow = areasTrigger.querySelector('.arrow-down');
+  //     if (arrow) {
+  //       arrow.textContent = isExpanded ? '▼' : '▲';
+  //     }
+  //   });
+  // }
 });
