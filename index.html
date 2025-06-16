@@ -46,9 +46,9 @@
       "availableLanguage": "English"
     },
     "sameAs": [
-      "https://www.facebook.com/yourpage",
-      "https://twitter.com/yourhandle",
-      "https://www.linkedin.com/company/yourcompany"
+      "https://www.facebook.com/OpsOnlineSolutionsExample",
+      "https://twitter.com/OpsOnlineExample",
+      "https://www.linkedin.com/company/OpsOnlineSolutionsExample"
     ]
   }
   </script>
@@ -63,7 +63,7 @@
 </head>
 
 <body>
-  <div id="secure-content" style="display:none;">
+  <div id="secure-content">
     <header>
       <nav>
         <ul>
@@ -81,7 +81,7 @@
     </header>
 
     <section class="hero">
-      <h1 data-en="Welcome to Ops Solutions Services" data-es="Bienvenido a OPS Solutions Services">Welcome to Ops Solutions Services</h1>
+      <h2 data-en="Welcome to Ops Solutions Services" data-es="Bienvenido a OPS Solutions Services">Welcome to Ops Solutions Services</h2>
       <p data-en="Empowering remote solutions with cutting-edge strategies." data-es="Impulsando soluciones remotas con estrategias innovadoras.">Empowering remote solutions with cutting-edge strategies.</p>
       <img src="assets/images/hero-image.jpg" alt="Hero Image" class="hero-image">
     </section>
@@ -110,7 +110,7 @@
     </section>
 
     <footer>
-      <p data-en="All rights reserved" data-es="Todos los derechos reservados">&copy; 2025 OPS Solutions Services. All rights reserved.</p>
+      <p data-en="All rights reserved" data-es="Todos los derechos reservados">&copy; 2024 OPS Solutions Services. All rights reserved.</p>
     </footer>
 
     <div class="floating-icons">
@@ -162,7 +162,36 @@
                 </button>
               </div>
             </div>
-            <!-- Checkbox Groups omitted here for brevity but would follow same data-en/data-es logic -->
+            <div id="employment-type-checkboxes" style="display: none; grid-column: 1 / -1;">
+              <div class="form-row checkbox-row">
+                <div class="checkbox-cell">
+                  <label>
+                    <span data-en="Remote" data-es="Remoto">Remote</span>
+                    <input type="checkbox" name="join_interest" value="remote">
+                  </label>
+                </div>
+                <div class="checkbox-cell">
+                  <label>
+                    <span data-en="Hybrid" data-es="Híbrido">Hybrid</span>
+                    <input type="checkbox" name="join_interest" value="hybrid">
+                  </label>
+                </div>
+              </div>
+              <div class="form-row checkbox-row">
+                <div class="checkbox-cell">
+                  <label>
+                    <span data-en="Full-time" data-es="Tiempo Completo">Full-time</span>
+                    <input type="checkbox" name="join_interest" value="full-time">
+                  </label>
+                </div>
+                <div class="checkbox-cell">
+                  <label>
+                    <span data-en="Part-time" data-es="Medio Tiempo">Part-time</span>
+                    <input type="checkbox" name="join_interest" value="part-time">
+                  </label>
+                </div>
+              </div>
+            </div>
             <div class="form-row">
               <div class="form-cell" style="grid-column: span 2;">
                 <label for="join-comment" data-en="Comment" data-es="Comentario">Comment</label>
@@ -230,11 +259,10 @@
       <button class="mobile-nav-item" id="mobile-services-toggle" data-en="Services" data-es="Servicios"><i class="fas fa-bars"></i><span>Services</span></button>
       <button class="mobile-nav-item" id="mobile-language-toggle">EN</button>
       <button class="mobile-nav-item" id="mobile-theme-toggle" data-en="Light" data-es="Claro">Light</button>
-      <a href="#" class="mobile-nav-item" data-en="Chat" data-es="Chat"><i class="fas fa-comment-alt"></i><span>Chat</span></a>
+      <button class="mobile-nav-item" data-modal="contact-modal" data-en="Chat" data-es="Chat" aria-label="Contact Us"><i class="fas fa-comment-alt"></i><span>Chat</span></button>
     </nav>
 
     <script src="js/main.js" defer></script>
-    <script src="js/ui-setup.js" defer></script>
   </div>
 </body>
 </html>
