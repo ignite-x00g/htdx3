@@ -14,9 +14,9 @@ document.addEventListener("DOMContentLoaded", () => {
     elements.forEach(el => {
       const translation = el.getAttribute(attr);
       if (!translation) return;
-      if (el.placeholder !== undefined && el.tagName === "INPUT") {
-        el.placeholder = translation;
-      } else if (!["INPUT", "TEXTAREA"].includes(el.tagName)) {
+      if (["INPUT", "TEXTAREA"].includes(el.tagName)) {
+        if (el.placeholder) el.placeholder = translation;
+      } else {
         el.textContent = translation;
       }
     });
@@ -64,9 +64,9 @@ document.addEventListener("DOMContentLoaded", () => {
   // ================================
   // MODALS
   // ================================
-  const modalOverlays = document.querySelectorAll(".modal-overlay");
   const modalTriggers = document.querySelectorAll("[data-modal]");
   const closeModalButtons = document.querySelectorAll("[data-close]");
+  const modalOverlays = document.querySelectorAll(".modal-overlay");
 
   modalTriggers.forEach(btn => {
     btn.addEventListener("click", () => {
@@ -110,6 +110,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const areasTrigger = document.getElementById("join-areas-trigger");
   const areasOptions = document.getElementById("join-areas-options");
   const areasDone = document.getElementById("areas-done");
+
   if (areasTrigger) {
     areasTrigger.addEventListener("click", () => {
       const isOpen = areasOptions.style.display === "block";
@@ -119,6 +120,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (arrow) arrow.textContent = isOpen ? "▼" : "▲";
     });
   }
+
   if (areasDone) {
     areasDone.addEventListener("click", () => {
       areasOptions.style.display = "none";
@@ -131,6 +133,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const employmentToggle = document.getElementById("employment-type-toggle");
   const employmentOptions = document.getElementById("employment-type-checkboxes");
   const employmentDone = document.getElementById("employment-done");
+
   if (employmentToggle) {
     employmentToggle.addEventListener("click", () => {
       const isOpen = employmentOptions.style.display === "block";
@@ -138,6 +141,7 @@ document.addEventListener("DOMContentLoaded", () => {
       employmentToggle.setAttribute("aria-expanded", !isOpen);
     });
   }
+
   if (employmentDone) {
     employmentDone.addEventListener("click", () => {
       employmentOptions.style.display = "none";
@@ -150,11 +154,13 @@ document.addEventListener("DOMContentLoaded", () => {
   // ================================
   const mobileMenuToggle = document.getElementById("mobile-services-toggle");
   const mobileMenu = document.getElementById("mobile-services-menu-container");
+
   if (mobileMenuToggle && mobileMenu) {
     mobileMenuToggle.addEventListener("click", (e) => {
       e.stopPropagation();
       mobileMenu.classList.toggle("active");
     });
+
     document.addEventListener("click", (e) => {
       if (!mobileMenu.contains(e.target) && !mobileMenuToggle.contains(e.target)) {
         mobileMenu.classList.remove("active");
@@ -163,39 +169,135 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // ================================
-  // FORM HANDLERS (JOIN & CONTACT)
+  // FORM VALIDATION HELPERS
+  // ================================
+  function sanitizeInput(input) {
+    const div = document.createElement("div");
+    div.textContent = input;
+    return div.innerHTML;
+  }
+
+  // ================================
+  // FORM: JOIN US
   // ================================
   const joinForm = document.getElementById("join-form");
+
   if (joinForm) {
-    joinForm.addEventListener("submit", function(e) {
+    joinForm.addEventListener("submit", function (e) {
       e.preventDefault();
-      if (document.getElementById("honeypot-join").value !== "") return;
-      grecaptcha.ready(function() {
-        grecaptcha.execute('6LfAOV0rAAAAAPBGgn2swZWj5SjANoQ4rUH6XIMz', { action: 'submit' }).then(function(token) {
-          const input = document.createElement("input");
-          input.type = "hidden";
-          input.name = "recaptcha_token";
-          input.value = token;
-          joinForm.appendChild(input);
-          joinForm.submit();
+
+      const honey = document.getElementById('honeypot-join');
+      if (honey && honey.value) {
+        alert('Submission blocked.');
+        return;
+      }
+
+      if (typeof grecaptcha === 'undefined') {
+        alert('ReCAPTCHA not ready.');
+        return;
+      }
+
+      grecaptcha.ready(() => {
+        grecaptcha.execute('6LfAOV0rAAAAAPBGgn2swZWj5SjANoQ4rUH6XIMz', { action: 'join_us_submit' }).then((token) => {
+          const name = sanitizeInput(document.getElementById("join-name").value);
+          const email = sanitizeInput(document.getElementById("join-email").value);
+          const contact = sanitizeInput(document.getElementById("join-contact").value);
+          const date = document.getElementById("join-date").value;
+          const time = document.getElementById("join-time").value;
+          const comment = sanitizeInput(document.getElementById("join-comment").value);
+
+          const selectedInterests = [];
+          document.querySelectorAll('input[name="join_interest"]:checked').forEach(cb => selectedInterests.push(cb.value));
+
+          const formData = new FormData();
+          formData.append("name", name);
+          formData.append("email", email);
+          formData.append("contact", contact);
+          formData.append("date", date);
+          formData.append("time", time);
+          formData.append("comment", comment);
+          formData.append("interests", selectedInterests.join(","));
+          formData.append("g-recaptcha-response", token);
+
+          fetch("https://join.gabrieloor-cv1.workers.dev/", {
+            method: "POST",
+            body: formData
+          })
+            .then(res => res.json())
+            .then(data => {
+              if (data.success) {
+                alert("Form submitted successfully! " + data.message);
+                joinForm.reset();
+                document.getElementById("join-modal").classList.remove("active");
+              } else {
+                alert("Submission failed: " + (data.message || "Unknown error"));
+              }
+            })
+            .catch(err => {
+              console.error("Join Us form error:", err);
+              alert("Error submitting the form. Try again.");
+            });
         });
       });
     });
   }
 
+  // ================================
+  // FORM: CONTACT US
+  // ================================
   const contactForm = document.getElementById("contact-form");
+
   if (contactForm) {
-    contactForm.addEventListener("submit", function(e) {
+    contactForm.addEventListener("submit", function (e) {
       e.preventDefault();
-      if (document.getElementById("honeypot-contact").value !== "") return;
-      grecaptcha.ready(function() {
-        grecaptcha.execute('6LfAOV0rAAAAAPBGgn2swZWj5SjANoQ4rUH6XIMz', { action: 'submit' }).then(function(token) {
-          const input = document.createElement("input");
-          input.type = "hidden";
-          input.name = "recaptcha_token";
-          input.value = token;
-          contactForm.appendChild(input);
-          contactForm.submit();
+
+      const honey = document.getElementById('honeypot-contact');
+      if (honey && honey.value) {
+        alert('Submission blocked.');
+        return;
+      }
+
+      if (typeof grecaptcha === 'undefined') {
+        alert('ReCAPTCHA not ready.');
+        return;
+      }
+
+      grecaptcha.ready(() => {
+        grecaptcha.execute('6LfAOV0rAAAAAPBGgn2swZWj5SjANoQ4rUH6XIMz', { action: 'contact_us_submit' }).then((token) => {
+          const name = sanitizeInput(document.getElementById("contact-name").value);
+          const email = sanitizeInput(document.getElementById("contact-email").value);
+          const contactNumber = sanitizeInput(document.getElementById("contact-number").value);
+          const preferredDate = document.getElementById("contact-date").value;
+          const preferredTime = document.getElementById("contact-time").value;
+          const comments = sanitizeInput(document.getElementById("contact-comments").value);
+
+          const formData = new FormData();
+          formData.append("name", name);
+          formData.append("email", email);
+          formData.append("contactNumber", contactNumber);
+          formData.append("preferredDate", preferredDate);
+          formData.append("preferredTime", preferredTime);
+          formData.append("comments", comments);
+          formData.append("g-recaptcha-response", token);
+
+          fetch("https://contact.gabrieloor-cv1.workers.dev/", {
+            method: "POST",
+            body: formData
+          })
+            .then(res => res.json())
+            .then(data => {
+              if (data.success) {
+                alert("Message sent successfully! " + data.message);
+                contactForm.reset();
+                document.getElementById("contact-modal").classList.remove("active");
+              } else {
+                alert("Submission failed: " + (data.message || "Unknown error"));
+              }
+            })
+            .catch(err => {
+              console.error("Contact Us form error:", err);
+              alert("Error submitting the form. Try again.");
+            });
         });
       });
     });
