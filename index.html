@@ -74,18 +74,26 @@
           <li><a href="professionals.html" data-en="Professionals" data-es="Profesionales">Professionals</a></li>
         </ul>
       </nav>
+
+      <!-- ========================================
+                     toggle-container
+       ======================================== -->
       <div class="toggle-container">
         <button id="theme-toggle-desktop" data-en="Light" data-es="Claro">Light</button>
         <button id="language-toggle-desktop">EN</button>
       </div>
     </header>
-
+      <!-- ========================================
+                 hero
+       ======================================== -->
     <section class="hero">
       <h2 data-en="Welcome to Ops Solutions Services" data-es="Bienvenido a OPS Solutions Services">Welcome to Ops Solutions Services</h2>
       <p data-en="Empowering remote solutions with cutting-edge strategies." data-es="Impulsando soluciones remotas con estrategias innovadoras.">Empowering remote solutions with cutting-edge strategies.</p>
       <img src="assets/images/hero-image.jpg" alt="Hero Image" class="hero-image">
     </section>
-
+      <!-- ========================================
+                 services-preview
+       ======================================== -->
     <section id="services-preview" class="services">
       <div class="service-item">
         <h3 data-en="Business Operations" data-es="Gestión">Business Operations</h3>
@@ -108,19 +116,149 @@
         <a href="professionals.html" class="btn" data-en="Learn More" data-es="Saber Más">Learn More</a>
       </div>
     </section>
-
+      <!-- ========================================
+                         footer
+       ======================================== -->
     <footer>
       <p data-en="All rights reserved" data-es="Todos los derechos reservados">&copy; 2024 OPS Solutions Services. All rights reserved.</p>
     </footer>
-
+      <!-- ========================================
+                 floating-icons
+       ======================================== -->
     <div class="floating-icons">
       <button class="floating-icon" data-modal="join-modal" aria-label="Join Us" tabindex="0"><i class="fas fa-user-plus"></i></button>
       <button class="floating-icon" data-modal="contact-modal" aria-label="Contact Us" tabindex="0"><i class="fas fa-envelope-open-text"></i></button>
     </div>
 
-    <!-- Modals, Forms, and Rest of the Page will go here if needed -->
+    <!-- ========================================
+                JOIN US MODALL 
+  ======================================== -->
 
-    <nav class="mobile-nav">
+<div class="modal-overlay" id="join-modal" tabindex="-1">
+  <div class="modal-content" role="dialog" aria-modal="true">
+    <div class="modal-header">
+      <h3 data-en="Join Us" data-es="Únete a Nosotros">Join Us</h3>
+      <button class="close-modal" data-close aria-label="Close">&times;</button>
+    </div>
+    <div class="modal-body">
+      <form id="join-form">
+        <input type="text" class="honeypot" id="honeypot-join" name="honeypot-join" autocomplete="off">
+        <div class="form-cell">
+          <label for="join-name" data-en="Full Name" data-es="Nombre Completo">Full Name</label>
+          <input type="text" id="join-name" name="name" placeholder="Enter your name / Ingrese su Nombre" required data-en="Enter your name" data-es="Ingrese su Nombre">
+        </div>
+        <div class="form-cell">
+          <label for="join-email" data-en="Email" data-es="Correo">Email</label>
+          <input type="email" id="join-email" name="email" placeholder="you@example.com" required>
+        </div>
+        <div class="form-cell">
+          <label for="join-contact" data-en="Phone Number" data-es="Teléfono">Phone Number</label>
+          <input type="tel" id="join-contact" name="contact" placeholder="e.g. +1 555-1234">
+        </div>
+        <div class="form-cell">
+          <label for="join-date" data-en="Preferred Date" data-es="Fecha Preferida">Preferred Date</label>
+          <input type="date" id="join-date" name="date">
+        </div>
+        <div class="form-cell">
+          <label for="join-time" data-en="Preferred Time" data-es="Hora Preferida">Preferred Time</label>
+          <input type="time" id="join-time" name="time">
+        </div>
+        <div class="form-cell full-width">
+          <label for="join-areas-trigger" data-en="Areas of Interest" data-es="Áreas de Interés">Areas of Interest</label>
+          <button type="button" class="toggle-button" id="join-areas-trigger" aria-expanded="false">
+            Select Interests <span class="arrow-down">▼</span>
+          </button>
+          <div id="join-areas-options" class="dropdown-overlay" style="display: none;">
+            <label><input type="checkbox" name="join_interest" value="Tech Support"> <span>Tech Support</span></label>
+            <label><input type="checkbox" name="join_interest" value="Customer Service"> <span>Customer Service</span></label>
+            <label><input type="checkbox" name="join_interest" value="Sales"> <span>Sales</span></label>
+            <label><input type="checkbox" name="join_interest" value="Back Office"> <span>Back Office</span></label>
+            <button type="button" class="done-btn" id="areas-done">Done</button>
+          </div>
+        </div>
+        <div class="form-cell full-width">
+          <label for="employment-type-toggle" data-en="Employment Type" data-es="Tipo de Empleo">Employment Type</label>
+          <button type="button" class="toggle-button" id="employment-type-toggle" aria-expanded="false">
+            Choose Type
+          </button>
+          <div id="employment-type-checkboxes" class="collapsible-content" style="display: none;">
+            <div class="form-row checkbox-row">
+              <div class="checkbox-cell">
+                <label><span>Full-Time</span><input type="checkbox" name="join_interest" value="Full-Time"></label>
+              </div>
+              <div class="checkbox-cell">
+                <label><span>Part-Time</span><input type="checkbox" name="join_interest" value="Part-Time"></label>
+              </div>
+            </div>
+            <div class="form-row checkbox-row">
+              <div class="checkbox-cell">
+                <label><span>Freelance</span><input type="checkbox" name="join_interest" value="Freelance"></label>
+              </div>
+              <div class="checkbox-cell">
+                <label><span>Internship</span><input type="checkbox" name="join_interest" value="Internship"></label>
+              </div>
+            </div>
+            <button type="button" class="done-btn" id="employment-done">Done</button>
+          </div>
+        </div>
+        <div class="form-cell full-width">
+          <label for="join-comment" data-en="Comments" data-es="Comentarios">Comments</label>
+          <textarea id="join-comment" name="comment" rows="4" placeholder="Your message or motivation..."></textarea>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="submit-button" data-en="Submit" data-es="Enviar">Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- ========================================
+                CONTACT US MODAL 
+  ======================================== -->
+<div class="modal-overlay" id="contact-modal" tabindex="-1">
+  <div class="modal-content" role="dialog" aria-modal="true">
+    <div class="modal-header">
+      <h3 data-en="Contact Us" data-es="Contáctanos">Contact Us</h3>
+      <button class="close-modal" data-close aria-label="Close">&times;</button>
+    </div>
+    <div class="modal-body">
+      <form id="contact-form">
+        <input type="text" class="honeypot" id="honeypot-contact" name="honeypot-contact" autocomplete="off">
+        <div class="form-cell">
+          <label for="contact-name">Full Name</label>
+          <input type="text" id="contact-name" name="name" placeholder="Your full name" required>
+        </div>
+        <div class="form-cell">
+          <label for="contact-email">Email</label>
+          <input type="email" id="contact-email" name="email" placeholder="you@example.com" required>
+        </div>
+        <div class="form-cell">
+          <label for="contact-number">Phone</label>
+          <input type="tel" id="contact-number" name="contact" placeholder="e.g. +1 555-1234">
+        </div>
+        <div class="form-cell">
+          <label for="contact-date">Preferred Date</label>
+          <input type="date" id="contact-date" name="date">
+        </div>
+        <div class="form-cell">
+          <label for="contact-time">Preferred Time</label>
+          <input type="time" id="contact-time" name="time">
+        </div>
+        <div class="form-cell full-width">
+          <label for="contact-comments">Message</label>
+          <textarea id="contact-comments" name="comment" rows="4" placeholder="Tell us how we can help you."></textarea>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="submit-button">Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- ========================================
+               mobile-nav 
+  ======================================== -->
+        <nav class="mobile-nav">
       <a href="index.html" class="mobile-nav-item" data-en="Home" data-es="Inicio"><i class="fas fa-home"></i><span>Home</span></a>
       <button class="mobile-nav-item" id="mobile-services-toggle" data-en="Services" data-es="Servicios"><i class="fas fa-bars"></i><span>Services</span></button>
       <button class="mobile-nav-item" id="language-toggle-mobile">EN</button>
