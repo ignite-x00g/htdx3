@@ -1,13 +1,12 @@
-// MODAL FORM CONTROLLER FULL SCRIPT
+// MODAL FORM CONTROLLER – FINAL FULL VERSION
 
 document.addEventListener("DOMContentLoaded", () => {
-
   // ================================
   // LANGUAGE TOGGLE
   // ================================
   let currentLanguage = localStorage.getItem("language") || "en";
   const langToggleDesktop = document.getElementById("language-toggle-desktop");
-  const langToggleMobile  = document.getElementById("language-toggle-mobile");
+  const langToggleMobile = document.getElementById("language-toggle-mobile");
 
   function updateLanguage(lang) {
     const attr = lang === "en" ? "data-en" : "data-es";
@@ -15,10 +14,9 @@ document.addEventListener("DOMContentLoaded", () => {
     elements.forEach(el => {
       const translation = el.getAttribute(attr);
       if (!translation) return;
-      if (el.placeholder !== undefined) {
+      if (el.placeholder !== undefined && el.tagName === "INPUT") {
         el.placeholder = translation;
-      }
-      if (!["INPUT", "TEXTAREA"].includes(el.tagName)) {
+      } else if (!["INPUT", "TEXTAREA"].includes(el.tagName)) {
         el.textContent = translation;
       }
     });
@@ -45,7 +43,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // THEME TOGGLE
   // ================================
   const themeToggleDesktop = document.getElementById("theme-toggle-desktop");
-  const themeToggleMobile  = document.getElementById("theme-toggle-mobile");
+  const themeToggleMobile = document.getElementById("theme-toggle-mobile");
   const currentTheme = localStorage.getItem("theme") || "light";
   document.body.setAttribute("data-theme", currentTheme);
 
@@ -161,6 +159,45 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!mobileMenu.contains(e.target) && !mobileMenuToggle.contains(e.target)) {
         mobileMenu.classList.remove("active");
       }
+    });
+  }
+
+  // ================================
+  // FORM HANDLERS (JOIN & CONTACT)
+  // ================================
+  const joinForm = document.getElementById("join-form");
+  if (joinForm) {
+    joinForm.addEventListener("submit", function(e) {
+      e.preventDefault();
+      if (document.getElementById("honeypot-join").value !== "") return;
+      grecaptcha.ready(function() {
+        grecaptcha.execute('6LfAOV0rAAAAAPBGgn2swZWj5SjANoQ4rUH6XIMz', { action: 'submit' }).then(function(token) {
+          const input = document.createElement("input");
+          input.type = "hidden";
+          input.name = "recaptcha_token";
+          input.value = token;
+          joinForm.appendChild(input);
+          joinForm.submit();
+        });
+      });
+    });
+  }
+
+  const contactForm = document.getElementById("contact-form");
+  if (contactForm) {
+    contactForm.addEventListener("submit", function(e) {
+      e.preventDefault();
+      if (document.getElementById("honeypot-contact").value !== "") return;
+      grecaptcha.ready(function() {
+        grecaptcha.execute('6LfAOV0rAAAAAPBGgn2swZWj5SjANoQ4rUH6XIMz', { action: 'submit' }).then(function(token) {
+          const input = document.createElement("input");
+          input.type = "hidden";
+          input.name = "recaptcha_token";
+          input.value = token;
+          contactForm.appendChild(input);
+          contactForm.submit();
+        });
+      });
     });
   }
 });
