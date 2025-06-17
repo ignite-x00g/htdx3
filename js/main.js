@@ -1,267 +1,166 @@
-vdocument.addEventListener("DOMContentLoaded", () => {
-  // === LANGUAGE TOGGLE ===
+// MODAL FORM CONTROLLER FULL SCRIPT
+
+document.addEventListener("DOMContentLoaded", () => {
+
+  // ================================
+  // LANGUAGE TOGGLE
+  // ================================
   let currentLanguage = localStorage.getItem("language") || "en";
   const langToggleDesktop = document.getElementById("language-toggle-desktop");
-  const langToggleMobile = document.getElementById("language-toggle-mobile");
+  const langToggleMobile  = document.getElementById("language-toggle-mobile");
 
   function updateLanguage(lang) {
-    const attr = (lang === "en") ? "data-en" : "data-es";
+    const attr = lang === "en" ? "data-en" : "data-es";
     const elements = document.querySelectorAll("[data-en]");
-    elements.forEach((el) => {
+    elements.forEach(el => {
       const translation = el.getAttribute(attr);
-      if (translation) {
-        if (el.hasAttribute("placeholder")) {
-          el.setAttribute("placeholder", translation);
-        } else if (el.tagName !== "INPUT" && el.tagName !== "TEXTAREA") {
-          el.textContent = translation;
-        }
+      if (!translation) return;
+      if (el.placeholder !== undefined) {
+        el.placeholder = translation;
+      }
+      if (!["INPUT", "TEXTAREA"].includes(el.tagName)) {
+        el.textContent = translation;
       }
     });
   }
 
-  document.body.setAttribute("lang", currentLanguage);
-  updateLanguage(currentLanguage);
-
-  function setLanguageButtonLabels() {
-    if (langToggleDesktop) langToggleDesktop.textContent = (currentLanguage === "en") ? "ES" : "EN";
+  function toggleLanguage() {
+    currentLanguage = currentLanguage === "en" ? "es" : "en";
+    localStorage.setItem("language", currentLanguage);
+    updateLanguage(currentLanguage);
+    document.body.setAttribute("lang", currentLanguage);
+    if (langToggleDesktop) langToggleDesktop.textContent = currentLanguage === "en" ? "ES" : "EN";
     if (langToggleMobile) {
-      const mobileSpan = langToggleMobile.querySelector("span") || langToggleMobile;
-      mobileSpan.textContent = (currentLanguage === "en") ? "ES" : "EN";
+      const span = langToggleMobile.querySelector("span") || langToggleMobile;
+      span.textContent = currentLanguage === "en" ? "ES" : "EN";
     }
   }
 
-  function toggleLanguage() {
-    currentLanguage = (currentLanguage === "en") ? "es" : "en";
-    localStorage.setItem("language", currentLanguage);
-    document.body.setAttribute("lang", currentLanguage);
-    updateLanguage(currentLanguage);
-    setLanguageButtonLabels();
-  }
-
+  updateLanguage(currentLanguage);
+  document.body.setAttribute("lang", currentLanguage);
   if (langToggleDesktop) langToggleDesktop.addEventListener("click", toggleLanguage);
   if (langToggleMobile) langToggleMobile.addEventListener("click", toggleLanguage);
-  setLanguageButtonLabels();
 
-  // === THEME TOGGLE ===
+  // ================================
+  // THEME TOGGLE
+  // ================================
   const themeToggleDesktop = document.getElementById("theme-toggle-desktop");
-  const themeToggleMobile = document.getElementById("theme-toggle-mobile");
-  const body = document.body;
-  const savedTheme = localStorage.getItem("theme") || "light";
-  body.setAttribute("data-theme", savedTheme);
+  const themeToggleMobile  = document.getElementById("theme-toggle-mobile");
+  const currentTheme = localStorage.getItem("theme") || "light";
+  document.body.setAttribute("data-theme", currentTheme);
 
-  function setupThemeToggle(button) {
+  function setupTheme(button) {
     if (!button) return;
-    button.textContent = (savedTheme === "light") ? "Dark" : "Light";
+    button.textContent = currentTheme === "light" ? "Dark" : "Light";
     button.addEventListener("click", () => {
-      const current = body.getAttribute("data-theme");
-      const newTheme = current === "light" ? "dark" : "light";
-      body.setAttribute("data-theme", newTheme);
-      button.textContent = current;
+      const newTheme = document.body.getAttribute("data-theme") === "light" ? "dark" : "light";
+      document.body.setAttribute("data-theme", newTheme);
       localStorage.setItem("theme", newTheme);
+      button.textContent = newTheme === "light" ? "Dark" : "Light";
     });
   }
 
-  setupThemeToggle(themeToggleDesktop);
-  setupThemeToggle(themeToggleMobile);
+  setupTheme(themeToggleDesktop);
+  setupTheme(themeToggleMobile);
 
-  // === MODAL LOGIC with Scroll Lock ===
-  const modalOverlays = document.querySelectorAll('.modal-overlay');
-  const closeModalButtons = document.querySelectorAll('[data-close]');
-  const floatingIcons = document.querySelectorAll('.floating-icon');
+  // ================================
+  // MODALS
+  // ================================
+  const modalOverlays = document.querySelectorAll(".modal-overlay");
+  const modalTriggers = document.querySelectorAll("[data-modal]");
+  const closeModalButtons = document.querySelectorAll("[data-close]");
 
-  function toggleBodyScroll(lock) {
-    document.body.style.overflow = lock ? 'hidden' : '';
-  }
-
-  floatingIcons.forEach(icon => {
-    icon.addEventListener('click', () => {
-      const modalId = icon.getAttribute('data-modal');
-      const target = document.getElementById(modalId);
-      if (target) {
-        target.classList.add('active');
-        toggleBodyScroll(true);
+  modalTriggers.forEach(btn => {
+    btn.addEventListener("click", () => {
+      const modalId = btn.getAttribute("data-modal");
+      const modal = document.getElementById(modalId);
+      if (modal) {
+        modal.classList.add("active");
+        document.body.style.overflow = "hidden";
       }
     });
   });
 
   closeModalButtons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      const modal = btn.closest('.modal-overlay');
+    btn.addEventListener("click", () => {
+      const modal = btn.closest(".modal-overlay");
       if (modal) {
-        modal.classList.remove('active');
-        toggleBodyScroll(false);
+        modal.classList.remove("active");
+        document.body.style.overflow = "";
       }
     });
   });
 
-  modalOverlays.forEach(overlay => {
-    overlay.addEventListener('click', (e) => {
-      if (e.target === overlay) {
-        overlay.classList.remove('active');
-        toggleBodyScroll(false);
+  modalOverlays.forEach(modal => {
+    modal.addEventListener("click", (e) => {
+      if (e.target === modal) {
+        modal.classList.remove("active");
+        document.body.style.overflow = "";
       }
     });
-    overlay.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
-        overlay.classList.remove('active');
-        toggleBodyScroll(false);
+    modal.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") {
+        modal.classList.remove("active");
+        document.body.style.overflow = "";
       }
     });
   });
 
-  // === MOBILE SERVICES MENU ===
-  const mobileServicesToggleBtn = document.getElementById('mobile-services-toggle');
-  const mobileServicesMenu = document.getElementById('mobile-services-menu-container');
+  // ================================
+  // COLLAPSIBLE SECTIONS
+  // ================================
+  const areasTrigger = document.getElementById("join-areas-trigger");
+  const areasOptions = document.getElementById("join-areas-options");
+  const areasDone = document.getElementById("areas-done");
+  if (areasTrigger) {
+    areasTrigger.addEventListener("click", () => {
+      const isOpen = areasOptions.style.display === "block";
+      areasOptions.style.display = isOpen ? "none" : "block";
+      areasTrigger.setAttribute("aria-expanded", !isOpen);
+      const arrow = areasTrigger.querySelector(".arrow-down");
+      if (arrow) arrow.textContent = isOpen ? "▼" : "▲";
+    });
+  }
+  if (areasDone) {
+    areasDone.addEventListener("click", () => {
+      areasOptions.style.display = "none";
+      areasTrigger.setAttribute("aria-expanded", "false");
+      const arrow = areasTrigger.querySelector(".arrow-down");
+      if (arrow) arrow.textContent = "▼";
+    });
+  }
 
-  if (mobileServicesToggleBtn && mobileServicesMenu) {
-    mobileServicesToggleBtn.addEventListener('click', (e) => {
+  const employmentToggle = document.getElementById("employment-type-toggle");
+  const employmentOptions = document.getElementById("employment-type-checkboxes");
+  const employmentDone = document.getElementById("employment-done");
+  if (employmentToggle) {
+    employmentToggle.addEventListener("click", () => {
+      const isOpen = employmentOptions.style.display === "block";
+      employmentOptions.style.display = isOpen ? "none" : "block";
+      employmentToggle.setAttribute("aria-expanded", !isOpen);
+    });
+  }
+  if (employmentDone) {
+    employmentDone.addEventListener("click", () => {
+      employmentOptions.style.display = "none";
+      employmentToggle.setAttribute("aria-expanded", "false");
+    });
+  }
+
+  // ================================
+  // MOBILE SERVICES MENU
+  // ================================
+  const mobileMenuToggle = document.getElementById("mobile-services-toggle");
+  const mobileMenu = document.getElementById("mobile-services-menu-container");
+  if (mobileMenuToggle && mobileMenu) {
+    mobileMenuToggle.addEventListener("click", (e) => {
       e.stopPropagation();
-      mobileServicesMenu.classList.toggle('active');
+      mobileMenu.classList.toggle("active");
     });
-    document.addEventListener('click', (e) => {
-      if (!mobileServicesMenu.contains(e.target) && !mobileServicesToggleBtn.contains(e.target)) {
-        mobileServicesMenu.classList.remove('active');
+    document.addEventListener("click", (e) => {
+      if (!mobileMenu.contains(e.target) && !mobileMenuToggle.contains(e.target)) {
+        mobileMenu.classList.remove("active");
       }
-    });
-  }
-
-  // === COLLAPSIBLE DROPDOWNS ===
-  const employmentTypeToggle = document.getElementById('employment-type-toggle');
-  const employmentTypeCheckboxes = document.getElementById('employment-type-checkboxes');
-  const employmentDone = document.getElementById('employment-done');
-
-  if (employmentTypeToggle && employmentTypeCheckboxes && employmentDone) {
-    employmentTypeToggle.addEventListener('click', () => {
-      employmentTypeCheckboxes.style.display = 'block';
-      employmentTypeToggle.setAttribute('aria-expanded', 'true');
-    });
-    employmentDone.addEventListener('click', () => {
-      employmentTypeCheckboxes.style.display = 'none';
-      employmentTypeToggle.setAttribute('aria-expanded', 'false');
-    });
-  }
-
-  const areasTrigger = document.getElementById('join-areas-trigger');
-  const areasOptions = document.getElementById('join-areas-options');
-  const areasDone = document.getElementById('areas-done');
-
-  if (areasTrigger && areasOptions && areasDone) {
-    areasTrigger.addEventListener('click', () => {
-      const isOpen = areasTrigger.getAttribute('aria-expanded') === 'true';
-      areasTrigger.setAttribute('aria-expanded', !isOpen);
-      areasOptions.style.display = isOpen ? 'none' : 'block';
-      const arrow = areasTrigger.querySelector('.arrow-down');
-      if (arrow) arrow.textContent = isOpen ? '▼' : '▲';
-    });
-    areasDone.addEventListener('click', () => {
-      areasOptions.style.display = 'none';
-      areasTrigger.setAttribute('aria-expanded', 'false');
-      const arrow = areasTrigger.querySelector('.arrow-down');
-      if (arrow) arrow.textContent = '▼';
-    });
-  }
-
-  // === INLINE VALIDATION FEEDBACK ===
-  const requiredFields = document.querySelectorAll('#join-form input[required], #join-form textarea[required]');
-  requiredFields.forEach(field => {
-    field.addEventListener('blur', () => {
-      if (!field.checkValidity()) field.classList.add('invalid');
-      else field.classList.remove('invalid');
-    });
-  });
-
-  // === SANITIZE FUNCTION ===
-  function sanitizeInput(input) {
-    if (typeof input !== 'string') return '';
-    return input.replace(/</g, "&lt;")
-                .replace(/>/g, "&gt;")
-                .replace(/&/g, "&amp;")
-                .replace(/"/g, "&quot;")
-                .replace(/'/g, "&#x27;")
-                .trim();
-  }
-
-  // === FORM SUBMISSION: JOIN US ===
-  const joinForm = document.getElementById('join-form');
-  if (joinForm) {
-    joinForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const submitBtn = joinForm.querySelector('.submit-button');
-      const originalText = submitBtn.textContent;
-      submitBtn.disabled = true;
-      submitBtn.textContent = 'Submitting...';
-
-      if (document.getElementById('honeypot-join').value) return;
-
-      grecaptcha.ready(() => {
-        grecaptcha.execute('6LfAOV0rAAAAAPBGgn2swZWj5SjANoQ4rUH6XIMz', { action: 'join_us_submit' }).then((token) => {
-          const formData = new FormData(joinForm);
-          formData.append('g-recaptcha-response', token);
-
-          fetch('https://join.gabrieloor-cv1.workers.dev/', {
-            method: 'POST',
-            body: formData
-          })
-          .then(res => res.json())
-          .then(data => {
-            if (data.success) {
-              joinForm.reset();
-              document.getElementById('join-success-msg').style.display = 'block';
-              setTimeout(() => {
-                document.getElementById('join-modal').classList.remove('active');
-                toggleBodyScroll(false);
-                document.getElementById('join-success-msg').style.display = 'none';
-              }, 3000);
-            } else {
-              alert('Join submission failed.');
-            }
-            submitBtn.disabled = false;
-            submitBtn.textContent = originalText;
-          });
-        });
-      });
-    });
-  }
-
-  // === FORM SUBMISSION: CONTACT US ===
-  const contactForm = document.getElementById('contact-form');
-  if (contactForm) {
-    contactForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const submitBtn = contactForm.querySelector('.submit-button');
-      const originalText = submitBtn.textContent;
-      submitBtn.disabled = true;
-      submitBtn.textContent = 'Submitting...';
-
-      if (document.getElementById('honeypot-contact').value) return;
-
-      grecaptcha.ready(() => {
-        grecaptcha.execute('6LfAOV0rAAAAAPBGgn2swZWj5SjANoQ4rUH6XIMz', { action: 'contact_us_submit' }).then((token) => {
-          const formData = new FormData(contactForm);
-          formData.append('g-recaptcha-response', token);
-
-          fetch('https://contact.gabrieloor-cv1.workers.dev/', {
-            method: 'POST',
-            body: formData
-          })
-          .then(res => res.json())
-          .then(data => {
-            if (data.success) {
-              contactForm.reset();
-              document.getElementById('contact-success-msg').style.display = 'block';
-              setTimeout(() => {
-                document.getElementById('contact-modal').classList.remove('active');
-                toggleBodyScroll(false);
-                document.getElementById('contact-success-msg').style.display = 'none';
-              }, 3000);
-            } else {
-              alert('Contact submission failed.');
-            }
-            submitBtn.disabled = false;
-            submitBtn.textContent = originalText;
-          });
-        });
-      });
     });
   }
 });
