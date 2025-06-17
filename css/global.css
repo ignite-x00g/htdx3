@@ -438,3 +438,15 @@ body[data-theme="dark"] .modal-content form {
     /* Existing styles should cover this, but can be fine-tuned if necessary */
 }
 
+/* Dark Mode Form Input Contrast Improvements */
+body[data-theme="dark"] .modal-body form .form-cell input,
+body[data-theme="dark"] .modal-body form .form-cell textarea {
+  background-color: #2a2a2a; /* Slightly lighter than the form background */
+  border-color: #444; /* A visible border color */
+  color: #e0e0e0; /* Ensure text is light */
+}
+
+body[data-theme="dark"] .modal-body form .form-cell input::placeholder,
+body[data-theme="dark"] .modal-body form .form-cell textarea::placeholder {
+  color: #888; /* Lighter placeholder text */
+}
