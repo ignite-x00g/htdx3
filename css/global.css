@@ -443,6 +443,12 @@ body[data-theme="dark"] .modal-content form {
     background-color: #e0e0e0;
 }
 
+/* Arrow-down icon in collapsible trigger */
+.toggle-button .arrow-down {
+  margin-left: 8px;
+  font-size: 0.9em;
+}
+
 /* Small dropdown overlay used for Employment Type and Areas of Interest */
 .dropdown-overlay {
     position: absolute;
