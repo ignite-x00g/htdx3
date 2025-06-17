@@ -174,6 +174,26 @@ document.addEventListener("DOMContentLoaded", () => {
   });
   
   // ================================================================
+  // Mobile Services Menu Toggle
+  // =================================================================
+  const mobileServicesToggleBtn = document.getElementById('mobile-services-toggle');
+  const mobileServicesMenu = document.getElementById('mobile-services-menu-container');
+
+  if (mobileServicesToggleBtn && mobileServicesMenu) {
+    mobileServicesToggleBtn.addEventListener('click', (e) => {
+      e.stopPropagation(); // Prevent click from immediately closing due to document listener
+      mobileServicesMenu.classList.toggle('active');
+    });
+
+    // Optional: Close menu if clicking outside of it
+    document.addEventListener('click', (e) => {
+      if (mobileServicesMenu.classList.contains('active') && !mobileServicesMenu.contains(e.target) && !mobileServicesToggleBtn.contains(e.target)) {
+        mobileServicesMenu.classList.remove('active');
+      }
+    });
+  }
+
+  // ================================================================
   // Employment Type Toggle for Join Us Form
   // ================================================================
   const employmentTypeToggle = document.getElementById('employment-type-toggle');
@@ -397,19 +417,30 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Collapsible Areas of Interest for Join Us form
-  const areasTrigger = document.getElementById('join-areas-trigger');
-  const areasOptions = document.getElementById('join-areas-options');
-  const areasDone = document.getElementById('areas-done');
-  if (areasTrigger && areasOptions && areasDone) {
-    areasTrigger.addEventListener('click', () => {
-      areasOptions.style.display = 'block';
-      areasTrigger.setAttribute('aria-expanded', 'true');
-    });
+ // Collapsible Areas of Interest for Join Us form
+const areasTrigger = document.getElementById('join-areas-trigger');
+const areasOptions = document.getElementById('join-areas-options');
+const areasDone = document.getElementById('areas-done');
 
-    areasDone.addEventListener('click', () => {
-      areasOptions.style.display = 'none';
-      areasTrigger.setAttribute('aria-expanded', 'false');
-    });
-  }
-});
+if (areasTrigger && areasOptions) {
+  areasTrigger.addEventListener('click', () => {
+    const isExpanded = areasTrigger.getAttribute('aria-expanded') === 'true';
+    const arrow = areasTrigger.querySelector('.arrow-down');
+    areasTrigger.setAttribute('aria-expanded', !isExpanded);
+    areasOptions.style.display = isExpanded ? 'none' : 'block';
+    if (arrow) {
+      arrow.textContent = isExpanded ? '▼' : '▲';
+    }
+  });
+}
+
+if (areasDone && areasOptions && areasTrigger) {
+  areasDone.addEventListener('click', () => {
+    areasOptions.style.display = 'none';
+    areasTrigger.setAttribute('aria-expanded', 'false');
+    const arrow = areasTrigger.querySelector('.arrow-down');
+    if (arrow) {
+      arrow.textContent = '▼';
+    }
+  });
+}
