@@ -1,6 +1,6 @@
 /* Collapsible Checkbox List Styles */
 .collapsible-trigger {
-  background-color: #eee; /* Light grey background */
+  background-color: #eee;
   color: #333;
   cursor: pointer;
   padding: 10px 15px;
@@ -12,7 +12,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 0; /* Remove default button margin if any */
+  margin-bottom: 0;
 }
 .collapsible-trigger:hover {
   background-color: #ddd;
@@ -25,11 +25,10 @@
   background-color: #f9f9f9;
 }
 .collapsible-content label {
-  display: block; /* Make each checkbox label take its own line */
+  display: block;
   margin-bottom: 5px;
-  font-weight: normal; /* Override potential label bolding from .form-cell label */
+  font-weight: normal;
 }
-/* Dark mode considerations for collapsible */
 body[data-theme="dark"] .collapsible-trigger {
   background-color: #2a2a2a;
   color: #e0e0e0;
@@ -43,22 +42,23 @@ body[data-theme="dark"] .collapsible-content {
   border-color: #444;
 }
 body[data-theme="dark"] .collapsible-content label {
-  color: #e0e0e0; /* Ensure label text is visible in dark mode */
+  color: #e0e0e0;
 }
 
-/* Global Reset & Basic Body Styles */
+/* Global Reset */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-/* Honeypot field hidden from users */
+/* Honeypot */
 .honeypot {
   position: absolute !important;
   left: -9999px !important;
 }
 
+/* Body & Header */
 body {
   font-family: Arial, sans-serif;
   background-color: #f4f4f4;
@@ -67,8 +67,6 @@ body {
   padding: 20px;
   transition: background-color 0.3s, color 0.3s;
 }
-
-/* Header & Navigation */
 header {
   background-color: #9b87f5;
   color: white;
@@ -76,21 +74,19 @@ header {
   text-align: center;
   position: relative;
 }
-
 header nav ul {
   list-style: none;
   display: flex;
   justify-content: center;
   gap: 20px;
 }
-
 header nav a {
   text-decoration: none;
   color: white;
   font-weight: bold;
 }
 
-/* Toggle Button Container (Desktop) */
+/* Toggle Buttons */
 .toggle-container {
   position: absolute;
   top: 10px;
@@ -98,7 +94,6 @@ header nav a {
   display: flex;
   gap: 10px;
 }
-
 .toggle-container button {
   background-color: #7e69ab;
   color: white;
@@ -108,28 +103,24 @@ header nav a {
   border-radius: 20px;
   transition: background-color 0.3s;
 }
-
 .toggle-container button:hover {
   background-color: #9b87f5;
 }
 
-/* Hero Section */
+/* Hero */
 .hero {
   text-align: center;
   padding: 4rem 1rem;
 }
-
 .hero h2 {
   font-size: 2.5rem;
   color: #9b87f5;
 }
-
 .hero p {
   font-size: 1.3rem;
   margin-top: 1rem;
   color: #333;
 }
-
 .hero-image {
   width: 100%;
   height: auto;
@@ -146,7 +137,6 @@ header nav a {
   gap: 1rem;
   justify-content: space-between;
 }
-
 .service-item {
   background: transparent;
   border: 2px solid currentColor;
@@ -154,19 +144,16 @@ header nav a {
   width: calc(25% - 1rem);
   text-align: center;
   padding: 1.5rem;
-  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+  transition: all 0.3s;
   color: inherit;
 }
-
 .service-item h3 {
   margin-bottom: 1rem;
   color: #9b87f5;
 }
-
 .service-item p {
   margin-bottom: 1rem;
 }
-
 .service-item .btn {
   background-color: #9b87f5;
   color: #fff;
@@ -176,7 +163,6 @@ header nav a {
   display: inline-block;
   transition: background-color 0.3s;
 }
-
 .service-item .btn:hover {
   background-color: #7e69ab;
 }
@@ -200,7 +186,6 @@ footer {
   gap: 1rem;
   z-index: 2000;
 }
-
 .floating-icon {
   background-color: #9b87f5;
   border: none;
@@ -215,15 +200,14 @@ footer {
   cursor: pointer;
   transition: background-color 0.3s, transform 0.3s;
 }
-
 .floating-icon:hover {
   background-color: #7e69ab;
   transform: scale(1.1);
 }
 
-/* Modal Overlay & Content */
+/* Modal */
 .modal-overlay {
-  display: none; /* Hidden by default */
+  display: none;
   position: fixed;
   inset: 0;
   background-color: rgba(0,0,0,0.7);
@@ -232,11 +216,9 @@ footer {
   z-index: 3000;
   flex-direction: column;
 }
-
 .modal-overlay.active {
   display: flex;
 }
-
 .modal-content {
   background-color: #fff;
   border-radius: 10px;
@@ -248,8 +230,6 @@ footer {
   position: relative;
   overflow: hidden;
 }
-
-/* Modal Header (Title and Close Button) */
 .modal-header {
   display: flex;
   justify-content: space-between;
@@ -258,57 +238,44 @@ footer {
   padding: 1rem;
   color: #fff;
 }
-
 .modal-header h3 {
   margin: 0;
   font-size: 1.5rem;
 }
-
 .close-modal {
   background-color: transparent;
   border: none;
   color: #fff;
   font-size: 1.5rem;
   cursor: pointer;
-  transition: color 0.3s;
 }
-
 .close-modal:hover {
   color: #ddd;
 }
-
-/* Modal Body & Form Layout (Grid: Table-like) */
 .modal-body {
   padding: 1rem;
   flex: 1;
   overflow-y: auto;
 }
-
-/* Use CSS Grid for a two-column layout on big screens */
 .modal-body form {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 1rem;
 }
-
 .form-cell {
   display: flex;
   flex-direction: column;
 }
-
 .form-cell label {
   font-weight: bold;
   margin-bottom: 0.5rem;
 }
-
 .form-cell input,
 .form-cell textarea {
   padding: 0.5rem;
   border: 1px solid #ccc;
   border-radius: 5px;
 }
-
-/* Modal Footer: Submit Button Aligned Right */
 .modal-footer {
   display: flex;
   justify-content: flex-end;
@@ -318,7 +285,6 @@ footer {
   width: 100%; /* Ensure footer spans full width */
   box-sizing: border-box; /* Ensure padding doesn't add to width */
 }
-
 .submit-button {
   background-color: #9b87f5;
   color: #fff;
@@ -331,204 +297,131 @@ footer {
   min-width: 150px; /* Ensure a minimum width */
   text-align: center; /* Ensure text is centered */
 }
-
 .submit-button:hover {
   background-color: #7e69ab;
 }
 
-.submit-button:focus {
-  outline: 2px solid #333;
-  outline-offset: 2px;
-}
-
-.submit-button:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
-
-/* Dark Mode Overrides */
+/* Dark Mode */
 body[data-theme="dark"] {
   background-color: #121212;
   color: #e0e0e0;
 }
-
 body[data-theme="dark"] header {
   background-color: #1c1c1c;
 }
-
 body[data-theme="dark"] header nav a {
   color: #e0e0e0;
 }
-
 body[data-theme="dark"] .hero h2 {
   color: #bb86fc;
 }
-
 body[data-theme="dark"] .hero p {
   color: #e0e0e0;
 }
-
 body[data-theme="dark"] .services {
   background-color: #121212;
 }
-
 body[data-theme="dark"] .floating-icon {
   background-color: #bb86fc;
 }
-
 body[data-theme="dark"] .floating-icon:hover {
   background-color: #7e69ab;
 }
-
 body[data-theme="dark"] .modal-content {
   background-color: #000;
   color: #e0e0e0;
 }
-
 body[data-theme="dark"] .modal-content form {
   background-color: rgba(0,0,0,0.85);
 }
+body[data-theme="dark"] .modal-body form .form-cell input,
+body[data-theme="dark"] .modal-body form .form-cell textarea {
+  background-color: #2a2a2a;
+  border-color: #444;
+  color: #e0e0e0;
+}
+body[data-theme="dark"] .modal-body form .form-cell input::placeholder,
+body[data-theme="dark"] .modal-body form .form-cell textarea::placeholder {
+  color: #888;
+}
 
 /* Employment Type Section */
-.form-cell.full-width { /* Class for the label and button container */
-    grid-column: 1 / -1; /* Span full width in the grid */
+.form-cell.full-width {
+  grid-column: 1 / -1;
 }
-
 #employment-type-checkboxes {
-    /* display: none; is handled by inline style, controlled by JS */
-    padding-top: 10px; /* Space above checkboxes */
-    padding-left: 15px; /* Horizontal padding for <--- ---> effect */
-    padding-right: 15px; /* Horizontal padding for <--- ---> effect */
+  padding: 10px 15px;
 }
-
-/* Target .form-row that also has .checkbox-row for the flex layout */
 .collapsible-checkbox-group .form-row.checkbox-row {
-    display: flex; /* Arrange checkbox-cells in a row */
-    justify-content: space-between; /* Distribute space, or use gap */
-    gap: 10px; /* Space between the two checkbox cells */
-    margin-bottom: 8px; /* Spacing between checkbox rows, adjusted from 5px */
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 8px;
 }
-
 .checkbox-cell {
-    display: flex;
-    align-items: center; /* Align checkbox and label vertically */
-    flex: 1; /* Each cell takes equal width in the flex row */
-    /* Adding a bit of padding if needed, though label width 100% might cover it */
-    /* padding: 0 5px; */
+  display: flex;
+  align-items: center;
+  flex: 1;
 }
-
 .checkbox-cell label {
-    display: flex; /* Align text span and input within the label */
-    align-items: center;
-    cursor: pointer;
-    width: 100%; /* Make label take full width of cell for easier clicking */
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  width: 100%;
 }
-
 .checkbox-cell input[type="checkbox"] {
-    margin-left: 10px; /* Space between text and checkbox */
-    order: 1; /* Checkbox to the right of the label text */
-    flex-shrink: 0; /* Prevent checkbox from shrinking */
+  margin-left: 10px;
+  order: 1;
+  flex-shrink: 0;
 }
-
 .checkbox-cell label span {
-    flex-grow: 1; /* Text takes available space */
-    /* text-align: center; */ /* Uncomment if text itself needs to be centered */
+  flex-grow: 1;
 }
 
+/* Toggle Button */
 .toggle-button {
-    background-color: #f0f0f0;
-    border: 1px solid #ccc;
-    padding: 8px 12px;
-    cursor: pointer;
-    border-radius: 4px;
-    font-size: 0.9em;
-    margin-top: 5px; /* Space between label and button */
+  background-color: #f0f0f0;
+  color: #333;
+  border: 1px solid #ccc;
+  padding: 0.5rem;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 1em;
+  margin-top: 5px;
+  width: 100%;
+  text-align: left;
 }
-
 .toggle-button:hover {
-    background-color: #e0e0e0;
+  background-color: #e0e0e0;
+}
+.toggle-button .arrow-down {
+  margin-left: 8px;
+  font-size: 0.9em;
+}
+body[data-theme="dark"] .toggle-button {
+  background-color: #2a2a2a;
+  border-color: #444;
+  color: #e0e0e0;
+}
+body[data-theme="dark"] .toggle-button:hover {
+  background-color: #3a3a3a;
 }
 
-/* Small dropdown overlay used for Employment Type and Areas of Interest */
+/* Dropdown Overlay */
 .dropdown-overlay {
-    position: absolute;
-    right: 0;
-    top: 100%;
-    background-color: #f9f9f9;
-    border: 1px solid #ccc;
-    padding: 10px;
-    z-index: 1000;
-    border-radius: 4px;
-    min-width: 200px;
+  position: absolute;
+  right: 0;
+  top: 100%;
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+  padding: 10px;
+  z-index: 1000;
+  border-radius: 4px;
+  min-width: 200px;
 }
-
 .dropdown-overlay label {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 5px;
-}
-
-.dropdown-overlay .done-btn {
-    margin-top: 10px;
-    padding: 5px 10px;
-    background-color: #ddd;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-.dropdown-overlay .done-btn:hover {
-    background-color: #ccc;
-}
-
-body[data-theme="dark"] .dropdown-overlay {
-    background-color: #222;
-    border-color: #444;
-}
-
-body[data-theme="dark"] .dropdown-overlay .done-btn {
-    background-color: #555;
-}
-
-body[data-theme="dark"] .dropdown-overlay .done-btn:hover {
-    background-color: #666;
-}
-
-/* Ensure the modal form styling applies within the new section if needed */
-#join-form .form-row {
-    /* Existing styles should cover this, but can be fine-tuned if necessary */
-}
-
-/* ===========================================
-   Mobile Overrides (Responsive Design)
- =========================================== */
-@media screen and (max-width: 768px) {
-  .mobile-nav {
-    display: flex;
-    position: fixed;
-    bottom: 0;
-    right: 0;
-    background: #fff;
-    justify-content: space-around;
-    padding: 0.5rem 0;
-    z-index: 3000;
-    width: 85%;
-    border-radius: 20px;
-  }
-
-  .mobile-nav-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .mobile-services-menu {
-    display: none;
-    position: fixed;
-    bottom: 60px;
-    left: 85px;
-    background: #fff;
-    z-index: 1001;
-  }
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  line-height: 1.6;
 }
