@@ -330,16 +330,6 @@ footer {
   background-color: #7e69ab;
 }
 
-.submit-button:focus {
-  outline: 2px solid #333;
-  outline-offset: 2px;
-}
-
-.submit-button:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
-
 /* Dark Mode Overrides */
 body[data-theme="dark"] {
   background-color: #121212;
@@ -430,63 +420,36 @@ body[data-theme="dark"] .modal-content form {
 }
 
 .toggle-button {
-    background-color: #f0f0f0;
-    border: 1px solid #ccc;
-    padding: 8px 12px;
+    background-color: #f0f0f0; /* Current background */
+    color: #333; /* Explicitly set text color to match input text */
+    border: 1px solid #ccc; /* Current border */
+    padding: 0.5rem; /* Match general input/textarea padding */
     cursor: pointer;
-    border-radius: 4px;
-    font-size: 0.9em;
-    margin-top: 5px; /* Space between label and button */
+    border-radius: 5px; /* Match general input/textarea border-radius */
+    font-size: 1em; /* Match general font size (assuming inputs are 1em) */
+    margin-top: 5px;
+    width: 100%;
+    text-align: left;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    line-height: 1.6; /* Match body line-height for consistency if needed */
 }
 
+/* Original .toggle-button:hover can be kept for light mode */
 .toggle-button:hover {
     background-color: #e0e0e0;
 }
 
-/* Small dropdown overlay used for Employment Type and Areas of Interest */
-.dropdown-overlay {
-    position: absolute;
-    right: 0;
-    top: 100%;
-    background-color: #f9f9f9;
-    border: 1px solid #ccc;
-    padding: 10px;
-    z-index: 1000;
-    border-radius: 4px;
-    min-width: 200px;
+/* Dark mode adjustments for these buttons */
+body[data-theme="dark"] .toggle-button {
+  background-color: #2a2a2a;
+  border-color: #444;
+  color: #e0e0e0;
 }
 
-.dropdown-overlay label {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 5px;
-}
-
-.dropdown-overlay .done-btn {
-    margin-top: 10px;
-    padding: 5px 10px;
-    background-color: #ddd;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-.dropdown-overlay .done-btn:hover {
-    background-color: #ccc;
-}
-
-body[data-theme="dark"] .dropdown-overlay {
-    background-color: #222;
-    border-color: #444;
-}
-
-body[data-theme="dark"] .dropdown-overlay .done-btn {
-    background-color: #555;
-}
-
-body[data-theme="dark"] .dropdown-overlay .done-btn:hover {
-    background-color: #666;
+body[data-theme="dark"] .toggle-button:hover {
+  background-color: #3a3a3a; /* Darker hover */
 }
 
 /* Ensure the modal form styling applies within the new section if needed */
@@ -494,10 +457,7 @@ body[data-theme="dark"] .dropdown-overlay .done-btn:hover {
     /* Existing styles should cover this, but can be fine-tuned if necessary */
 }
 
-/* ===========================================
-   Dark Mode Form Input Contrast Improvements
- =========================================== */
-
+/* Dark Mode Form Input Contrast Improvements */
 body[data-theme="dark"] .modal-body form .form-cell input,
 body[data-theme="dark"] .modal-body form .form-cell textarea {
   background-color: #2a2a2a; /* Slightly lighter than the form background */
@@ -508,37 +468,4 @@ body[data-theme="dark"] .modal-body form .form-cell textarea {
 body[data-theme="dark"] .modal-body form .form-cell input::placeholder,
 body[data-theme="dark"] .modal-body form .form-cell textarea::placeholder {
   color: #888; /* Lighter placeholder text */
-}
-
-/* ===========================================
-   Mobile Overrides (Responsive Design)
- =========================================== */
-@media screen and (max-width: 768px) {
-  .mobile-nav {
-    display: flex;
-    position: fixed;
-    bottom: 0;
-    right: 0;
-    background: #fff;
-    justify-content: space-around;
-    padding: 0.5rem 0;
-    z-index: 3000;
-    width: 85%;
-    border-radius: 20px;
-  }
-
-  .mobile-nav-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .mobile-services-menu {
-    display: none;
-    position: fixed;
-    bottom: 60px;
-    left: 85px;
-    background: #fff;
-    z-index: 1001;
-  }
 }

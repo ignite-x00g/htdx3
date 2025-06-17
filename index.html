@@ -118,14 +118,186 @@
       <button class="floating-icon" data-modal="contact-modal" aria-label="Contact Us" tabindex="0"><i class="fas fa-envelope-open-text"></i></button>
     </div>
 
-    <!-- Modals, Forms, and Rest of the Page -->
-    <!-- (Already resolved in prior message – will be pasted if needed again) -->
+    <!-- Join Modal -->
+    <div id="join-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="joinModalTitle">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 id="joinModalTitle" data-en="Join Us" data-es="Únete a Nosotros">Join Us</h3>
+          <button class="close-modal" data-close aria-label="Close">&times;</button>
+        </div>
+        <div class="modal-body">
+          <form id="join-form">
+            <input type="text" name="website" id="honeypot-join" class="honeypot" autocomplete="off">
+            <div class="form-row">
+              <div class="form-cell">
+                <label for="join-name" data-en="Name" data-es="Nombre">Name</label>
+                <input type="text" id="join-name" data-en="Enter your name" data-es="Ingrese su Nombre" placeholder="Enter your name" required>
+              </div>
+              <div class="form-cell">
+                <label for="join-email" data-en="Email" data-es="Correo Electrónico">Email</label>
+                <input type="email" id="join-email" data-en="Enter your email" data-es="Ingrese su correo electrónico" placeholder="Enter your email" required>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-cell">
+                <label for="join-contact" data-en="Contact Number" data-es="Número de Contacto">Contact Number</label>
+                <input type="tel" id="join-contact" data-en="Enter your contact number" data-es="Ingrese su número" placeholder="Enter your contact number" required>
+              </div>
+              <div class="form-cell">
+                <label for="join-date" data-en="Date" data-es="Fecha">Date</label>
+                <input type="date" id="join-date" required>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-cell">
+                <label for="join-time" data-en="Time" data-es="Hora">Time</label>
+                <input type="time" id="join-time" required>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-cell full-width">
+                <label data-en="Employment Type" data-es="Tipo de Empleo">Employment Type</label>
+                <button type="button" id="employment-type-toggle" class="toggle-button" aria-expanded="false" aria-controls="employment-type-checkboxes">
+                  <span data-en="Work Preference" data-es="Modalidad de trabajo">Work Preference</span>
+                </button>
+              </div>
+            </div>
+            <div id="employment-type-checkboxes" style="display: none; grid-column: 1 / -1;">
+              <div class="form-row checkbox-row">
+                <div class="checkbox-cell">
+                  <label>
+                    <span data-en="Remote" data-es="Remoto">Remote</span>
+                    <input type="checkbox" name="join_interest" value="remote">
+                  </label>
+                </div>
+                <div class="checkbox-cell">
+                  <label>
+                    <span data-en="Hybrid" data-es="Híbrido">Hybrid</span>
+                    <input type="checkbox" name="join_interest" value="hybrid">
+                  </label>
+                </div>
+              </div>
+              <div class="form-row checkbox-row">
+                <div class="checkbox-cell">
+                  <label>
+                    <span data-en="Full-time" data-es="Tiempo Completo">Full-time</span>
+                    <input type="checkbox" name="join_interest" value="full-time">
+                  </label>
+                </div>
+                <div class="checkbox-cell">
+                  <label>
+                    <span data-en="Part-time" data-es="Medio Tiempo">Part-time</span>
+                    <input type="checkbox" name="join_interest" value="part-time">
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-cell full-width">
+                <label data-en="Areas of Interest" data-es="Áreas de Interés">Areas of Interest</label>
+                <button type="button" id="join-areas-trigger" class="toggle-button" aria-expanded="false" aria-controls="join-areas-options">
+                  <span data-en="Select Areas" data-es="Seleccionar Áreas">Select Areas</span>
+                  <span class="arrow-down">▼</span>
+                </button>
+              </div>
+            </div>
+            <div id="join-areas-options" class="collapsible-content" style="display: none; grid-column: 1 / -1;">
+              <div class="form-row checkbox-row">
+                <div class="checkbox-cell">
+                  <label>
+                    <span data-en="IT Support" data-es="Soporte IT">IT Support</span>
+                    <input type="checkbox" name="join_area_interest" value="it_support">
+                  </label>
+                </div>
+                <div class="checkbox-cell">
+                  <label>
+                    <span data-en="Customer Service" data-es="Servicio al Cliente">Customer Service</span>
+                    <input type="checkbox" name="join_area_interest" value="customer_service">
+                  </label>
+                </div>
+              </div>
+              <div class="form-row checkbox-row">
+                <div class="checkbox-cell">
+                  <label>
+                    <span data-en="Sales" data-es="Ventas">Sales</span>
+                    <input type="checkbox" name="join_area_interest" value="sales">
+                  </label>
+                </div>
+                <div class="checkbox-cell">
+                  <label>
+                    <span data-en="Development" data-es="Desarrollo">Development</span>
+                    <input type="checkbox" name="join_area_interest" value="development">
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-cell" style="grid-column: span 2;">
+                <label for="join-comment" data-en="Comment" data-es="Comentario">Comment</label>
+                <textarea id="join-comment" rows="4" data-en="Tell us about yourself" data-es="Cuéntanos sobre ti" placeholder="Tell us about yourself" required></textarea>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="submit-button" data-en="Submit" data-es="Enviar">Submit</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Contact Modal -->
+    <div id="contact-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="contactModalTitle">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 id="contactModalTitle" data-en="Contact Us" data-es="Contáctenos">Contact Us</h3>
+          <button class="close-modal" data-close aria-label="Close">&times;</button>
+        </div>
+        <div class="modal-body">
+          <form id="contact-form">
+            <input type="text" name="website" id="honeypot-contact" class="honeypot" autocomplete="off">
+            <div class="form-row">
+              <div class="form-cell">
+                <label for="contact-name" data-en="Name" data-es="Nombre">Name</label>
+                <input type="text" id="contact-name" data-en="Enter your name" data-es="Ingrese su Nombre" placeholder="Enter your name" required>
+              </div>
+              <div class="form-cell">
+                <label for="contact-email" data-en="Email" data-es="Correo Electrónico">Email</label>
+                <input type="email" id="contact-email" data-en="Enter your email" data-es="Ingrese su correo electrónico" placeholder="Enter your email" required>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-cell">
+                <label for="contact-number" data-en="Contact Number" data-es="Número de Contacto">Contact Number</label>
+                <input type="tel" id="contact-number" data-en="Enter your contact number" data-es="Ingrese su número" placeholder="Enter your contact number" required>
+              </div>
+              <div class="form-cell">
+                <label for="contact-date" data-en="Preferred Date" data-es="Fecha Preferida">Preferred Date</label>
+                <input type="date" id="contact-date" required>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-cell">
+                <label for="contact-time" data-en="Preferred Time" data-es="Hora Preferida">Preferred Time</label>
+                <input type="time" id="contact-time" required>
+              </div>
+              <div class="form-cell">
+                <label for="contact-comments" data-en="Comments" data-es="Comentarios">Comments</label>
+                <textarea id="contact-comments" rows="4" data-en="What service are you interested in?" data-es="¿En qué servicio está interesado?" placeholder="What service are you interested in?" required></textarea>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="submit-button" data-en="Send" data-es="Enviar">Send</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
 
     <nav class="mobile-nav">
       <a href="index.html" class="mobile-nav-item" data-en="Home" data-es="Inicio"><i class="fas fa-home"></i><span>Home</span></a>
       <button class="mobile-nav-item" id="mobile-services-toggle" data-en="Services" data-es="Servicios"><i class="fas fa-bars"></i><span>Services</span></button>
-      <button class="mobile-nav-item" id="language-toggle-mobile">EN</button>
-      <button class="mobile-nav-item" id="theme-toggle-mobile" data-en="Light" data-es="Claro">Light</button>
+      <button class="mobile-nav-item" id="mobile-language-toggle">EN</button>
+      <button class="mobile-nav-item" id="mobile-theme-toggle" data-en="Light" data-es="Claro">Light</button>
       <button class="mobile-nav-item" data-modal="contact-modal" data-en="Chat" data-es="Chat" aria-label="Contact Us"><i class="fas fa-comment-alt"></i><span>Chat</span></button>
     </nav>
 
