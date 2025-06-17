@@ -330,6 +330,16 @@ footer {
   background-color: #7e69ab;
 }
 
+.submit-button:focus {
+  outline: 2px solid #333;
+  outline-offset: 2px;
+}
+
+.submit-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
 /* Dark Mode Overrides */
 body[data-theme="dark"] {
   background-color: #121212;
@@ -433,12 +443,61 @@ body[data-theme="dark"] .modal-content form {
     background-color: #e0e0e0;
 }
 
+/* Small dropdown overlay used for Employment Type and Areas of Interest */
+.dropdown-overlay {
+    position: absolute;
+    right: 0;
+    top: 100%;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    padding: 10px;
+    z-index: 1000;
+    border-radius: 4px;
+    min-width: 200px;
+}
+
+.dropdown-overlay label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.dropdown-overlay .done-btn {
+    margin-top: 10px;
+    padding: 5px 10px;
+    background-color: #ddd;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.dropdown-overlay .done-btn:hover {
+    background-color: #ccc;
+}
+
+body[data-theme="dark"] .dropdown-overlay {
+    background-color: #222;
+    border-color: #444;
+}
+
+body[data-theme="dark"] .dropdown-overlay .done-btn {
+    background-color: #555;
+}
+
+body[data-theme="dark"] .dropdown-overlay .done-btn:hover {
+    background-color: #666;
+}
+
 /* Ensure the modal form styling applies within the new section if needed */
 #join-form .form-row {
     /* Existing styles should cover this, but can be fine-tuned if necessary */
 }
 
-/* Dark Mode Form Input Contrast Improvements */
+/* ===========================================
+   Dark Mode Form Input Contrast Improvements
+ =========================================== */
+
 body[data-theme="dark"] .modal-body form .form-cell input,
 body[data-theme="dark"] .modal-body form .form-cell textarea {
   background-color: #2a2a2a; /* Slightly lighter than the form background */
@@ -449,4 +508,37 @@ body[data-theme="dark"] .modal-body form .form-cell textarea {
 body[data-theme="dark"] .modal-body form .form-cell input::placeholder,
 body[data-theme="dark"] .modal-body form .form-cell textarea::placeholder {
   color: #888; /* Lighter placeholder text */
+}
+
+/* ===========================================
+   Mobile Overrides (Responsive Design)
+ =========================================== */
+@media screen and (max-width: 768px) {
+  .mobile-nav {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    background: #fff;
+    justify-content: space-around;
+    padding: 0.5rem 0;
+    z-index: 3000;
+    width: 85%;
+    border-radius: 20px;
+  }
+
+  .mobile-nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .mobile-services-menu {
+    display: none;
+    position: fixed;
+    bottom: 60px;
+    left: 85px;
+    background: #fff;
+    z-index: 1001;
+  }
 }
