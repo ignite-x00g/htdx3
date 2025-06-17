@@ -279,8 +279,11 @@ footer {
 .modal-footer {
   display: flex;
   justify-content: flex-end;
+  align-items: center; /* Vertically center items if footer has extra height */
   padding: 1rem;
   border-top: 1px solid #eee;
+  width: 100%; /* Ensure footer spans full width */
+  box-sizing: border-box; /* Ensure padding doesn't add to width */
 }
 .submit-button {
   background-color: #9b87f5;
@@ -290,6 +293,9 @@ footer {
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s;
+  font-size: 1em; /* Ensure consistent font size */
+  min-width: 150px; /* Ensure a minimum width */
+  text-align: center; /* Ensure text is centered */
 }
 .submit-button:hover {
   background-color: #7e69ab;
