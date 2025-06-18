@@ -1,63 +1,22 @@
-/* Collapsible Checkbox List Styles */
-.collapsible-trigger {
-  background-color: #eee; /* Light grey background */
-  color: #333;
-  cursor: pointer;
-  padding: 10px 15px;
-  width: 100%;
-  border: 1px solid #ccc;
-  text-align: left;
-  font-size: 1em;
-  border-radius: 4px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 0; /* Remove default button margin if any */
-}
-.collapsible-trigger:hover {
-  background-color: #ddd;
-}
-.collapsible-content {
-  padding: 10px 15px;
-  border: 1px solid #ccc;
-  border-top: none;
-  border-radius: 0 0 4px 4px;
-  background-color: #f9f9f9;
-}
-.collapsible-content label {
-  display: block; /* Make each checkbox label take its own line */
-  margin-bottom: 5px;
-  font-weight: normal; /* Override potential label bolding from .form-cell label */
-}
-/* Dark mode considerations for collapsible */
-body[data-theme="dark"] .collapsible-trigger {
-  background-color: #2a2a2a;
-  color: #e0e0e0;
-  border-color: #444;
-}
-body[data-theme="dark"] .collapsible-trigger:hover {
-  background-color: #3a3a3a;
-}
-body[data-theme="dark"] .collapsible-content {
-  background-color: #222;
-  border-color: #444;
-}
-body[data-theme="dark"] .collapsible-content label {
-  color: #e0e0e0; /* Ensure label text is visible in dark mode */
+/* =========================================================
+   For screens ≥ 769px, hide mobile nav (redundant but safe)
+   ========================================================= */
+@media screen and (min-width: 769px) {
+  .mobile-nav,
+  .mobile-services-menu {
+    display: none;
+  }
 }
 
-/* Global Reset & Basic Body Styles */
+/* ==================================================================
+   Global Reset & Basic Body Styles
+   ================================================================== */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-/* Honeypot (Preserved from original) */
-.honeypot {
-  position: absolute !important;
-  left: -9999px !important;
-}
 
 body {
   font-family: Arial, sans-serif;
@@ -69,7 +28,7 @@ body {
 }
 
 /* ==================================================================
-   Header & Navigation (Desktop)
+   Header & Navigation
    ================================================================== */
 header {
   background-color: #9b87f5;
@@ -162,7 +121,8 @@ header nav a {
   text-align: center;
   padding: 1.5rem;
   transition: background-color 0.3s, color 0.3s, border-color 0.3s;
-  color: inherit; /* Inherit color from parent for better theme adaptability */
+
+  color: inherit;
 }
 
 .service-item h3 {
@@ -199,9 +159,45 @@ footer {
   margin-top: 2rem;
 }
 
-/* Modal Overlay & Content */
+
+/* ==================================================================
+   Floating Icons
+   ================================================================== */
+.floating-icons {
+  position: fixed;
+  bottom: 110px;
+  right: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  z-index: 2000;
+}
+
+.floating-icon {
+  background-color: #9b87f5;
+  border: none;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.floating-icon:hover {
+  background-color: #7e69ab;
+  transform: scale(1.1);
+}
+
+/* ==================================================================
+   Modal Overlay & Content
+   ================================================================== */
 .modal-overlay {
-  display: none; /* Hidden by default, shown with JS */
+  display: none; /* Hidden by default */
   position: fixed;
   inset: 0; /* Cover the whole screen */
   background-color: rgba(0,0,0,0.7); /* Semi-transparent black background */
@@ -266,12 +262,18 @@ footer {
   overflow-y: auto; /* Scroll if content overflows */
 }
 
-/* Use CSS Grid for a two-column layout in forms */
+/* Use CSS Grid for a two-column layout on big screens */
+
 .modal-body form {
   display: grid;
   grid-template-columns: 1fr 1fr; /* Two equal columns */
   gap: 1rem; /* Space between form cells */
 }
+
+.form-row { /* This class is used in new HTML structure */
+    display: contents; /* Allows form-row to act as a direct child of grid for column layout */
+}
+
 
 .form-row { /* This class is used in new HTML structure */
     display: contents; /* Allows form-row to act as a direct child of grid for column layout */
@@ -301,18 +303,18 @@ footer {
   grid-column: 1 / -1; /* Span across both columns */
 }
 
+.form-cell.full-width { /* Added for elements spanning full width */
+  grid-column: 1 / -1;
+}
 
 /* ==================================================================
-   Modal Footer: Submit Button
+   Modal Footer: Submit Button Aligned Right
    ================================================================== */
 .modal-footer {
   display: flex;
-  justify-content: flex-end; /* Align button to the right */
-  align-items: center;
+  justify-content: flex-end;
   padding: 1rem;
-  border-top: 1px solid #eee; /* Separator line */
-  width: 100%;
-  box-sizing: border-box;
+  border-top: 1px solid #eee;
 }
 
 .submit-button {
@@ -323,9 +325,6 @@ footer {
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s;
-  font-size: 1em;
-  min-width: 150px;
-  text-align: center;
 }
 
 .submit-button:hover {
@@ -352,6 +351,12 @@ body[data-theme="dark"] .toggle-container button {
   background-color: #333;
   color: #e0e0e0;
 }
+
+body[data-theme="dark"] .toggle-container button {
+  background-color: #333; /* Example dark mode button */
+  color: #e0e0e0;
+}
+
 body[data-theme="dark"] .toggle-container button:hover {
   background-color: #555;
 }
@@ -372,42 +377,48 @@ body[data-theme="dark"] .service-item {
   border-color: #bb86fc; /* Use theme color for border */
   color: #e0e0e0;
 }
+
 body[data-theme="dark"] .service-item h3 {
   color: #bb86fc;
 }
+
 body[data-theme="dark"] .service-item .btn {
   background-color: #bb86fc;
   color: #121212; /* Dark text on light button */
 }
 body[data-theme="dark"] .service-item .btn:hover {
-  background-color: #9850f5;
+  background-color: #9850f5; /* Darker shade on hover */
 }
-
 
 body[data-theme="dark"] footer {
   background-color: #1c1c1c;
 }
 
+body[data-theme="dark"] .floating-icon {
+  background-color: #bb86fc;
+  color: #121212; /* Dark text for contrast */
+}
+body[data-theme="dark"] .floating-icon:hover {
+  background-color: #9850f5;
+}
+
 body[data-theme="dark"] .modal-content {
-  background-color: #1e1e1e; /* Dark modal background */
+  background-color: #1e1e1e; /* Darker modal background */
   color: #e0e0e0;
 }
 
 body[data-theme="dark"] .modal-header {
   background-color: #333; /* Darker modal header */
 }
-body[data-theme="dark"] .close-modal {
+
+  body[data-theme="dark"] .close-modal {
   color: #e0e0e0;
 }
 body[data-theme="dark"] .close-modal:hover {
   color: #bbb;
 }
 
-body[data-theme="dark"] .modal-body {
-  background-color: #1e1e1e;
-}
-
-body[data-theme="dark"] .modal-body form .form-cell label {
+  body[data-theme="dark"] .modal-body form .form-cell label {
   color: #e0e0e0;
 }
 
@@ -425,7 +436,6 @@ body[data-theme="dark"] .modal-body form .form-cell textarea::placeholder {
 }
 
 body[data-theme="dark"] .modal-footer {
-  background-color: #1e1e1e;
   border-top-color: #333;
 }
 
@@ -435,150 +445,4 @@ body[data-theme="dark"] .submit-button {
 }
 body[data-theme="dark"] .submit-button:hover {
   background-color: #9850f5;
-}
-
-
-/* ==================================================================
-   Collapsible Checkbox List Styles (Preserved from original)
-   ================================================================== */
-.collapsible-trigger {
-  background-color: #eee;
-  color: #333;
-  cursor: pointer;
-  padding: 10px 15px;
-  width: 100%;
-  border: 1px solid #ccc;
-  text-align: left;
-  font-size: 1em;
-  border-radius: 4px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 0; /* Adjusted from original */
-}
-.collapsible-trigger:hover {
-  background-color: #ddd;
-}
-.collapsible-content {
-  padding: 10px 15px;
-  border: 1px solid #ccc;
-  border-top: none;
-  border-radius: 0 0 4px 4px;
-  background-color: #f9f9f9;
-}
-.collapsible-content label { /* General label styling within collapsible */
-  display: block;
-  margin-bottom: 5px;
-  font-weight: normal; /* Overridden by .form-cell label if nested, which is fine */
-}
-body[data-theme="dark"] .collapsible-trigger {
-  background-color: #2a2a2a;
-  color: #e0e0e0;
-  border-color: #444;
-}
-body[data-theme="dark"] .collapsible-trigger:hover {
-  background-color: #3a3a3a;
-}
-body[data-theme="dark"] .collapsible-content {
-  background-color: #222;
-  border-color: #444;
-}
-body[data-theme="dark"] .collapsible-content label {
-  color: #e0e0e0;
-}
-
-/* Styles for checkbox layout within collapsible (Preserved from original) */
-#employment-type-checkboxes { /* This ID might be specific, keep if JS targets it */
-  padding: 10px 15px; /* Original had padding here */
-}
-.collapsible-checkbox-group .form-row.checkbox-row { /* This structure might be used by JS */
-  display: flex;
-  justify-content: space-between;
-  gap: 10px;
-  margin-bottom: 8px;
-}
-.checkbox-cell { /* Assuming this is part of the collapsible structure */
-  display: flex;
-  align-items: center;
-  flex: 1;
-}
-.checkbox-cell label { /* More specific label styling for checkboxes */
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-  width: 100%;
-  font-weight: normal; /* Ensure it's not bold like other form labels */
-}
-.checkbox-cell input[type="checkbox"] {
-  margin-left: 10px; /* Original had margin-left */
-  order: 1; /* Pushes checkbox to the right of the label text */
-  flex-shrink: 0;
-}
-.checkbox-cell label span { /* To ensure text takes available space */
-  flex-grow: 1;
-}
-
-
-/* Toggle Button (Preserved from original - might be for other dropdowns) */
-.toggle-button {
-    background-color: #f0f0f0; /* Current background */
-    color: #333; /* Explicitly set text color to match input text */
-    border: 1px solid #ccc; /* Current border */
-    padding: 0.5rem; /* Match general input/textarea padding */
-    cursor: pointer;
-    border-radius: 5px; /* Match general input/textarea border-radius */
-    font-size: 1em; /* Match general font size (assuming inputs are 1em) */
-    margin-top: 5px;
-    width: 100%;
-    text-align: left;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    line-height: 1.6; /* Match body line-height for consistency if needed */
-}
-
-/* Original .toggle-button:hover can be kept for light mode */
-.toggle-button:hover {
-  background-color: #e0e0e0;
-}
-.toggle-button .arrow-down {
-  margin-left: 8px;
-  font-size: 0.9em;
-}
-body[data-theme="dark"] .toggle-button {
-  background-color: #2a2a2a;
-  border-color: #444;
-  color: #e0e0e0;
-}
-body[data-theme="dark"] .toggle-button:hover {
-  background-color: #3a3a3a;
-}
-
-/* Dark mode adjustments for these buttons */
-body[data-theme="dark"] .toggle-button {
-  background-color: #2a2a2a;
-  border-color: #444;
-  color: #e0e0e0;
-}
-
-body[data-theme="dark"] .toggle-button:hover {
-  background-color: #3a3a3a; /* Darker hover */
-}
-
-/* Ensure the modal form styling applies within the new section if needed */
-#join-form .form-row {
-    /* Existing styles should cover this, but can be fine-tuned if necessary */
-}
-
-/* Dark Mode Form Input Contrast Improvements */
-body[data-theme="dark"] .modal-body form .form-cell input,
-body[data-theme="dark"] .modal-body form .form-cell textarea {
-  background-color: #2a2a2a; /* Slightly lighter than the form background */
-  border-color: #444; /* A visible border color */
-  color: #e0e0e0; /* Ensure text is light */
-}
-
-body[data-theme="dark"] .modal-body form .form-cell input::placeholder,
-body[data-theme="dark"] .modal-body form .form-cell textarea::placeholder {
-  color: #888; /* Lighter placeholder text */
 }
