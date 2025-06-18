@@ -125,8 +125,47 @@
   }
 
   .modal-body form {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr; /* Single column layout for form elements */
   }
+
+  /* Join Us Form Extensions - Small Screen Adjustments */
+  .dynamic-item input[type="text"],
+  .dynamic-item input[type="month"],
+  .dynamic-item textarea {
+    flex-basis: 100%; /* Ensure they take full width and stack */
+    min-width: 0; /* Reset min-width if it causes issues */
+  }
+
+  .experience-item input[type="month"] {
+      flex-basis: 100%; /* Stack date inputs */
+  }
+
+  .remove-btn {
+    margin-left: 0; /* Reset margin for stacking layout */
+    margin-top: 10px; /* Add some space if it wraps below */
+    width: 100%; /* Make remove button full width for easier tapping */
+    text-align: center;
+  }
+
+  .dynamic-item {
+    align-items: stretch; /* Ensure items stretch if some are taller */
+  }
+
+  .collapsible-toggle {
+    padding: 10px 12px; /* Adjust padding slightly for smaller screens */
+  }
+  .collapsible-toggle span { /* Ensure text doesn't get too small or too large */
+      font-size: 0.95em;
+  }
+
+  .collapsible-content {
+      padding: 10px;
+  }
+   .collapsible-content label span { /* Text next to checkbox */
+      font-size: 0.9em;
+  }
+
+} /* End of @media screen and (max-width: 768px) */
 
 /* =========================================================
    For screens ≥ 769px, hide mobile nav (redundant but safe)

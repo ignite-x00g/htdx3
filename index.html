@@ -139,55 +139,149 @@
           <!-- Row 2 -->
           <div class="form-row">
             <div class="form-cell">
-              <label for="join-contact" data-en="Contact Number" data-es="Número de Contacto">Contact Number</label>
+              <label for="join-contact" data-en="Contact | Phone Number" data-es="Contacto | Número de Teléfono">Contact | Phone Number</label>
               <input
                 type="tel"
                 id="join-contact"
-                placeholder="Enter your contact number / Ingrese su número"
-                required>
-            </div>
-            <div class="form-cell">
-              <label for="join-date" data-en="Date" data-es="Fecha">Date</label>
-              <input
-                type="date"
-                id="join-date"
+                placeholder="Enter your phone number / Ingrese su número de teléfono"
                 required>
             </div>
           </div>
-          <!-- Row 3 -->
-          <div class="form-row">
-            <div class="form-cell">
-              <label for="join-time" data-en="Time" data-es="Hora">Time</label>
-              <input
-                type="time"
-                id="join-time"
-                required>
+
+          <!-- Experience Section -->
+          <div class="form-row dynamic-section" id="experience-section">
+            <label data-en="Experience" data-es="Experiencia">Experience</label>
+            <div id="experience-fields-container">
+              <div class="dynamic-item experience-item">
+                <label for="exp-role-1" data-en="Describe your Roles" data-es="Describe tus Funciones">Describe your Roles</label>
+                <textarea id="exp-role-1" name="exp-role[]" placeholder="Describe your role... / Describe tu función..." rows="3"></textarea>
+                <label for="exp-date-from-1" data-en="Date from" data-es="Fecha desde">Date from</label>
+                <input type="month" id="exp-date-from-1" name="exp-date-from[]">
+                <label for="exp-date-to-1" data-en="Date to" data-es="Fecha hasta">Date to</label>
+                <input type="month" id="exp-date-to-1" name="exp-date-to[]">
+                <button type="button" class="remove-btn" data-remove="experience-item">-</button>
+              </div>
             </div>
-            <div class="form-cell">
-              <label for="join-resume" data-en="Upload Your Resume" data-es="Sube tu Currículum">Upload Your Resume</label>
-              <input
-                type="file"
-                id="join-resume"
-                accept=".pdf,.doc,.docx"
-                required>
+            <button type="button" class="add-btn" data-add="experience-item" data-en="+Add Experience" data-es="+Añadir Experiencia">+Add Experience</button>
+          </div>
+
+          <!-- Skills Section -->
+          <div class="form-row dynamic-section" id="skills-section">
+            <label data-en="Skills" data-es="Habilidades">Skills</label>
+            <div id="skills-fields-container">
+              <div class="dynamic-item skill-item">
+                <input type="text" name="skill[]" placeholder="Enter a skill / Ingresa una habilidad">
+                <button type="button" class="remove-btn" data-remove="skill-item">-</button>
+              </div>
+            </div>
+            <button type="button" class="add-btn" data-add="skill-item" data-en="+Add Skill" data-es="+Añadir Habilidad">+Add Skill</button>
+          </div>
+
+          <!-- Education Section -->
+          <div class="form-row dynamic-section" id="education-section">
+            <label data-en="Education" data-es="Educación">Education</label>
+            <div id="education-fields-container">
+              <div class="dynamic-item education-item">
+                <input type="text" name="education[]" placeholder="Enter degree or institution / Ingresa título o institución">
+                <button type="button" class="remove-btn" data-remove="education-item">-</button>
+              </div>
+            </div>
+            <button type="button" class="add-btn" data-add="education-item" data-en="+Add Education" data-es="+Añadir Educación">+Add Education</button>
+          </div>
+
+          <!-- Continued Education Section -->
+          <div class="form-row dynamic-section" id="continued-education-section">
+            <label data-en="Continued Education" data-es="Educación Continua">Continued Education</label>
+            <div id="continued-education-fields-container">
+              <div class="dynamic-item continued-education-item">
+                <input type="text" name="continued-education[]" placeholder="Enter course or program / Ingresa curso o programa">
+                <button type="button" class="remove-btn" data-remove="continued-education-item">-</button>
+              </div>
+            </div>
+            <button type="button" class="add-btn" data-add="continued-education-item" data-en="+Add Continued Education" data-es="+Añadir Educación Continua">+Add Continued Education</button>
+          </div>
+
+          <!-- Certification Section -->
+          <div class="form-row dynamic-section" id="certification-section">
+            <label data-en="Certification" data-es="Certificación">Certification</label>
+            <div id="certification-fields-container">
+              <div class="dynamic-item certification-item">
+                <input type="text" name="certification[]" placeholder="Enter certification / Ingresa certificación">
+                <button type="button" class="remove-btn" data-remove="certification-item">-</button>
+              </div>
+            </div>
+            <button type="button" class="add-btn" data-add="certification-item" data-en="+Add Certification" data-es="+Añadir Certificación">+Add Certification</button>
+          </div>
+
+          <!-- Hobbies Section -->
+          <div class="form-row dynamic-section" id="hobbies-section">
+            <label data-en="Hobbies" data-es="Pasatiempos">Hobbies</label>
+            <div id="hobbies-fields-container">
+              <div class="dynamic-item hobby-item">
+                <input type="text" name="hobby[]" placeholder="Enter a hobby / Ingresa un pasatiempo">
+                <button type="button" class="remove-btn" data-remove="hobby-item">-</button>
+              </div>
+            </div>
+            <button type="button" class="add-btn" data-add="hobby-item" data-en="+Add Hobby" data-es="+Añadir Pasatiempo">+Add Hobby</button>
+          </div>
+
+          <!-- Services Interest Section -->
+          <div class="form-row collapsible-section" id="services-interest-section">
+            <button type="button" class="collapsible-toggle" aria-expanded="false" aria-controls="services-interest-content">
+              <span data-en="What Services are you interested in?" data-es="¿Qué Servicios te Interesan?">What Services are you interested in?</span> <i class="fas fa-chevron-down"></i>
+            </button>
+            <div id="services-interest-content" class="collapsible-content">
+              <label><input type="checkbox" name="interested_services[]" value="business_operations"> <span data-en="Business Operations" data-es="Operaciones Empresariales">Business Operations</span></label>
+              <label><input type="checkbox" name="interested_services[]" value="contact_center"> <span data-en="Contact Center" data-es="Centro de Contacto">Contact Center</span></label>
+              <label><input type="checkbox" name="interested_services[]" value="it_support"> <span data-en="IT Support" data-es="Soporte IT">IT Support</span></label>
+              <label><input type="checkbox" name="interested_services[]" value="professionals"> <span data-en="Professionals" data-es="Profesionales">Professionals</span></label>
+              <button type="button" class="collapsible-done-btn" data-en="DONE" data-es="HECHO">DONE</button>
             </div>
           </div>
-          <!-- Row 4 -->
+
+          <!-- Work Mode Section -->
+          <div class="form-row collapsible-section" id="work-mode-section">
+            <button type="button" class="collapsible-toggle" aria-expanded="false" aria-controls="work-mode-content">
+              <span data-en="Interested in Work Mode" data-es="Interesado en Modalidad de Trabajo">Interested in Work Mode</span> <i class="fas fa-chevron-down"></i>
+            </button>
+            <div id="work-mode-content" class="collapsible-content">
+              <label><input type="checkbox" name="work_mode[]" value="remote"> <span data-en="Remote" data-es="Remoto">Remote</span></label>
+              <label><input type="checkbox" name="work_mode[]" value="freelance"> <span data-en="Freelance" data-es="Freelance">Freelance</span></label>
+              <label><input type="checkbox" name="work_mode[]" value="on_site"> <span data-en="On-Site" data-es="Presencial">On-Site</span></label>
+              <label><input type="checkbox" name="work_mode[]" value="hybrid"> <span data-en="Hybrid" data-es="Híbrido">Hybrid</span></label>
+              <button type="button" class="collapsible-done-btn" data-en="DONE" data-es="HECHO">DONE</button>
+            </div>
+          </div>
+
+          <!-- Contract Type Section -->
+          <div class="form-row collapsible-section" id="contract-type-section">
+            <button type="button" class="collapsible-toggle" aria-expanded="false" aria-controls="contract-type-content">
+              <span data-en="Would like my contract as:" data-es="Me gustaría mi contrato como:">Would like my contract as:</span> <i class="fas fa-chevron-down"></i>
+            </button>
+            <div id="contract-type-content" class="collapsible-content">
+              <label><input type="checkbox" name="contract_type[]" value="full_time"> <span data-en="Full-time contract" data-es="Contrato a tiempo completo">Full-time contract</span></label>
+              <label><input type="checkbox" name="contract_type[]" value="part_time"> <span data-en="Part-time contract" data-es="Contrato a tiempo parcial">Part-time contract</span></label>
+              <label><input type="checkbox" name="contract_type[]" value="freelance_contract"> <span data-en="Freelance contract" data-es="Contrato freelance">Freelance contract</span></label>
+              <label><input type="checkbox" name="contract_type[]" value="executive"> <span data-en="Executive contract" data-es="Contrato ejecutivo">Executive contract</span></label>
+              <label><input type="checkbox" name="contract_type[]" value="fixed_term"> <span data-en="Fixed-term contract" data-es="Contrato a plazo fijo">Fixed-term contract</span></label>
+              <label><input type="checkbox" name="contract_type[]" value="seasonal"> <span data-en="Seasonal contract" data-es="Contrato de temporada">Seasonal contract</span></label>
+              <label><input type="checkbox" name="contract_type[]" value="project_based"> <span data-en="Project Base contract" data-es="Contrato por proyecto">Project Base contract</span></label>
+              <label><input type="checkbox" name="contract_type[]" value="startup"> <span data-en="Start-Up" data-es="Start-Up">Start-Up</span></label>
+              <label><input type="checkbox" name="contract_type[]" value="non_profit"> <span data-en="Non-Profit" data-es="Sin fines de lucro">Non-Profit</span></label>
+              <button type="button" class="collapsible-done-btn" data-en="DONE" data-es="HECHO">DONE</button>
+            </div>
+          </div>
+
+          <!-- Row 4 (Comment Section) -->
           <div class="form-row">
             <div class="form-cell">
-              <label for="join-cover" data-en="Upload Your Cover Letter" data-es="Sube tu Carta de Presentación">Upload Your Cover Letter</label>
-              <input
-                type="file"
-                id="join-cover"
-                accept=".pdf,.doc,.docx"
-                required>
-            </div>
-            <div class="form-cell">
-              <label for="join-comment" data-en="Comment" data-es="Comentario">Comment</label>
+              <label for="join-comment" data-en="Tell us about Yourself" data-es="Cuéntanos sobre ti">Tell us about Yourself</label>
               <textarea
                 id="join-comment"
                 rows="4"
                 placeholder="Tell us about yourself"
+                data-en="Tell us about yourself"
+                data-es="Cuéntanos sobre ti"
                 required
               ></textarea>
             </div>
