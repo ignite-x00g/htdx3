@@ -1,13 +1,11 @@
 document.addEventListener('DOMContentLoaded', function() {
   const bodyElement = document.body;
-
   // ================================================================
   // 1) THEME TOGGLE (Desktop & Mobile)
   // ================================================================
   const themeToggleMobile = document.getElementById('mobile-theme-toggle');
   const themeToggleDesktop = document.getElementById('theme-toggle-desktop');
   let currentTheme = localStorage.getItem('theme') || 'light';
-
   bodyElement.setAttribute('data-theme', currentTheme);
 
   function setupThemeButton(button) {
@@ -78,7 +76,6 @@ document.addEventListener('DOMContentLoaded', function() {
   const modalOverlays = document.querySelectorAll('.modal-overlay');
   const closeModalButtons = document.querySelectorAll('[data-close]');
   const floatingIcons = document.querySelectorAll('.floating-icon');
-
   floatingIcons.forEach((icon) => {
     icon.addEventListener('click', function() {
       const modalId = icon.getAttribute('data-modal');
@@ -185,4 +182,5 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
   }
+
 });
