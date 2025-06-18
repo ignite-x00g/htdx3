@@ -1,88 +1,41 @@
-document.addEventListener("DOMContentLoaded", () => {
-
-  // ================================================================
-  // LANGUAGE TOGGLE (Desktop & Mobile)
-  // =================================================================
-
-  let currentLanguage = localStorage.getItem("language") || "en";
-  const langToggleDesktop = document.getElementById("language-toggle-desktop");
-  const langToggleMobile  = document.getElementById("language-toggle-mobile");
-
-  function updateLanguage(lang) {
-    const translatableElements = document.querySelectorAll("[data-en]");
-    translatableElements.forEach((el) => {
-      el.textContent = (lang === "en")
-        ? el.getAttribute("data-en")
-        : el.getAttribute("data-es");
-    });
-  }
-
-  // Initialize language on load
-  document.body.setAttribute("lang", currentLanguage);
-  updateLanguage(currentLanguage);
-
-  // Set initial button labels
-  function setLanguageButtonLabels() {
-    if (langToggleDesktop) {
-      langToggleDesktop.textContent = (currentLanguage === "en") ? "ES" : "EN";
-    }
-    if (langToggleMobile) {
-      const mobileSpan = langToggleMobile.querySelector("span") || langToggleMobile;
-      mobileSpan.textContent = (currentLanguage === "en") ? "ES" : "EN";
-    }
-  }
-  setLanguageButtonLabels();
-
-  function toggleLanguage() {
-    currentLanguage = (currentLanguage === "en") ? "es" : "en";
-    localStorage.setItem("language", currentLanguage);
-    document.body.setAttribute("lang", currentLanguage);
-    updateLanguage(currentLanguage);
-    setLanguageButtonLabels();
-  }
-
-  // Event listeners for language toggles
-  if (langToggleDesktop) {
-    langToggleDesktop.addEventListener("click", toggleLanguage);
-  }
-  if (langToggleMobile) {
-    langToggleMobile.addEventListener("click", toggleLanguage);
-  }
-
-  // ================================================================
-  // THEME TOGGLE (Desktop & Mobile)
-  // =================================================================
-
-  const themeToggleDesktop = document.getElementById("theme-toggle-desktop");
-  const themeToggleMobile  = document.getElementById("theme-toggle-mobile");
+document.addEventListener('DOMContentLoaded', function() {
   const bodyElement = document.body;
-  const savedTheme = localStorage.getItem("theme") || "light";
+  // ================================================================
+  // 1) THEME TOGGLE (Desktop & Mobile)
+  // ================================================================
+  const themeToggleMobile = document.getElementById('mobile-theme-toggle');
+  const themeToggleDesktop = document.getElementById('theme-toggle-desktop');
+  let currentTheme = localStorage.getItem('theme') || 'light';
 
   // Apply the saved theme on load
-  bodyElement.setAttribute("data-theme", savedTheme);
+  bodyElement.setAttribute('data-theme', currentTheme);
 
-  // Helper to set up a single theme button
-  function setupThemeToggle(button) {
+  // Helper to set up a single theme button's text and event listener
+  function setupThemeButton(button) {
     if (!button) return;
 
-    button.textContent = (savedTheme === "light") ? "Dark" : "Light";
+    // Set initial button text
+    button.textContent = (bodyElement.getAttribute('data-theme') === 'light') ? 'Dark' : 'Light';
 
-    button.addEventListener("click", () => {
-      const currentTheme = bodyElement.getAttribute("data-theme");
-      if (currentTheme === "light") {
-        bodyElement.setAttribute("data-theme", "dark");
-        button.textContent = "Light";
-        localStorage.setItem("theme", "dark");
-      } else {
-        bodyElement.setAttribute("data-theme", "light");
-        button.textContent = "Dark";
-        localStorage.setItem("theme", "light");
+    // Add event listener
+    button.addEventListener('click', function() {
+      currentTheme = bodyElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+      bodyElement.setAttribute('data-theme', currentTheme);
+      localStorage.setItem('theme', currentTheme);
+      // Update text for this button
+      this.textContent = (currentTheme === 'light') ? 'Dark' : 'Light';
+      // Update text for the other button if it exists
+      if (this === themeToggleMobile && themeToggleDesktop) {
+        themeToggleDesktop.textContent = (currentTheme === 'light') ? 'Dark' : 'Light';
+      } else if (this === themeToggleDesktop && themeToggleMobile) {
+        themeToggleMobile.textContent = (currentTheme === 'light') ? 'Dark' : 'Light';
       }
     });
   }
 
-  setupThemeToggle(themeToggleDesktop);
-  setupThemeToggle(themeToggleMobile);
+  // Initialize both theme toggles
+  setupThemeButton(themeToggleMobile);
+  setupThemeButton(themeToggleDesktop);
 
   // ================================================================
   // Right-Side Main Menu: Open/Close
@@ -120,49 +73,47 @@ document.addEventListener("DOMContentLoaded", () => {
   //     }
   //   });
   // }
-
   // ================================================================
-  // Modals (Join Us & Contact Us)
-  // =================================================================
+  // 3) MODAL FUNCTIONALITY (Join Us & Contact Us)
+  // ================================================================
   const modalOverlays = document.querySelectorAll('.modal-overlay');
   const closeModalButtons = document.querySelectorAll('[data-close]');
   const floatingIcons = document.querySelectorAll('.floating-icon-tailwind');
 
-  // Open modals
-  floatingIcons.forEach(icon => {
-    icon.addEventListener('click', () => {
+  floatingIcons.forEach((icon) => {
+    icon.addEventListener('click', function() {
       const modalId = icon.getAttribute('data-modal');
-      const targetModal = document.getElementById(modalId);
-      if (targetModal) {
-        targetModal.classList.add('active');
+      const modalElement = document.getElementById(modalId);
+      if (modalElement) {
+        modalElement.classList.add('active');
+        modalElement.focus(); // For accessibility, focus on the modal
       }
     });
   });
 
-  // Close modals via close button
-  closeModalButtons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      const parentModal = btn.closest('.modal-overlay');
-      if (parentModal) {
-        parentModal.classList.remove('active');
+  closeModalButtons.forEach((btn) => {
+    btn.addEventListener('click', function() {
+      const parentOverlay = btn.closest('.modal-overlay');
+      if (parentOverlay) {
+        parentOverlay.classList.remove('active');
       }
     });
   });
 
-  // Close modal by clicking outside or pressing ESC
-  modalOverlays.forEach(overlay => {
-    overlay.addEventListener('click', (e) => {
-      if (e.target === overlay) {
+  modalOverlays.forEach((overlay) => {
+    overlay.addEventListener('click', function(e) {
+      if (e.target === overlay) { // Clicked on the overlay itself
         overlay.classList.remove('active');
       }
     });
-    overlay.addEventListener('keydown', (e) => {
+    // Add ESC key listener to close modals
+    overlay.addEventListener('keydown', function(e) {
       if (e.key === 'Escape') {
         overlay.classList.remove('active');
       }
     });
   });
-  
+
   // ================================================================
   // Mobile Services Menu Toggle
   // =================================================================
@@ -215,74 +166,28 @@ document.addEventListener("DOMContentLoaded", () => {
   // ================================================================
   // Employment Type Toggle for Join Us Form
   // ================================================================
-  const employmentTypeToggle = document.getElementById('employment-type-toggle');
-  const employmentTypeCheckboxes = document.getElementById('employment-type-checkboxes');
+  const servicesToggleMobile = document.getElementById('mobile-services-toggle');
+  const mobileServicesMenu = document.getElementById('mobile-services-menu');
 
-  if (employmentTypeToggle && employmentTypeCheckboxes) {
-    employmentTypeToggle.addEventListener('click', () => {
-      const isExpanded = employmentTypeToggle.getAttribute('aria-expanded') === 'true';
-      employmentTypeCheckboxes.style.display = isExpanded ? 'none' : 'block'; // Or 'grid' if it's a grid container
-      employmentTypeToggle.setAttribute('aria-expanded', !isExpanded);
-
-      // Update button text (span inside the button)
-      const buttonTextSpan = employmentTypeToggle.querySelector('span');
-      if (buttonTextSpan) {
-        if (!isExpanded) {
-          buttonTextSpan.setAttribute('data-en', 'Hide Options');
-          buttonTextSpan.setAttribute('data-es', 'Ocultar Opciones');
-        } else {
-          buttonTextSpan.setAttribute('data-en', 'Show Options');
-          buttonTextSpan.setAttribute('data-es', 'Mostrar Opciones');
-        }
-        // Update text based on current language
-        const currentLang = document.body.getAttribute('lang') || 'en';
-        buttonTextSpan.textContent = buttonTextSpan.getAttribute(currentLang === 'en' ? 'data-en' : 'data-es');
-      }
+  if (servicesToggleMobile && mobileServicesMenu) {
+    servicesToggleMobile.addEventListener('click', function() {
+      mobileServicesMenu.classList.toggle('active');
     });
-
-    // Ensure initial button text is correct based on language (if Show Options is default)
-    const initialButtonTextSpan = employmentTypeToggle.querySelector('span');
-    if (initialButtonTextSpan) {
-        const currentLang = document.body.getAttribute('lang') || 'en';
-        initialButtonTextSpan.textContent = initialButtonTextSpan.getAttribute(currentLang === 'en' ? 'data-en' : 'data-es');
-    }
   }
 
-  // =======================================================================================
-  // Sanitize input function Form Submissions: Alert + Reset + Input Sanitization
-  // =======================================================================================
-  function sanitizeInput(input) {
-    if (typeof input !== 'string') {
-      // Handle non-string inputs, e.g., by returning them as is or an empty string
-      // For form inputs, they are typically strings, but good to be safe.
-      return '';
-    }
-    const output = input.replace(/</g, "&lt;")
-                        .replace(/>/g, "&gt;")
-                        .replace(/&/g, "&amp;")
-                        .replace(/"/g, "&quot;")
-                        .replace(/'/g, "&#x27;") // Alternatively, use &#39;
-                        // .replace(/\//g, "&#x2F;") // Forward slash, less critical but sometimes included
-                        .trim();
-    return output;
-  }
-
-  // Join Us Form
+  // ================================================================
+  // 5) FORM SUBMISSIONS (Alert + Reset + Close Modal)
+  // ================================================================
   const joinForm = document.getElementById('join-form');
   if (joinForm) {
     joinForm.addEventListener('submit', (e) => {
       e.preventDefault();
-
-      const honey = document.getElementById('honeypot-join');
-      if (honey && honey.value) {
-        alert('Submission blocked.');
-        return;
-      }
-
-      if (typeof grecaptcha === 'undefined' || typeof grecaptcha.execute === 'undefined') {
-          console.error('ReCAPTCHA not loaded yet.');
-          alert('ReCAPTCHA is not ready. Please try again in a moment.');
-          return;
+      // Simple alert, replace with actual submission logic if needed
+      alert(currentLanguage === 'en' ? 'Thank you for joining us! We have received your details.' : '¡Gracias por unirte! Hemos recibido tus datos.');
+      joinForm.reset();
+      const joinModal = document.getElementById('join-modal');
+      if (joinModal) {
+        joinModal.classList.remove('active');
       }
       grecaptcha.ready(() => {
         grecaptcha.execute('6LfAOV0rAAAAAPBGgn2swZWj5SjANoQ4rUH6XIMz', { action: 'join_us_submit' }).then((token) => {
@@ -337,74 +242,22 @@ document.addEventListener("DOMContentLoaded", () => {
           alert("Error with reCAPTCHA. Please try again.");
         });
       });
-
     });
   }
 
-  // Contact Us Form
   const contactForm = document.getElementById('contact-form');
   if (contactForm) {
     contactForm.addEventListener('submit', (e) => {
       e.preventDefault();
-
-      const honey = document.getElementById('honeypot-contact');
-      if (honey && honey.value) {
-        alert('Submission blocked.');
-        return;
+      // Simple alert, replace with actual submission logic if needed
+      alert(currentLanguage === 'en' ? 'Thank you for contacting us! We will get back to you soon.' : '¡Gracias por contactarnos! Nos pondremos en contacto contigo pronto.');
+      contactForm.reset();
+      const contactModal = document.getElementById('contact-modal');
+      if (contactModal) {
+        contactModal.classList.remove('active');
       }
-      if (typeof grecaptcha === 'undefined' || typeof grecaptcha.execute === 'undefined') {
-          console.error('ReCAPTCHA not loaded yet.');
-          alert('ReCAPTCHA is not ready. Please try again in a moment.');
-          return;
-      }
-      grecaptcha.ready(() => {
-        grecaptcha.execute('6LfAOV0rAAAAAPBGgn2swZWj5SjANoQ4rUH6XIMz', { action: 'contact_us_submit' }).then((token) => {
-          console.log('Contact Us ReCAPTCHA token:', token);
-
-          const name = sanitizeInput(document.getElementById("contact-name").value);
-          const email = sanitizeInput(document.getElementById("contact-email").value);
-          const contactNumber = sanitizeInput(document.getElementById("contact-number").value);
-          const preferredDate = document.getElementById("contact-date").value;
-          const preferredTime = document.getElementById("contact-time").value;
-          const comments = sanitizeInput(document.getElementById("contact-comments").value);
-
-          const formData = new FormData();
-          formData.append('name', name);
-          formData.append('email', email);
-          formData.append('contactNumber', contactNumber);
-          formData.append('preferredDate', preferredDate);
-          formData.append('preferredTime', preferredTime);
-          formData.append('comments', comments);
-          formData.append('g-recaptcha-response', token);
-
-          console.log("Submitting Contact Us Form Data:", { name, email, contactNumber, preferredDate, preferredTime, comments }); // Token sent, not logged here
-
-          fetch('https://contact.gabrieloor-cv1.workers.dev/', {
-            method: 'POST',
-            body: formData
-          })
-          .then(response => response.json())
-          .then(data => {
-            if (data.success) {
-              alert('Form submitted successfully! Message: ' + data.message);
-              contactForm.reset();
-              document.getElementById('contact-modal').classList.remove('active');
-            } else {
-              alert('Submission failed: ' + (data.message || 'Unknown error') + (data.details ? ' Details: ' + JSON.stringify(data.details) : ''));
-            }
-          })
-          .catch(error => {
-            console.error('Error submitting Contact Us form:', error);
-            alert('An error occurred while submitting the Contact Us form. Please try again.');
-          });
-        }).catch(error => {
-          console.error("Error executing reCAPTCHA for Contact Us:", error);
-          alert("Error with reCAPTCHA. Please try again.");
-        });
-      });
     });
   }
-
   // Collapsible Areas of Interest for Join Us form
   const areasTrigger = document.getElementById('join-areas-trigger');
   const areasOptions = document.getElementById('join-areas-options');
@@ -419,4 +272,5 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   }
+
 });
