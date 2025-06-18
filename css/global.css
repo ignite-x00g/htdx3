@@ -1,13 +1,3 @@
-/* =========================================================
-   For screens ≥ 769px, hide mobile nav (redundant but safe)
-   ========================================================= */
-@media screen and (min-width: 769px) {
-  .mobile-nav,
-  .mobile-services-menu {
-    display: none;
-  }
-}
-
 /* Collapsible Checkbox List Styles */
 .collapsible-trigger {
   background-color: #eee; /* Light grey background */
@@ -200,37 +190,6 @@ footer {
   margin-top: 2rem;
 }
 
-/* Floating Icons */
-.floating-icons {
-  position: fixed;
-  bottom: 110px;
-  right: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  z-index: 2000;
-}
-
-.floating-icon {
-  background-color: #9b87f5;
-  border: none;
-  border-radius: 50%;
-  width: 60px;
-  height: 60px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-size: 24px;
-  cursor: pointer;
-  transition: background-color 0.3s, transform 0.3s;
-}
-
-.floating-icon:hover {
-  background-color: #7e69ab;
-  transform: scale(1.1);
-}
-
 /* Modal Overlay & Content */
 .modal-overlay {
   display: none; /* Hidden by default */
@@ -366,14 +325,6 @@ body[data-theme="dark"] .services {
   background-color: #121212;
 }
 
-body[data-theme="dark"] .floating-icon {
-  background-color: #bb86fc;
-}
-
-body[data-theme="dark"] .floating-icon:hover {
-  background-color: #7e69ab;
-}
-
 body[data-theme="dark"] .modal-content {
   background-color: #000;
   color: #e0e0e0;
@@ -430,17 +381,36 @@ body[data-theme="dark"] .modal-content form {
 }
 
 .toggle-button {
-    background-color: #f0f0f0;
-    border: 1px solid #ccc;
-    padding: 8px 12px;
+    background-color: #f0f0f0; /* Current background */
+    color: #333; /* Explicitly set text color to match input text */
+    border: 1px solid #ccc; /* Current border */
+    padding: 0.5rem; /* Match general input/textarea padding */
     cursor: pointer;
-    border-radius: 4px;
-    font-size: 0.9em;
-    margin-top: 5px; /* Space between label and button */
+    border-radius: 5px; /* Match general input/textarea border-radius */
+    font-size: 1em; /* Match general font size (assuming inputs are 1em) */
+    margin-top: 5px;
+    width: 100%;
+    text-align: left;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    line-height: 1.6; /* Match body line-height for consistency if needed */
 }
 
+/* Original .toggle-button:hover can be kept for light mode */
 .toggle-button:hover {
     background-color: #e0e0e0;
+}
+
+/* Dark mode adjustments for these buttons */
+body[data-theme="dark"] .toggle-button {
+  background-color: #2a2a2a;
+  border-color: #444;
+  color: #e0e0e0;
+}
+
+body[data-theme="dark"] .toggle-button:hover {
+  background-color: #3a3a3a; /* Darker hover */
 }
 
 /* Ensure the modal form styling applies within the new section if needed */
@@ -448,42 +418,15 @@ body[data-theme="dark"] .modal-content form {
     /* Existing styles should cover this, but can be fine-tuned if necessary */
 }
 
-/* ===========================================
-   Mobile Overrides (Responsive Design)
- =========================================== */
-@media screen and (max-width: 768px) {
-  header nav ul {
-    display: none;
-  }
-  .toggle-container {
-    display: none;
-  }
+/* Dark Mode Form Input Contrast Improvements */
+body[data-theme="dark"] .modal-body form .form-cell input,
+body[data-theme="dark"] .modal-body form .form-cell textarea {
+  background-color: #2a2a2a; /* Slightly lighter than the form background */
+  border-color: #444; /* A visible border color */
+  color: #e0e0e0; /* Ensure text is light */
+}
 
-  .mobile-nav {
-    display: flex;
-    position: fixed;
-    bottom: 0;
-    right: 0;
-    background: #fff;
-    justify-content: space-around;
-    padding: 0.5rem 0;
-    z-index: 3000;
-    width: 85%;
-    border-radius: 20px;
-  }
-
-  .mobile-nav-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .mobile-services-menu {
-    display: none;
-    position: fixed;
-    bottom: 60px;
-    left: 85px;
-    background: #fff;
-    z-index: 1001;
-  }
+body[data-theme="dark"] .modal-body form .form-cell input::placeholder,
+body[data-theme="dark"] .modal-body form .form-cell textarea::placeholder {
+  color: #888; /* Lighter placeholder text */
 }

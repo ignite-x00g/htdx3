@@ -87,46 +87,46 @@ document.addEventListener("DOMContentLoaded", () => {
   // ================================================================
   // Right-Side Main Menu: Open/Close
   // =================================================================
-  const menuOpenBtn = document.getElementById('menu-open');
-  const menuCloseBtn = document.getElementById('menu-close');
-  const rightSideMenu = document.getElementById('rightSideMenu');
+  // const menuOpenBtn = document.getElementById('menu-open');
+  // const menuCloseBtn = document.getElementById('menu-close');
+  // const rightSideMenu = document.getElementById('rightSideMenu');
 
-  if (menuOpenBtn && menuCloseBtn && rightSideMenu) {
-    menuOpenBtn.addEventListener('click', () => {
-      rightSideMenu.classList.add('open');
-    });
-    menuCloseBtn.addEventListener('click', () => {
-      rightSideMenu.classList.remove('open');
-    });
-  }
+  // if (menuOpenBtn && menuCloseBtn && rightSideMenu) {
+  //   menuOpenBtn.addEventListener('click', () => {
+  //     rightSideMenu.classList.add('open');
+  //   });
+  //   menuCloseBtn.addEventListener('click', () => {
+  //     rightSideMenu.classList.remove('open');
+  //   });
+  // }
 
   // ================================================================
   // Services Sub-Menu: Slide Up
   // =================================================================
-  const servicesTrigger = document.querySelector('.services-trigger button');
-  const servicesSubMenu = document.getElementById('servicesSubMenu');
+  // const servicesTrigger = document.querySelector('.services-trigger button');
+  // const servicesSubMenu = document.getElementById('servicesSubMenu');
 
-  if (servicesTrigger && servicesSubMenu) {
-    servicesTrigger.addEventListener('click', (e) => {
-      e.stopPropagation();
-      servicesSubMenu.classList.toggle('open');
-    });
+  // if (servicesTrigger && servicesSubMenu) {
+  //   servicesTrigger.addEventListener('click', (e) => {
+  //     e.stopPropagation();
+  //     servicesSubMenu.classList.toggle('open');
+  //   });
 
-    document.addEventListener('click', (evt) => {
-      const clickInsideTrigger = servicesTrigger.contains(evt.target);
-      const clickInsideSubMenu = servicesSubMenu.contains(evt.target);
-      if (!clickInsideTrigger && !clickInsideSubMenu) {
-        servicesSubMenu.classList.remove('open');
-      }
-    });
-  }
+  //   document.addEventListener('click', (evt) => {
+  //     const clickInsideTrigger = servicesTrigger.contains(evt.target);
+  //     const clickInsideSubMenu = servicesSubMenu.contains(evt.target);
+  //     if (!clickInsideTrigger && !clickInsideSubMenu) {
+  //       servicesSubMenu.classList.remove('open');
+  //     }
+  //   });
+  // }
 
   // ================================================================
   // Modals (Join Us & Contact Us)
   // =================================================================
   const modalOverlays = document.querySelectorAll('.modal-overlay');
   const closeModalButtons = document.querySelectorAll('[data-close]');
-  const floatingIcons = document.querySelectorAll('.floating-icon');
+  const floatingIcons = document.querySelectorAll('.floating-icon-tailwind');
 
   // Open modals
   floatingIcons.forEach(icon => {
@@ -163,6 +163,55 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
   
+  // ================================================================
+  // Mobile Services Menu Toggle
+  // =================================================================
+  const mobileServicesToggleBtn = document.getElementById('mobile-services-toggle');
+  const mobileServicesMenu = document.getElementById('mobile-services-menu'); // Corrected ID
+
+  if (mobileServicesToggleBtn && mobileServicesMenu) {
+    mobileServicesToggleBtn.addEventListener('click', (e) => {
+      e.stopPropagation(); // Prevent click from immediately closing due to document listener
+
+      const isHidden = mobileServicesMenu.classList.contains('hidden');
+
+      if (isHidden) {
+        // Show menu
+        mobileServicesMenu.classList.remove('hidden');
+        // Allow a frame for display:block to take effect before starting transition
+        requestAnimationFrame(() => {
+          mobileServicesMenu.classList.remove('opacity-0');
+          mobileServicesMenu.classList.remove('translate-y-full');
+          mobileServicesMenu.classList.add('opacity-100');
+          mobileServicesMenu.classList.add('translate-y-0');
+        });
+      } else {
+        // Hide menu
+        mobileServicesMenu.classList.remove('opacity-100');
+        mobileServicesMenu.classList.remove('translate-y-0');
+        mobileServicesMenu.classList.add('opacity-0');
+        mobileServicesMenu.classList.add('translate-y-full');
+        // Wait for transition to finish before adding 'hidden'
+        setTimeout(() => {
+          mobileServicesMenu.classList.add('hidden');
+        }, 300); // Match transition duration
+      }
+    });
+
+    // Optional: Close menu if clicking outside of it
+    document.addEventListener('click', (e) => {
+      if (!mobileServicesMenu.classList.contains('hidden') && !mobileServicesMenu.contains(e.target) && !mobileServicesToggleBtn.contains(e.target)) {
+        mobileServicesMenu.classList.remove('opacity-100');
+        mobileServicesMenu.classList.remove('translate-y-0');
+        mobileServicesMenu.classList.add('opacity-0');
+        mobileServicesMenu.classList.add('translate-y-full');
+        setTimeout(() => {
+          mobileServicesMenu.classList.add('hidden');
+        }, 300);
+      }
+    });
+  }
+
   // ================================================================
   // Employment Type Toggle for Join Us Form
   // ================================================================
@@ -236,7 +285,7 @@ document.addEventListener("DOMContentLoaded", () => {
           return;
       }
       grecaptcha.ready(() => {
-        grecaptcha.execute('6LfFOV0rAAAAAP2NYL8f1hPyfpsc-MiPx9n02THp', { action: 'join_us_submit' }).then((token) => {
+        grecaptcha.execute('6LfAOV0rAAAAAPBGgn2swZWj5SjANoQ4rUH6XIMz', { action: 'join_us_submit' }).then((token) => {
           console.log('Join Us ReCAPTCHA token:', token);
 
           const name = sanitizeInput(document.getElementById("join-name").value);
@@ -363,10 +412,10 @@ document.addEventListener("DOMContentLoaded", () => {
     areasTrigger.addEventListener('click', () => {
       const isExpanded = areasTrigger.getAttribute('aria-expanded') === 'true';
       areasTrigger.setAttribute('aria-expanded', !isExpanded);
-      areasOptions.style.display = isExpanded ? 'none' : 'block';
+      areasOptions.style.display = isExpanded ? 'none' : 'block'; // This controls visibility
       const arrow = areasTrigger.querySelector('.arrow-down');
       if (arrow) {
-        arrow.textContent = isExpanded ? '▼' : '▲';
+        arrow.textContent = isExpanded ? '▼' : '▲'; // Toggle arrow indicator
       }
     });
   }

@@ -1,240 +1,361 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta http-equiv="Content-Security-Policy" content="
-    default-src 'self';
-    script-src 'self' https://www.google.com/recaptcha/ https://www.gstatic.com/recaptcha/ https://cdnjs.cloudflare.com;
-    style-src 'self' https://cdnjs.cloudflare.com;
-    img-src 'self' data: https://trusted-image-cdn.com;
-    font-src 'self' https://cdnjs.cloudflare.com;
-    connect-src 'self';
-    frame-src 'self' https://www.google.com/recaptcha/ https://recaptcha.google.com/;
-    frame-ancestors 'none';
-    object-src 'none';
-    base-uri 'self';
-    form-action 'self';
-  ">
-  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
-  <meta http-equiv="X-Frame-Options" content="DENY" />
-  <meta name="Referrer-Policy" content="strict-origin-when-cross-origin" />
-  <meta http-equiv="Permissions-Policy" content="microphone=(), camera=()" />
-
-  <title>Ops Online Solutions - Secure IT Support & Remote Solutions</title>
-  <meta name="description" content="Ops Online Solutions offers secure IT support, remote solutions, and professional services to optimize your business operations. Empowering businesses with cutting-edge strategies.">
-  <meta name="keywords" content="IT Support, Remote Solutions, Contact Center, Business Operations, Professional Services, Ops Online Solutions, Secure IT Services">
-  <meta name="robots" content="index, follow">
-
-  <meta property="og:title" content="Ops Online Solutions - Secure IT Support & Remote Solutions">
-  <meta property="og:description" content="Ops Online Solutions offers secure IT support, remote solutions, and professional services to optimize your business operations. Empowering businesses with cutting-edge strategies.">
-  <meta property="og:image" content="assets/images/hero-image.jpg">
-  <meta property="og:url" content="https://www.opsonlinesolutions.com">
-
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "name": "Ops Online Solutions",
-    "url": "https://www.opsonlinesolutions.com",
-    "logo": "https://www.opsonlinesolutions.com/assets/logo.png",
-    "contactPoint": {
-      "@type": "ContactPoint",
-      "telephone": "+1-201-350-7567",
-      "contactType": "Customer Service",
-      "areaServed": "US",
-      "availableLanguage": "English"
-    },
-    "sameAs": [
-      "https://www.facebook.com/yourpage",
-      "https://twitter.com/yourhandle",
-      "https://www.linkedin.com/company/yourcompany"
-    ]
-  }
-  </script>
-
-  <link rel="stylesheet" href="css/global.css">
-  <link rel="stylesheet" media="(max-width: 768px)" href="css/small-screens.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <!-- ==================================================================
+       Document Metadata & External Resources
+       ================================================================== -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OPS Solutions Services</title>
+  <link rel="stylesheet" href="css/style.css"> <!-- Tailwind Output CSS -->
+  <!-- Global CSS (Desktop-First) -->
+  <!-- <link rel="stylesheet" href="css/global.css"> -->
+  <!-- Additional overrides for small screens -->
+  <!-- <link rel="stylesheet" media="(max-width: 768px)" href="css/small-screens.css"> -->
+  <!-- Font Awesome Stylesheet -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" crossorigin="anonymous">
+  <link rel="manifest" href="manifest.json">
   <link rel="icon" href="assets/favicon.ico">
-  <link rel="manifest" href="/manifest.json">
-
-  <script src="https://www.google.com/recaptcha/api.js?render=6LfAOV0rAAAAAPBGgn2swZWj5SjANoQ4rUH6XIMz" async defer></script>
 </head>
 
-<body>
-  <div id="secure-content" style="display:none;">
-    <header>
-      <nav>
-        <ul>
-          <li><a href="index.html" data-en="Home" data-es="Inicio">Home</a></li>
-          <li><a href="business-operations.html" data-en="Business Operations" data-es="Gestión">Business Operations</a></li>
-          <li><a href="contact-center.html" data-en="Contact Center" data-es="Centro de Contacto">Contact Center</a></li>
-          <li><a href="it-support.html" data-en="IT Support" data-es="Soporte IT">IT Support</a></li>
-          <li><a href="professionals.html" data-en="Professionals" data-es="Profesionales">Professionals</a></li>
-        </ul>
-      </nav>
-      <div class="toggle-container">
-        <button id="theme-toggle-desktop" data-en="Light" data-es="Claro">Light</button>
-        <button id="language-toggle-desktop">EN</button>
-      </div>
-    </header>
-
-    <section class="hero">
-      <h1 data-en="Welcome to Ops Solutions Services" data-es="Bienvenido a OPS Solutions Services">Welcome to Ops Solutions Services</h1>
-      <p data-en="Empowering remote solutions with cutting-edge strategies." data-es="Impulsando soluciones remotas con estrategias innovadoras.">Empowering remote solutions with cutting-edge strategies.</p>
-      <img src="assets/images/hero-image.jpg" alt="Hero Image" class="hero-image">
-    </section>
-
-    <section id="services-preview" class="services">
-      <div class="service-item">
-        <h3 data-en="Business Operations" data-es="Gestión">Business Operations</h3>
-        <p data-en="Discover how we optimize your business processes." data-es="Descubre cómo optimizamos tus procesos empresariales.">Discover how we optimize your business processes.</p>
-        <a href="business-operations.html" class="btn" data-en="Learn More" data-es="Saber Más">Learn More</a>
-      </div>
-      <div class="service-item">
-        <h3 data-en="Contact Center" data-es="Centro de Contacto">Contact Center</h3>
-        <p data-en="Enhance customer interactions with our contact solutions." data-es="Mejora la interacción con tus clientes con nuestras soluciones de contacto.">Enhance customer interactions with our contact solutions.</p>
-        <a href="contact-center.html" class="btn" data-en="Learn More" data-es="Saber Más">Learn More</a>
-      </div>
-      <div class="service-item">
-        <h3 data-en="IT Support" data-es="Soporte IT">IT Support</h3>
-        <p data-en="Ensure seamless IT operations with our expert support." data-es="Garantiza operaciones de IT sin problemas con nuestro soporte experto.">Ensure seamless IT operations with our expert support.</p>
-        <a href="it-support.html" class="btn" data-en="Learn More" data-es="Saber Más">Learn More</a>
-      </div>
-      <div class="service-item">
-        <h3 data-en="Professionals" data-es="Profesionales">Professionals</h3>
-        <p data-en="Access top-tier professionals for your business needs." data-es="Accede a profesionales de primer nivel para las necesidades de tu negocio.">Access top-tier professionals for your business needs.</p>
-        <a href="professionals.html" class="btn" data-en="Learn More" data-es="Saber Más">Learn More</a>
-      </div>
-    </section>
-
-    <footer>
-      <p data-en="All rights reserved" data-es="Todos los derechos reservados">&copy; 2025 OPS Solutions Services. All rights reserved.</p>
-    </footer>
-
-    <div class="floating-icons">
-      <button class="floating-icon" data-modal="join-modal" aria-label="Join Us" tabindex="0"><i class="fas fa-user-plus"></i></button>
-      <button class="floating-icon" data-modal="contact-modal" aria-label="Contact Us" tabindex="0"><i class="fas fa-envelope-open-text"></i></button>
-    </div>
-
-    <!-- Join Modal -->
-    <div id="join-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="joinModalTitle">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h3 id="joinModalTitle" data-en="Join Us" data-es="Únete a Nosotros">Join Us</h3>
-          <button class="close-modal" data-close aria-label="Close">&times;</button>
-        </div>
-        <div class="modal-body">
-          <form id="join-form">
-            <input type="text" name="website" id="honeypot-join" class="honeypot" autocomplete="off">
-            <div class="form-row">
-              <div class="form-cell">
-                <label for="join-name" data-en="Name" data-es="Nombre">Name</label>
-                <input type="text" id="join-name" data-en="Enter your name" data-es="Ingrese su Nombre" placeholder="Enter your name" required>
-              </div>
-              <div class="form-cell">
-                <label for="join-email" data-en="Email" data-es="Correo Electrónico">Email</label>
-                <input type="email" id="join-email" data-en="Enter your email" data-es="Ingrese su correo electrónico" placeholder="Enter your email" required>
-              </div>
-            </div>
-            <div class="form-row">
-              <div class="form-cell">
-                <label for="join-contact" data-en="Contact Number" data-es="Número de Contacto">Contact Number</label>
-                <input type="tel" id="join-contact" data-en="Enter your contact number" data-es="Ingrese su número" placeholder="Enter your contact number" required>
-              </div>
-              <div class="form-cell">
-                <label for="join-date" data-en="Date" data-es="Fecha">Date</label>
-                <input type="date" id="join-date" required>
-              </div>
-            </div>
-            <div class="form-row">
-              <div class="form-cell">
-                <label for="join-time" data-en="Time" data-es="Hora">Time</label>
-                <input type="time" id="join-time" required>
-              </div>
-            </div>
-            <div class="form-row">
-              <div class="form-cell full-width">
-                <label data-en="Employment Type" data-es="Tipo de Empleo">Employment Type</label>
-                <button type="button" id="employment-type-toggle" class="toggle-button" aria-expanded="false" aria-controls="employment-type-checkboxes">
-                  <span data-en="Work Preference" data-es="Modalidad de trabajo">Work Preference</span>
-                </button>
-              </div>
-            </div>
-            <!-- Checkbox Groups omitted here for brevity but would follow same data-en/data-es logic -->
-            <div class="form-row">
-              <div class="form-cell" style="grid-column: span 2;">
-                <label for="join-comment" data-en="Comment" data-es="Comentario">Comment</label>
-                <textarea id="join-comment" rows="4" data-en="Tell us about yourself" data-es="Cuéntanos sobre ti" placeholder="Tell us about yourself" required></textarea>
-              </div>
-            </div>
-            <div class="modal-footer">
-              <button type="submit" class="submit-button" data-en="Submit" data-es="Enviar">Submit</button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-
-    <!-- Contact Modal -->
-    <div id="contact-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="contactModalTitle">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h3 id="contactModalTitle" data-en="Contact Us" data-es="Contáctenos">Contact Us</h3>
-          <button class="close-modal" data-close aria-label="Close">&times;</button>
-        </div>
-        <div class="modal-body">
-          <form id="contact-form">
-            <input type="text" name="website" id="honeypot-contact" class="honeypot" autocomplete="off">
-            <div class="form-row">
-              <div class="form-cell">
-                <label for="contact-name" data-en="Name" data-es="Nombre">Name</label>
-                <input type="text" id="contact-name" data-en="Enter your name" data-es="Ingrese su Nombre" placeholder="Enter your name" required>
-              </div>
-              <div class="form-cell">
-                <label for="contact-email" data-en="Email" data-es="Correo Electrónico">Email</label>
-                <input type="email" id="contact-email" data-en="Enter your email" data-es="Ingrese su correo electrónico" placeholder="Enter your email" required>
-              </div>
-            </div>
-            <div class="form-row">
-              <div class="form-cell">
-                <label for="contact-number" data-en="Contact Number" data-es="Número de Contacto">Contact Number</label>
-                <input type="tel" id="contact-number" data-en="Enter your contact number" data-es="Ingrese su número" placeholder="Enter your contact number" required>
-              </div>
-              <div class="form-cell">
-                <label for="contact-date" data-en="Preferred Date" data-es="Fecha Preferida">Preferred Date</label>
-                <input type="date" id="contact-date" required>
-              </div>
-            </div>
-            <div class="form-row">
-              <div class="form-cell">
-                <label for="contact-time" data-en="Preferred Time" data-es="Hora Preferida">Preferred Time</label>
-                <input type="time" id="contact-time" required>
-              </div>
-              <div class="form-cell">
-                <label for="contact-comments" data-en="Comments" data-es="Comentarios">Comments</label>
-                <textarea id="contact-comments" rows="4" data-en="What service are you interested in?" data-es="¿En qué servicio está interesado?" placeholder="What service are you interested in?" required></textarea>
-              </div>
-            </div>
-            <div class="modal-footer">
-              <button type="submit" class="submit-button" data-en="Send" data-es="Enviar">Send</button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-
-    <nav class="mobile-nav">
-      <a href="index.html" class="mobile-nav-item" data-en="Home" data-es="Inicio"><i class="fas fa-home"></i><span>Home</span></a>
-      <button class="mobile-nav-item" id="mobile-services-toggle" data-en="Services" data-es="Servicios"><i class="fas fa-bars"></i><span>Services</span></button>
-      <button class="mobile-nav-item" id="mobile-language-toggle">EN</button>
-      <button class="mobile-nav-item" id="mobile-theme-toggle" data-en="Light" data-es="Claro">Light</button>
-      <a href="#" class="mobile-nav-item" data-en="Chat" data-es="Chat"><i class="fas fa-comment-alt"></i><span>Chat</span></a>
+<body class="bg-white dark:bg-gray-900 text-gray-800 dark:text-text-light font-sans">
+  <!-- ==================================================================
+       Header Section: Navigation & Toggle Buttons (Desktop Only)
+       ================================================================== -->
+  <header class="bg-deep-purple text-text-light shadow-md">
+    <nav>
+      <ul class="container mx-auto flex justify-center space-x-6 py-4">
+        <li><a href="index.html" data-en="Home" data-es="Inicio" class="hover:text-glow-accent transition-colors duration-300">Home</a></li>
+        <li><a href="business-operations.html" data-en="Business Operations" data-es="Operaciones Empresariales" class="hover:text-glow-accent transition-colors duration-300">Business Operations</a></li>
+        <li><a href="contact-center.html" data-en="Contact Center" data-es="Centro de Contacto" class="hover:text-glow-accent transition-colors duration-300">Contact Center</a></li>
+        <li><a href="it-support.html" data-en="IT Support" data-es="Soporte IT" class="hover:text-glow-accent transition-colors duration-300">IT Support</a></li>
+        <li><a href="professionals.html" data-en="Professionals" data-es="Profesionales" class="hover:text-glow-accent transition-colors duration-300">Professionals</a></li>
+      </ul>
     </nav>
 
-    <script src="js/main.js" defer></script>
-    <script src="js/ui-setup.js" defer></script>
+    <!-- Theme and Language Toggle for Desktop -->
+    <div class="toggle-container absolute top-4 right-4 flex space-x-2">
+      <button id="theme-toggle-desktop" class="bg-ops-violet hover:bg-glow-accent text-text-light px-3 py-1 rounded text-sm">Light</button>
+      <button id="language-toggle-desktop" class="bg-ops-violet hover:bg-glow-accent text-text-light px-3 py-1 rounded text-sm">EN</button>
+    </div>
+  </header>
+
+  <!-- ==================================================================
+       Hero Section
+       ================================================================== -->
+  <section class="hero text-center py-16 md:py-24 px-4">
+    <h2 data-en="Welcome to Ops Solutions Services" data-es="Bienvenido a OPS Solutions Services" class="text-4xl md:text-5xl font-bold text-ops-violet dark:text-glow-accent mb-4">
+      Welcome to Ops Solutions Services
+    </h2>
+    <p data-en="Empowering remote solutions with cutting-edge strategies." data-es="Impulsando soluciones remotas con estrategias innovadoras." class="text-lg md:text-xl text-gray-700 dark:text-gray-300 mb-8 max-w-2xl mx-auto">
+      Empowering remote solutions with cutting-edge strategies.
+    </p>
+    <img src="assets/images/hero-image.jpg" alt="Hero Image" class="hero-image mx-auto rounded-lg shadow-lg max-w-full md:max-w-xl">
+  </section>
+
+  <!-- ==================================================================
+       Services Preview Section
+       ================================================================== -->
+  <section id="services-preview" class="services py-16 md:py-24 px-4 bg-gray-50 dark:bg-gray-800">
+    <div class="container mx-auto grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+      <div class="service-item bg-white dark:bg-gray-700 p-6 rounded-lg shadow-lg text-center flex flex-col transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-[0_0_0_2px_theme(colors.ops-violet),_0_0_15px_5px_theme(colors.glow-accent),_0_0_35px_10px_theme(colors.contrast-neon,0.5)]">
+        <h3 data-en="Business Operations" data-es="Operaciones Empresariales" class="text-2xl font-semibold text-ops-violet dark:text-glow-accent mb-3">Business Operations</h3>
+        <p data-en="Discover how we optimize your business processes." data-es="Descubre cómo optimizamos tus procesos empresariales." class="text-gray-600 dark:text-gray-300 flex-grow">
+          Discover how we optimize your business processes.
+        </p>
+        <a href="business-operations.html" class="btn inline-block mt-6 bg-ops-violet text-text-light px-6 py-3 rounded-md hover:bg-deep-purple transition-colors duration-300 font-semibold" data-en="Learn More" data-es="Saber Más">Learn More</a>
+      </div>
+      <div class="service-item bg-white dark:bg-gray-700 p-6 rounded-lg shadow-lg text-center flex flex-col transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-[0_0_0_2px_theme(colors.ops-violet),_0_0_15px_5px_theme(colors.glow-accent),_0_0_35px_10px_theme(colors.contrast-neon,0.5)]">
+        <h3 data-en="Contact Center" data-es="Centro de Contacto" class="text-2xl font-semibold text-ops-violet dark:text-glow-accent mb-3">Contact Center</h3>
+        <p data-en="Enhance customer interactions with our contact solutions." data-es="Mejora la interacción con tus clientes con nuestras soluciones de contacto." class="text-gray-600 dark:text-gray-300 flex-grow">
+          Enhance customer interactions with our contact solutions.
+        </p>
+        <a href="contact-center.html" class="btn inline-block mt-6 bg-ops-violet text-text-light px-6 py-3 rounded-md hover:bg-deep-purple transition-colors duration-300 font-semibold" data-en="Learn More" data-es="Saber Más">Learn More</a>
+      </div>
+      <div class="service-item bg-white dark:bg-gray-700 p-6 rounded-lg shadow-lg text-center flex flex-col transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-[0_0_0_2px_theme(colors.ops-violet),_0_0_15px_5px_theme(colors.glow-accent),_0_0_35px_10px_theme(colors.contrast-neon,0.5)]">
+        <h3 data-en="IT Support" data-es="Soporte IT" class="text-2xl font-semibold text-ops-violet dark:text-glow-accent mb-3">IT Support</h3>
+        <p data-en="Ensure seamless IT operations with our expert support." data-es="Garantiza operaciones de IT sin problemas con nuestro soporte experto." class="text-gray-600 dark:text-gray-300 flex-grow">
+          Ensure seamless IT operations with our expert support.
+        </p>
+        <a href="it-support.html" class="btn inline-block mt-6 bg-ops-violet text-text-light px-6 py-3 rounded-md hover:bg-deep-purple transition-colors duration-300 font-semibold" data-en="Learn More" data-es="Saber Más">Learn More</a>
+      </div>
+      <div class="service-item bg-white dark:bg-gray-700 p-6 rounded-lg shadow-lg text-center flex flex-col transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-[0_0_0_2px_theme(colors.ops-violet),_0_0_15px_5px_theme(colors.glow-accent),_0_0_35px_10px_theme(colors.contrast-neon,0.5)]">
+        <h3 data-en="Professionals" data-es="Profesionales" class="text-2xl font-semibold text-ops-violet dark:text-glow-accent mb-3">Professionals</h3>
+        <p data-en="Access top-tier professionals for your business needs." data-es="Accede a profesionales de primer nivel para las necesidades de tu negocio." class="text-gray-600 dark:text-gray-300 flex-grow">
+          Access top-tier professionals for your business needs.
+        </p>
+        <a href="professionals.html" class="btn inline-block mt-6 bg-ops-violet text-text-light px-6 py-3 rounded-md hover:bg-deep-purple transition-colors duration-300 font-semibold" data-en="Learn More" data-es="Saber Más">Learn More</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================================================================
+       Footer Section
+       ================================================================== -->
+  <footer class="bg-deep-purple text-text-light text-center py-8 mt-16 md:mt-24">
+    <p class="container mx-auto">&copy; 2025 OPS Solutions Services. All rights reserved.</p>
+  </footer>
+
+  <!-- ==================================================================
+       Floating Icons (Triggers for Modals)
+       ================================================================== -->
+  <div class="floating-icons fixed bottom-6 right-6 flex flex-col space-y-3 z-50">
+    <button class="floating-icon w-14 h-14 bg-ops-violet text-text-light rounded-full flex items-center justify-center shadow-lg hover:bg-deep-purple transition-colors duration-300 text-xl" data-modal="join-modal" aria-label="Join Us" tabindex="0">
+      <i class="fas fa-user-plus"></i>
+    </button>
+    <button class="floating-icon w-14 h-14 bg-ops-violet text-text-light rounded-full flex items-center justify-center shadow-lg hover:bg-deep-purple transition-colors duration-300 text-xl" data-modal="contact-modal" aria-label="Contact Us" tabindex="0">
+      <i class="fas fa-envelope-open-text"></i>
+    </button>
   </div>
+
+  <!-- ==================================================================
+       Join Modal
+       ================================================================== -->
+  <div id="join-modal" class="modal-overlay fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm flex items-center justify-center p-4 z-[1000] hidden">
+    <div class="modal-content bg-white dark:bg-gray-800 rounded-lg shadow-xl w-full max-w-2xl max-h-[90vh] flex flex-col overflow-hidden">
+      <!-- Modal Header: Title & Close Button -->
+      <div class="modal-header bg-ops-violet text-text-light p-4 flex justify-between items-center">
+        <h3 id="joinModalTitle" data-en="Join Us" data-es="Únete a Nosotros" class="text-xl font-semibold">Join Us</h3>
+        <button class="close-modal text-text-light hover:text-glow-accent text-2xl font-bold" data-close aria-label="Close">&times;</button>
+      </div>
+      <!-- Modal Body: Form with Grid (Table-like) Layout -->
+      <div class="modal-body p-6 overflow-y-auto">
+        <form id="join-form" class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
+          <!-- Row 1 -->
+          <div class="form-cell md:col-span-1 flex flex-col">
+            <label for="join-name" data-en="Name" data-es="Nombre" class="mb-1 font-medium text-gray-700 dark:text-gray-300">Name</label>
+            <input
+              type="text"
+              id="join-name"
+              placeholder="Enter your name / Ingrese su Nombre"
+              required
+              class="p-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-2 focus:ring-ops-violet focus:border-transparent dark:bg-gray-700 dark:text-text-light w-full"
+            >
+          </div>
+          <div class="form-cell md:col-span-1 flex flex-col">
+            <label for="join-email" data-en="Email" data-es="Correo Electrónico" class="mb-1 font-medium text-gray-700 dark:text-gray-300">Email</label>
+            <input
+              type="email"
+              id="join-email"
+              placeholder="Enter your email / Ingrese su correo electrónico"
+              required
+              class="p-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-2 focus:ring-ops-violet focus:border-transparent dark:bg-gray-700 dark:text-text-light w-full"
+            >
+          </div>
+          <!-- Row 2 -->
+          <div class="form-cell md:col-span-1 flex flex-col">
+            <label for="join-contact" data-en="Contact Number" data-es="Número de Contacto" class="mb-1 font-medium text-gray-700 dark:text-gray-300">Contact Number</label>
+            <input
+              type="tel"
+              id="join-contact"
+              placeholder="Enter your contact number / Ingrese su número"
+              required
+              class="p-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-2 focus:ring-ops-violet focus:border-transparent dark:bg-gray-700 dark:text-text-light w-full"
+            >
+          </div>
+          <div class="form-cell md:col-span-1 flex flex-col">
+            <label for="join-date" data-en="Date" data-es="Fecha" class="mb-1 font-medium text-gray-700 dark:text-gray-300">Date</label>
+            <input
+              type="date"
+              id="join-date"
+              required
+              class="p-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-2 focus:ring-ops-violet focus:border-transparent dark:bg-gray-700 dark:text-text-light w-full"
+            >
+          </div>
+          <!-- Row 3 -->
+          <div class="form-cell md:col-span-1 flex flex-col">
+            <label for="join-time" data-en="Time" data-es="Hora" class="mb-1 font-medium text-gray-700 dark:text-gray-300">Time</label>
+            <input
+              type="time"
+              id="join-time"
+              required
+              class="p-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-2 focus:ring-ops-violet focus:border-transparent dark:bg-gray-700 dark:text-text-light w-full"
+            >
+          </div>
+          <div class="form-cell md:col-span-1 flex flex-col">
+            <label for="join-resume" data-en="Upload Your Resume" data-es="Sube tu Currículum" class="mb-1 font-medium text-gray-700 dark:text-gray-300">Upload Your Resume</label>
+            <input
+              type="file"
+              id="join-resume"
+              accept=".pdf,.doc,.docx"
+              required
+              class="p-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-2 focus:ring-ops-violet focus:border-transparent dark:bg-gray-700 dark:text-text-light w-full file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-ops-violet file:text-text-light hover:file:bg-deep-purple"
+            >
+          </div>
+          <!-- Row 4 -->
+          <div class="form-cell md:col-span-1 flex flex-col"> {/* Adjusted to md:col-span-1, assuming comment is full width */}
+            <label for="join-cover" data-en="Upload Your Cover Letter" data-es="Sube tu Carta de Presentación" class="mb-1 font-medium text-gray-700 dark:text-gray-300">Upload Your Cover Letter</label>
+            <input
+              type="file"
+              id="join-cover"
+              accept=".pdf,.doc,.docx"
+              required
+              class="p-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-2 focus:ring-ops-violet focus:border-transparent dark:bg-gray-700 dark:text-text-light w-full file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-ops-violet file:text-text-light hover:file:bg-deep-purple"
+            >
+          </div>
+          <div class="form-cell md:col-span-1 flex flex-col"> {/* Adjusted to md:col-span-1 */}
+            <label for="join-comment" data-en="Comment" data-es="Comentario" class="mb-1 font-medium text-gray-700 dark:text-gray-300">Comment</label>
+            <textarea
+              id="join-comment"
+              rows="3"  /* Adjusted rows to better fit typical form layout with two file inputs side-by-side */
+              placeholder="Tell us about yourself"
+              required
+              class="p-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-2 focus:ring-ops-violet focus:border-transparent dark:bg-gray-700 dark:text-text-light w-full"
+            ></textarea>
+          </div>
+        </form>
+      </div>
+      <!-- Modal Footer: Submit Button -->
+      <div class="modal-footer p-4 border-t border-gray-200 dark:border-gray-700 flex justify-end space-x-3">
+        <button
+          type="submit"
+          form="join-form"
+          class="submit-button bg-ops-violet text-text-light px-6 py-2 rounded-md hover:bg-deep-purple transition-colors duration-300 font-semibold"
+          data-en="Submit"
+          data-es="Enviar"
+        >Submit</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================================================================
+       Contact Modal
+       ================================================================== -->
+  <div id="contact-modal" class="modal-overlay fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm flex items-center justify-center p-4 z-[1000] hidden">
+    <div class="modal-content bg-white dark:bg-gray-800 rounded-lg shadow-xl w-full max-w-2xl max-h-[90vh] flex flex-col overflow-hidden">
+      <!-- Modal Header: Title & Close Button -->
+      <div class="modal-header bg-ops-violet text-text-light p-4 flex justify-between items-center">
+        <h3 id="contactModalTitle" data-en="Contact Us" data-es="Contáctenos" class="text-xl font-semibold">Contact Us</h3>
+        <button class="close-modal text-text-light hover:text-glow-accent text-2xl font-bold" data-close aria-label="Close">&times;</button>
+      </div>
+      <!-- Modal Body: Form with Grid (Table-like) Layout -->
+      <div class="modal-body p-6 overflow-y-auto">
+        <form id="contact-form" class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
+          <!-- Row 1 -->
+          <div class="form-cell md:col-span-1 flex flex-col">
+            <label for="contact-name" data-en="Name" data-es="Nombre" class="mb-1 font-medium text-gray-700 dark:text-gray-300">Name</label>
+            <input
+              type="text"
+              id="contact-name"
+              placeholder="Enter your name / Ingrese su Nombre"
+              required
+              class="p-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-2 focus:ring-ops-violet focus:border-transparent dark:bg-gray-700 dark:text-text-light w-full"
+            >
+          </div>
+          <div class="form-cell md:col-span-1 flex flex-col">
+            <label for="contact-email" data-en="Email" data-es="Correo Electrónico" class="mb-1 font-medium text-gray-700 dark:text-gray-300">Email</label>
+            <input
+              type="email"
+              id="contact-email"
+              placeholder="Enter your email / Ingrese su correo electrónico"
+              required
+              class="p-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-2 focus:ring-ops-violet focus:border-transparent dark:bg-gray-700 dark:text-text-light w-full"
+            >
+          </div>
+          <!-- Row 2 -->
+          <div class="form-cell md:col-span-1 flex flex-col">
+            <label for="contact-number" data-en="Contact Number" data-es="Número de Contacto" class="mb-1 font-medium text-gray-700 dark:text-gray-300">Contact Number</label>
+            <input
+              type="tel"
+              id="contact-number"
+              placeholder="Enter your contact number / Ingrese su número"
+              required
+              class="p-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-2 focus:ring-ops-violet focus:border-transparent dark:bg-gray-700 dark:text-text-light w-full"
+            >
+          </div>
+          <div class="form-cell md:col-span-1 flex flex-col">
+            <label for="contact-date" data-en="Preferred Date" data-es="Fecha Preferida" class="mb-1 font-medium text-gray-700 dark:text-gray-300">Preferred Date</label>
+            <input
+              type="date"
+              id="contact-date"
+              required
+              class="p-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-2 focus:ring-ops-violet focus:border-transparent dark:bg-gray-700 dark:text-text-light w-full"
+            >
+          </div>
+          <!-- Row 3 -->
+          <div class="form-cell md:col-span-1 flex flex-col">
+            <label for="contact-time" data-en="Preferred Time" data-es="Hora Preferida" class="mb-1 font-medium text-gray-700 dark:text-gray-300">Preferred Time</label>
+            <input
+              type="time"
+              id="contact-time"
+              required
+              class="p-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-2 focus:ring-ops-violet focus:border-transparent dark:bg-gray-700 dark:text-text-light w-full"
+            >
+          </div>
+          <div class="form-cell md:col-span-1 flex flex-col">
+            <label for="contact-comments" data-en="Comments" data-es="Comentarios" class="mb-1 font-medium text-gray-700 dark:text-gray-300">Comments</label>
+            <textarea
+              id="contact-comments"
+              rows="3" /* Adjusted rows */
+              placeholder="What service are you interested in? / En qué servicio está interesado?"
+              required
+              class="p-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-2 focus:ring-ops-violet focus:border-transparent dark:bg-gray-700 dark:text-text-light w-full"
+            ></textarea>
+          </div>
+        </form>
+      </div>
+      <!-- Modal Footer: Submit Button -->
+      <div class="modal-footer p-4 border-t border-gray-200 dark:border-gray-700 flex justify-end space-x-3">
+        <button
+          type="submit"
+          form="contact-form"
+          class="submit-button bg-ops-violet text-text-light px-6 py-2 rounded-md hover:bg-deep-purple transition-colors duration-300 font-semibold"
+          data-en="Send"
+          data-es="Enviar"
+        >Send</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================================================================
+       Mobile Bottom Navigation & Services Menu (Small Screens)
+       ================================================================== -->
+  <!-- Mobile Bottom Navigation Bar -->
+  <nav class="mobile-nav fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 flex justify-around items-center p-1 z-50 md:hidden">
+    <a href="index.html" class="mobile-nav-item flex flex-col items-center text-gray-600 dark:text-gray-300 hover:text-ops-violet dark:hover:text-glow-accent text-xs pt-1 pb-1">
+      <i class="fas fa-home text-lg mb-0.5"></i>
+      <span class="text-[10px]" data-en="Home" data-es="Inicio">Home</span>
+    </a>
+
+    <!-- Services Hamburger / Toggle -->
+    <button class="mobile-nav-item flex flex-col items-center text-gray-600 dark:text-gray-300 hover:text-ops-violet dark:hover:text-glow-accent text-xs pt-1 pb-1" id="mobile-services-toggle">
+      <i class="fas fa-bars text-lg mb-0.5"></i>
+      <span class="text-[10px]" data-en="Services" data-es="Servicios">Services</span>
+    </button>
+
+    <!-- Language Toggle (Mobile) -->
+    <button class="mobile-nav-item flex flex-col items-center text-gray-600 dark:text-gray-300 hover:text-ops-violet dark:hover:text-glow-accent text-xs pt-1 pb-1" id="mobile-language-toggle">
+      <span class="text-lg font-semibold">EN</span>
+      <span class="text-[10px]" data-en="Language" data-es="Idioma">Language</span>
+    </button>
+
+    <!-- Theme Toggle (Mobile) -->
+    <button class="mobile-nav-item flex flex-col items-center text-gray-600 dark:text-gray-300 hover:text-ops-violet dark:hover:text-glow-accent text-xs pt-1 pb-1" id="mobile-theme-toggle">
+      <i class="fas fa-moon text-lg mb-0.5"></i> {/* Default to moon, JS will toggle */}
+      <span class="text-[10px]" data-en="Theme" data-es="Tema">Theme</span>
+    </button>
+
+    <!-- Chat Link (Now a button to trigger modal) -->
+    <button class="mobile-nav-item flex flex-col items-center text-gray-600 dark:text-gray-300 hover:text-ops-violet dark:hover:text-glow-accent text-xs pt-1 pb-1" data-modal="contact-modal" aria-label="Contact Us">
+      <i class="fas fa-comment-alt text-lg mb-0.5"></i>
+      <span class="text-[10px]" data-en="Chat" data-es="Chat">Chat</span>
+    </button>
+  </nav>
+
+  <!-- Hidden Mobile Services Menu -->
+  <div class="mobile-services-menu fixed bottom-0 left-0 right-0 mb-[56px] bg-white dark:bg-gray-800 border-t-2 border-ops-violet p-4 z-40 md:hidden hidden opacity-0 translate-y-full transform transition-all duration-300 ease-in-out" id="mobile-services-menu">
+    <ul class="space-y-2">
+      <li><a href="business-operations.html" data-en="Business Operations" data-es="Operaciones Empresariales" class="block p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded text-gray-700 dark:text-gray-200">Business Operations</a></li>
+      <li><a href="contact-center.html" data-en="Contact Center" data-es="Centro de Contacto" class="block p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded text-gray-700 dark:text-gray-200">Contact Center</a></li>
+      <li><a href="it-support.html" data-en="IT Support" data-es="Soporte IT" class="block p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded text-gray-700 dark:text-gray-200">IT Support</a></li>
+      <li><a href="professionals.html" data-en="Professionals" data-es="Profesionales" class="block p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded text-gray-700 dark:text-gray-200">Professionals</a></li>
+    </ul>
+  </div>
+
+  <!-- ==================================================================
+       JavaScript: Main Functionality & Mobile Menu Toggle
+       ================================================================== -->
+  <script src="js/main.js" defer></script>
+  <script src="js/service-worker.js" defer></script>
 </body>
 </html>

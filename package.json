@@ -1,0 +1,18 @@
+{
+  "name": "ops-online-support",
+  "version": "1.0.0",
+  "description": "OPS Online Support website with Tailwind CSS",
+  "main": "index.html",
+  "scripts": {
+    "build:css": "tailwindcss -i ./css/tailwind-input.css -o ./css/style.css --watch",
+    "build": "tailwindcss -i ./css/tailwind-input.css -o ./css/style.css --minify"
+  },
+  "keywords": ["bpo", "it-support", "tailwind"],
+  "author": "OPS Online Support",
+  "license": "UNLICENSED",
+  "devDependencies": {
+    "autoprefixer": "^10.4.19",
+    "postcss": "^8.4.38",
+    "tailwindcss": "^3.4.3"
+  }
+}
