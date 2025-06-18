@@ -1,16 +1,52 @@
-/* =========================================================
-   For screens ≥ 769px, hide mobile nav (redundant but safe)
-   ========================================================= */
-@media screen and (min-width: 769px) {
-  .mobile-nav,
-  .mobile-services-menu {
-    display: none;
-  }
+/* Collapsible Checkbox List Styles */
+.collapsible-trigger {
+  background-color: #eee; /* Light grey background */
+  color: #333;
+  cursor: pointer;
+  padding: 10px 15px;
+  width: 100%;
+  border: 1px solid #ccc;
+  text-align: left;
+  font-size: 1em;
+  border-radius: 4px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0; /* Remove default button margin if any */
+}
+.collapsible-trigger:hover {
+  background-color: #ddd;
+}
+.collapsible-content {
+  padding: 10px 15px;
+  border: 1px solid #ccc;
+  border-top: none;
+  border-radius: 0 0 4px 4px;
+  background-color: #f9f9f9;
+}
+.collapsible-content label {
+  display: block; /* Make each checkbox label take its own line */
+  margin-bottom: 5px;
+  font-weight: normal; /* Override potential label bolding from .form-cell label */
+}
+/* Dark mode considerations for collapsible */
+body[data-theme="dark"] .collapsible-trigger {
+  background-color: #2a2a2a;
+  color: #e0e0e0;
+  border-color: #444;
+}
+body[data-theme="dark"] .collapsible-trigger:hover {
+  background-color: #3a3a3a;
+}
+body[data-theme="dark"] .collapsible-content {
+  background-color: #222;
+  border-color: #444;
+}
+body[data-theme="dark"] .collapsible-content label {
+  color: #e0e0e0; /* Ensure label text is visible in dark mode */
 }
 
-/* ==================================================================
-   Global Reset & Basic Body Styles
-   ================================================================== */
+/* Global Reset & Basic Body Styles */
 * {
   margin: 0;
   padding: 0;
@@ -163,42 +199,7 @@ footer {
   margin-top: 2rem;
 }
 
-/* ==================================================================
-   Floating Icons (for Modals)
-   ================================================================== */
-.floating-icons {
-  position: fixed;
-  bottom: 110px; /* Adjusted to be above mobile nav */
-  right: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  z-index: 2000; /* High z-index to be on top */
-}
-
-.floating-icon {
-  background-color: #9b87f5;
-  border: none;
-  border-radius: 50%;
-  width: 60px;
-  height: 60px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-size: 24px; /* Icon size */
-  cursor: pointer;
-  transition: background-color 0.3s, transform 0.3s;
-}
-
-.floating-icon:hover {
-  background-color: #7e69ab; /* Darker shade on hover */
-  transform: scale(1.1); /* Slight zoom effect */
-}
-
-/* ==================================================================
-   Modal Overlay & Content
-   ================================================================== */
+/* Modal Overlay & Content */
 .modal-overlay {
   display: none; /* Hidden by default, shown with JS */
   position: fixed;
@@ -387,15 +388,6 @@ body[data-theme="dark"] footer {
   background-color: #1c1c1c;
 }
 
-body[data-theme="dark"] .floating-icon {
-  background-color: #bb86fc;
-  color: #121212;
-}
-
-body[data-theme="dark"] .floating-icon:hover {
-  background-color: #9850f5;
-}
-
 body[data-theme="dark"] .modal-content {
   background-color: #1e1e1e; /* Dark modal background */
   color: #e0e0e0;
@@ -529,17 +521,23 @@ body[data-theme="dark"] .collapsible-content label {
 
 /* Toggle Button (Preserved from original - might be for other dropdowns) */
 .toggle-button {
-  background-color: #f0f0f0;
-  color: #333;
-  border: 1px solid #ccc;
-  padding: 0.5rem;
-  cursor: pointer;
-  border-radius: 5px;
-  font-size: 1em;
-  margin-top: 5px;
-  width: 100%;
-  text-align: left;
+    background-color: #f0f0f0; /* Current background */
+    color: #333; /* Explicitly set text color to match input text */
+    border: 1px solid #ccc; /* Current border */
+    padding: 0.5rem; /* Match general input/textarea padding */
+    cursor: pointer;
+    border-radius: 5px; /* Match general input/textarea border-radius */
+    font-size: 1em; /* Match general font size (assuming inputs are 1em) */
+    margin-top: 5px;
+    width: 100%;
+    text-align: left;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    line-height: 1.6; /* Match body line-height for consistency if needed */
 }
+
+/* Original .toggle-button:hover can be kept for light mode */
 .toggle-button:hover {
   background-color: #e0e0e0;
 }
@@ -556,121 +554,31 @@ body[data-theme="dark"] .toggle-button:hover {
   background-color: #3a3a3a;
 }
 
-/* Dropdown Overlay (Preserved - might be for other dropdowns) */
-.dropdown-overlay {
-  position: absolute; /* Context depends on parent */
-  right: 0;
-  top: 100%; /* Position below the toggle */
-  background-color: #f9f9f9;
-  border: 1px solid #ccc;
-  padding: 10px;
-  z-index: 1000;
-  border-radius: 4px;
-  min-width: 200px;
-}
-.dropdown-overlay label { /* Styles for labels within this specific dropdown */
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  line-height: 1.6;
-  font-weight: normal;
-}
-body[data-theme="dark"] .dropdown-overlay {
-  background-color: #222;
+/* Dark mode adjustments for these buttons */
+body[data-theme="dark"] .toggle-button {
+  background-color: #2a2a2a;
   border-color: #444;
-}
-body[data-theme="dark"] .dropdown-overlay label {
   color: #e0e0e0;
 }
 
-/* Ensure form-cell specific styles from original are considered or merged */
-/* .form-cell.full-width was already added in the new modal section */
-/* The specific checkbox styling like .collapsible-checkbox-group .form-row.checkbox-row is preserved */
-/* and .checkbox-cell is also preserved. */
-/* These seem to be part of a specific UI component that might still be in use via JS. */
-
-/* Styles for Mobile Navigation (from new index.html structure) */
-.mobile-nav {
-  /* display: none; */ /* Hidden by default on larger screens by media query at top */
-                         /* Shown by small-screens.css on smaller screens */
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background-color: #333; /* Dark background for nav bar */
-  color: white;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  padding: 0.5rem 0;
-  z-index: 1000; /* Ensure it's above page content */
+body[data-theme="dark"] .toggle-button:hover {
+  background-color: #3a3a3a; /* Darker hover */
 }
 
-.mobile-nav-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-decoration: none;
-  color: white;
-  padding: 0.5rem;
-  font-size: 0.8rem; /* Smaller font for mobile */
-  background: none; /* Ensure buttons look like nav items */
-  border: none;     /* Ensure buttons look like nav items */
-  cursor: pointer;
+/* Ensure the modal form styling applies within the new section if needed */
+#join-form .form-row {
+    /* Existing styles should cover this, but can be fine-tuned if necessary */
 }
 
-.mobile-nav-item i {
-  font-size: 1.5rem; /* Icon size */
-  margin-bottom: 0.25rem;
+/* Dark Mode Form Input Contrast Improvements */
+body[data-theme="dark"] .modal-body form .form-cell input,
+body[data-theme="dark"] .modal-body form .form-cell textarea {
+  background-color: #2a2a2a; /* Slightly lighter than the form background */
+  border-color: #444; /* A visible border color */
+  color: #e0e0e0; /* Ensure text is light */
 }
 
-.mobile-services-menu {
-  display: none; /* Hidden by default, toggled by JS */
-  position: fixed;
-  bottom: 60px; /* Position above the mobile nav bar */
-  left: 0;
-  right: 0;
-  background-color: #444; /* Slightly lighter than nav bar */
-  padding: 1rem;
-  z-index: 999; /* Below nav bar but above content */
-}
-
-.mobile-services-menu ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.mobile-services-menu li a {
-  display: block;
-  padding: 0.75rem 1rem;
-  color: white;
-  text-decoration: none;
-  border-bottom: 1px solid #555; /* Separator for links */
-}
-
-.mobile-services-menu li a:hover {
-  background-color: #555;
-}
-
-/* Dark mode for mobile navigation elements */
-body[data-theme="dark"] .mobile-nav {
-  background-color: #222; /* Even darker for dark mode */
-}
-
-body[data-theme="dark"] .mobile-nav-item {
-  color: #e0e0e0;
-}
-
-body[data-theme="dark"] .mobile-services-menu {
-  background-color: #333;
-}
-
-body[data-theme="dark"] .mobile-services-menu li a {
-  color: #e0e0e0;
-  border-bottom-color: #444;
-}
-
-body[data-theme="dark"] .mobile-services-menu li a:hover {
-  background-color: #444;
+body[data-theme="dark"] .modal-body form .form-cell input::placeholder,
+body[data-theme="dark"] .modal-body form .form-cell textarea::placeholder {
+  color: #888; /* Lighter placeholder text */
 }

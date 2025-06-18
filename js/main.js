@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
   const bodyElement = document.body;
-
   // ================================================================
   // 1) THEME TOGGLE (Desktop & Mobile)
   // ================================================================
@@ -39,60 +38,47 @@ document.addEventListener('DOMContentLoaded', function() {
   setupThemeButton(themeToggleDesktop);
 
   // ================================================================
-  // 2) LANGUAGE TOGGLE (Desktop & Mobile)
+  // Right-Side Main Menu: Open/Close
+  // =================================================================
+  // const menuOpenBtn = document.getElementById('menu-open');
+  // const menuCloseBtn = document.getElementById('menu-close');
+  // const rightSideMenu = document.getElementById('rightSideMenu');
+
+  // if (menuOpenBtn && menuCloseBtn && rightSideMenu) {
+  //   menuOpenBtn.addEventListener('click', () => {
+  //     rightSideMenu.classList.add('open');
+  //   });
+  //   menuCloseBtn.addEventListener('click', () => {
+  //     rightSideMenu.classList.remove('open');
+  //   });
+  // }
+
   // ================================================================
-  const langToggleMobile = document.getElementById('mobile-language-toggle');
-  const langToggleDesktop = document.getElementById('language-toggle-desktop');
-  let currentLanguage = localStorage.getItem('language') || 'en';
+  // Services Sub-Menu: Slide Up
+  // =================================================================
+  // const servicesTrigger = document.querySelector('.services-trigger button');
+  // const servicesSubMenu = document.getElementById('servicesSubMenu');
 
-  // Helper function to update text content based on selected language
-  function updateLanguageText() {
-    const translatableElements = document.querySelectorAll('[data-en]');
-    translatableElements.forEach((el) => {
-      const text = (currentLanguage === 'en') ? el.getAttribute('data-en') : el.getAttribute('data-es');
-      if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
-        if (el.placeholder) el.placeholder = text;
-      } else {
-        el.textContent = text;
-      }
-    });
-  }
+  // if (servicesTrigger && servicesSubMenu) {
+  //   servicesTrigger.addEventListener('click', (e) => {
+  //     e.stopPropagation();
+  //     servicesSubMenu.classList.toggle('open');
+  //   });
 
-  // Helper function to set button labels
-  function setLanguageButtonLabels() {
-    const label = (currentLanguage === 'en') ? 'ES' : 'EN';
-    if (langToggleMobile) langToggleMobile.textContent = label;
-    if (langToggleDesktop) langToggleDesktop.textContent = label;
-  }
-
-  // Initialize language on load
-  bodyElement.setAttribute('lang', currentLanguage);
-  updateLanguageText();
-  setLanguageButtonLabels();
-
-  // Combined toggle function for language
-  function toggleLanguage() {
-    currentLanguage = (currentLanguage === 'en') ? 'es' : 'en';
-    localStorage.setItem('language', currentLanguage);
-    bodyElement.setAttribute('lang', currentLanguage);
-    updateLanguageText();
-    setLanguageButtonLabels();
-  }
-
-  // Event listeners for language toggles
-  if (langToggleMobile) {
-    langToggleMobile.addEventListener('click', toggleLanguage);
-  }
-  if (langToggleDesktop) {
-    langToggleDesktop.addEventListener('click', toggleLanguage);
-  }
-
+  //   document.addEventListener('click', (evt) => {
+  //     const clickInsideTrigger = servicesTrigger.contains(evt.target);
+  //     const clickInsideSubMenu = servicesSubMenu.contains(evt.target);
+  //     if (!clickInsideTrigger && !clickInsideSubMenu) {
+  //       servicesSubMenu.classList.remove('open');
+  //     }
+  //   });
+  // }
   // ================================================================
   // 3) MODAL FUNCTIONALITY (Join Us & Contact Us)
   // ================================================================
   const modalOverlays = document.querySelectorAll('.modal-overlay');
   const closeModalButtons = document.querySelectorAll('[data-close]');
-  const floatingIcons = document.querySelectorAll('.floating-icon');
+  const floatingIcons = document.querySelectorAll('.floating-icon-tailwind');
 
   floatingIcons.forEach((icon) => {
     icon.addEventListener('click', function() {
@@ -129,7 +115,56 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
   // ================================================================
-  // 4) MOBILE SERVICES TOGGLE
+  // Mobile Services Menu Toggle
+  // =================================================================
+  const mobileServicesToggleBtn = document.getElementById('mobile-services-toggle');
+  const mobileServicesMenu = document.getElementById('mobile-services-menu'); // Corrected ID
+
+  if (mobileServicesToggleBtn && mobileServicesMenu) {
+    mobileServicesToggleBtn.addEventListener('click', (e) => {
+      e.stopPropagation(); // Prevent click from immediately closing due to document listener
+
+      const isHidden = mobileServicesMenu.classList.contains('hidden');
+
+      if (isHidden) {
+        // Show menu
+        mobileServicesMenu.classList.remove('hidden');
+        // Allow a frame for display:block to take effect before starting transition
+        requestAnimationFrame(() => {
+          mobileServicesMenu.classList.remove('opacity-0');
+          mobileServicesMenu.classList.remove('translate-y-full');
+          mobileServicesMenu.classList.add('opacity-100');
+          mobileServicesMenu.classList.add('translate-y-0');
+        });
+      } else {
+        // Hide menu
+        mobileServicesMenu.classList.remove('opacity-100');
+        mobileServicesMenu.classList.remove('translate-y-0');
+        mobileServicesMenu.classList.add('opacity-0');
+        mobileServicesMenu.classList.add('translate-y-full');
+        // Wait for transition to finish before adding 'hidden'
+        setTimeout(() => {
+          mobileServicesMenu.classList.add('hidden');
+        }, 300); // Match transition duration
+      }
+    });
+
+    // Optional: Close menu if clicking outside of it
+    document.addEventListener('click', (e) => {
+      if (!mobileServicesMenu.classList.contains('hidden') && !mobileServicesMenu.contains(e.target) && !mobileServicesToggleBtn.contains(e.target)) {
+        mobileServicesMenu.classList.remove('opacity-100');
+        mobileServicesMenu.classList.remove('translate-y-0');
+        mobileServicesMenu.classList.add('opacity-0');
+        mobileServicesMenu.classList.add('translate-y-full');
+        setTimeout(() => {
+          mobileServicesMenu.classList.add('hidden');
+        }, 300);
+      }
+    });
+  }
+
+  // ================================================================
+  // Employment Type Toggle for Join Us Form
   // ================================================================
   const servicesToggleMobile = document.getElementById('mobile-services-toggle');
   const mobileServicesMenu = document.getElementById('mobile-services-menu');
@@ -154,6 +189,59 @@ document.addEventListener('DOMContentLoaded', function() {
       if (joinModal) {
         joinModal.classList.remove('active');
       }
+      grecaptcha.ready(() => {
+        grecaptcha.execute('6LfAOV0rAAAAAPBGgn2swZWj5SjANoQ4rUH6XIMz', { action: 'join_us_submit' }).then((token) => {
+          console.log('Join Us ReCAPTCHA token:', token);
+
+          const name = sanitizeInput(document.getElementById("join-name").value);
+          const email = sanitizeInput(document.getElementById("join-email").value);
+          const contact = sanitizeInput(document.getElementById("join-contact").value);
+          const date = document.getElementById("join-date").value;
+          const time = document.getElementById("join-time").value;
+          const comment = sanitizeInput(document.getElementById("join-comment").value);
+
+          const selectedInterests = [];
+          document.querySelectorAll('input[name="join_interest"]:checked').forEach(checkbox => {
+            selectedInterests.push(checkbox.value);
+          });
+
+          const formData = new FormData();
+          formData.append('name', name);
+          formData.append('email', email);
+          formData.append('contact', contact);
+          formData.append('date', date);
+          formData.append('time', time);
+          formData.append('comment', comment);
+          if (selectedInterests.length > 0) {
+            formData.append('interests', selectedInterests.join(','));
+          }
+          formData.append('g-recaptcha-response', token);
+
+          console.log("Submitting Join Us Form Data:", { name, email, contact, date, time, comment, interests: selectedInterests.join(',') }); // Token is not directly logged here but sent
+
+          fetch('https://join.gabrieloor-cv1.workers.dev/', {
+            method: 'POST',
+            body: formData
+          })
+          .then(response => response.json())
+          .then(data => {
+            if (data.success) {
+              alert('Form submitted successfully! Message: ' + data.message);
+              joinForm.reset();
+              document.getElementById('join-modal').classList.remove('active');
+            } else {
+              alert('Submission failed: ' + (data.message || 'Unknown error') + (data.details ? ' Details: ' + JSON.stringify(data.details) : ''));
+            }
+          })
+          .catch(error => {
+            console.error('Error submitting Join Us form:', error);
+            alert('An error occurred while submitting the Join Us form. Please try again.');
+          });
+        }).catch(error => {
+          console.error("Error executing reCAPTCHA for Join Us:", error);
+          alert("Error with reCAPTCHA. Please try again.");
+        });
+      });
     });
   }
 
@@ -170,19 +258,18 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
   }
-
-  // ================================================================
-  // 6) SERVICE WORKER REGISTRATION
-  // ================================================================
-  if ('serviceWorker'in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('/service-worker.js') // Ensure this path is correct
-        .then((registration) => {
-          console.log('Service Worker registered with scope:', registration.scope);
-        })
-        .catch((err) => {
-          console.error('Service Worker registration failed:', err);
-        });
+  // Collapsible Areas of Interest for Join Us form
+  const areasTrigger = document.getElementById('join-areas-trigger');
+  const areasOptions = document.getElementById('join-areas-options');
+  if (areasTrigger && areasOptions) {
+    areasTrigger.addEventListener('click', () => {
+      const isExpanded = areasTrigger.getAttribute('aria-expanded') === 'true';
+      areasTrigger.setAttribute('aria-expanded', !isExpanded);
+      areasOptions.style.display = isExpanded ? 'none' : 'block'; // This controls visibility
+      const arrow = areasTrigger.querySelector('.arrow-down');
+      if (arrow) {
+        arrow.textContent = isExpanded ? '▼' : '▲'; // Toggle arrow indicator
+      }
     });
   }
 
