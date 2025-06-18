@@ -1,329 +1,189 @@
-// MODAL FORM CONTROLLER – FINAL FULL VERSION
+document.addEventListener('DOMContentLoaded', function() {
+  const bodyElement = document.body;
 
-document.addEventListener("DOMContentLoaded", () => {
-  // ================================
-  // LANGUAGE TOGGLE
-  // ================================
-  let currentLanguage = localStorage.getItem("language") || "en";
-  const langToggleDesktop = document.getElementById("language-toggle-desktop");
-  const langToggleMobile = document.getElementById("language-toggle-mobile");
+  // ================================================================
+  // 1) THEME TOGGLE (Desktop & Mobile)
+  // ================================================================
+  const themeToggleMobile = document.getElementById('mobile-theme-toggle');
+  const themeToggleDesktop = document.getElementById('theme-toggle-desktop');
+  let currentTheme = localStorage.getItem('theme') || 'light';
 
-  function updateLanguage(lang) {
-    const attr = lang === "en" ? "data-en" : "data-es";
-    const elements = document.querySelectorAll("[data-en]");
-    elements.forEach(el => {
-      const translation = el.getAttribute(attr);
-      if (!translation) return;
-      if (["INPUT", "TEXTAREA"].includes(el.tagName)) {
-        if (el.placeholder) el.placeholder = translation;
-      } else {
-        el.textContent = translation;
-      }
-    });
-  }
+  // Apply the saved theme on load
+  bodyElement.setAttribute('data-theme', currentTheme);
 
-  function toggleLanguage() {
-    currentLanguage = currentLanguage === "en" ? "es" : "en";
-    localStorage.setItem("language", currentLanguage);
-    updateLanguage(currentLanguage);
-    document.body.setAttribute("lang", currentLanguage);
-    if (langToggleDesktop) langToggleDesktop.textContent = currentLanguage === "en" ? "ES" : "EN";
-    if (langToggleMobile) {
-      const span = langToggleMobile.querySelector("span") || langToggleMobile;
-      span.textContent = currentLanguage === "en" ? "ES" : "EN";
-    }
-  }
-
-  updateLanguage(currentLanguage);
-  document.body.setAttribute("lang", currentLanguage);
-  if (langToggleDesktop) langToggleDesktop.addEventListener("click", toggleLanguage);
-  if (langToggleMobile) langToggleMobile.addEventListener("click", toggleLanguage);
-
-  // ================================
-  // THEME TOGGLE
-  // ================================
-  const themeToggleDesktop = document.getElementById("theme-toggle-desktop");
-  const themeToggleMobile = document.getElementById("theme-toggle-mobile");
-  const currentTheme = localStorage.getItem("theme") || "light";
-  document.body.setAttribute("data-theme", currentTheme);
-
-  function setupTheme(button) {
+  // Helper to set up a single theme button's text and event listener
+  function setupThemeButton(button) {
     if (!button) return;
-    button.textContent = currentTheme === "light" ? "Dark" : "Light";
-    button.addEventListener("click", () => {
-      const newTheme = document.body.getAttribute("data-theme") === "light" ? "dark" : "light";
-      document.body.setAttribute("data-theme", newTheme);
-      localStorage.setItem("theme", newTheme);
-      button.textContent = newTheme === "light" ? "Dark" : "Light";
+
+    // Set initial button text
+    button.textContent = (bodyElement.getAttribute('data-theme') === 'light') ? 'Dark' : 'Light';
+
+    // Add event listener
+    button.addEventListener('click', function() {
+      currentTheme = bodyElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+      bodyElement.setAttribute('data-theme', currentTheme);
+      localStorage.setItem('theme', currentTheme);
+      // Update text for this button
+      this.textContent = (currentTheme === 'light') ? 'Dark' : 'Light';
+      // Update text for the other button if it exists
+      if (this === themeToggleMobile && themeToggleDesktop) {
+        themeToggleDesktop.textContent = (currentTheme === 'light') ? 'Dark' : 'Light';
+      } else if (this === themeToggleDesktop && themeToggleMobile) {
+        themeToggleMobile.textContent = (currentTheme === 'light') ? 'Dark' : 'Light';
+      }
     });
   }
 
-  setupTheme(themeToggleDesktop);
-  setupTheme(themeToggleMobile);
-
-  // ================================
-  // MODALS
-  // ================================
-  const modalTriggers = document.querySelectorAll("[data-modal]");
-  const closeModalButtons = document.querySelectorAll("[data-close]");
-  const modalOverlays = document.querySelectorAll(".modal-overlay");
-
-  modalTriggers.forEach(btn => {
-    btn.addEventListener("click", () => {
-      const modalId = btn.getAttribute("data-modal");
-      const modal = document.getElementById(modalId);
-      if (modal) {
-        modal.classList.add("active");
-        document.body.style.overflow = "hidden";
-      }
-    });
-  });
-
-  closeModalButtons.forEach(btn => {
-    btn.addEventListener("click", () => {
-      const modal = btn.closest(".modal-overlay");
-      if (modal) {
-        modal.classList.remove("active");
-        document.body.style.overflow = "";
-      }
-    });
-  });
-
-  modalOverlays.forEach(modal => {
-    modal.addEventListener("click", (e) => {
-      if (e.target === modal) {
-        modal.classList.remove("active");
-        document.body.style.overflow = "";
-      }
-    });
-    modal.addEventListener("keydown", (e) => {
-      if (e.key === "Escape") {
-        modal.classList.remove("active");
-        document.body.style.overflow = "";
-      }
-    });
-  });
+  // Initialize both theme toggles
+  setupThemeButton(themeToggleMobile);
+  setupThemeButton(themeToggleDesktop);
 
   // ================================================================
-  // Employment Type Toggle for Join Us Form
+  // 2) LANGUAGE TOGGLE (Desktop & Mobile)
   // ================================================================
-  const employmentTypeToggle = document.getElementById('employment-type-toggle');
-  const employmentTypeCheckboxes = document.getElementById('employment-type-checkboxes');
-  const employmentDone = document.getElementById('employment-done');
+  const langToggleMobile = document.getElementById('mobile-language-toggle');
+  const langToggleDesktop = document.getElementById('language-toggle-desktop');
+  let currentLanguage = localStorage.getItem('language') || 'en';
 
-  if (employmentTypeToggle && employmentTypeCheckboxes && employmentDone) {
-    employmentTypeToggle.addEventListener('click', () => {
-      const isExpanded = employmentTypeToggle.getAttribute('aria-expanded') === 'true';
-      if (isExpanded) {
-        employmentTypeCheckboxes.style.display = 'none';
-        employmentTypeToggle.setAttribute('aria-expanded', 'false');
+  // Helper function to update text content based on selected language
+  function updateLanguageText() {
+    const translatableElements = document.querySelectorAll('[data-en]');
+    translatableElements.forEach((el) => {
+      const text = (currentLanguage === 'en') ? el.getAttribute('data-en') : el.getAttribute('data-es');
+      if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+        if (el.placeholder) el.placeholder = text;
       } else {
-        employmentTypeCheckboxes.style.display = 'block';
-        employmentTypeToggle.setAttribute('aria-expanded', 'true');
+        el.textContent = text;
       }
     });
   }
 
-  if (areasDone) {
-    areasDone.addEventListener("click", () => {
-      areasOptions.style.display = "none";
-      areasTrigger.setAttribute("aria-expanded", "false");
-      const arrow = areasTrigger.querySelector(".arrow-down");
-      if (arrow) arrow.textContent = "▼";
-    });
+  // Helper function to set button labels
+  function setLanguageButtonLabels() {
+    const label = (currentLanguage === 'en') ? 'ES' : 'EN';
+    if (langToggleMobile) langToggleMobile.textContent = label;
+    if (langToggleDesktop) langToggleDesktop.textContent = label;
   }
 
-  const employmentToggle = document.getElementById("employment-type-toggle");
-  const employmentOptions = document.getElementById("employment-type-checkboxes");
-  const employmentDone = document.getElementById("employment-done");
+  // Initialize language on load
+  bodyElement.setAttribute('lang', currentLanguage);
+  updateLanguageText();
+  setLanguageButtonLabels();
 
-  if (employmentToggle) {
-    employmentToggle.addEventListener("click", () => {
-      const isOpen = employmentOptions.style.display === "block";
-      employmentOptions.style.display = isOpen ? "none" : "block";
-      employmentToggle.setAttribute("aria-expanded", !isOpen);
-    });
+  // Combined toggle function for language
+  function toggleLanguage() {
+    currentLanguage = (currentLanguage === 'en') ? 'es' : 'en';
+    localStorage.setItem('language', currentLanguage);
+    bodyElement.setAttribute('lang', currentLanguage);
+    updateLanguageText();
+    setLanguageButtonLabels();
   }
 
-  if (employmentDone) {
-    employmentDone.addEventListener("click", () => {
-      employmentOptions.style.display = "none";
-      employmentToggle.setAttribute("aria-expanded", "false");
-    });
+  // Event listeners for language toggles
+  if (langToggleMobile) {
+    langToggleMobile.addEventListener('click', toggleLanguage);
+  }
+  if (langToggleDesktop) {
+    langToggleDesktop.addEventListener('click', toggleLanguage);
   }
 
-  // ================================
-  // MOBILE SERVICES MENU
-  // ================================
-  const mobileMenuToggle = document.getElementById("mobile-services-toggle");
-  const mobileMenu = document.getElementById("mobile-services-menu-container");
+  // ================================================================
+  // 3) MODAL FUNCTIONALITY (Join Us & Contact Us)
+  // ================================================================
+  const modalOverlays = document.querySelectorAll('.modal-overlay');
+  const closeModalButtons = document.querySelectorAll('[data-close]');
+  const floatingIcons = document.querySelectorAll('.floating-icon');
 
-  if (mobileMenuToggle && mobileMenu) {
-    mobileMenuToggle.addEventListener("click", (e) => {
-      e.stopPropagation();
-      mobileMenu.classList.toggle("active");
-    });
-
-    document.addEventListener("click", (e) => {
-      if (!mobileMenu.contains(e.target) && !mobileMenuToggle.contains(e.target)) {
-        mobileMenu.classList.remove("active");
+  floatingIcons.forEach((icon) => {
+    icon.addEventListener('click', function() {
+      const modalId = icon.getAttribute('data-modal');
+      const modalElement = document.getElementById(modalId);
+      if (modalElement) {
+        modalElement.classList.add('active');
+        modalElement.focus(); // For accessibility, focus on the modal
       }
     });
+  });
+
+  closeModalButtons.forEach((btn) => {
+    btn.addEventListener('click', function() {
+      const parentOverlay = btn.closest('.modal-overlay');
+      if (parentOverlay) {
+        parentOverlay.classList.remove('active');
+      }
+    });
+  });
+
+  modalOverlays.forEach((overlay) => {
+    overlay.addEventListener('click', function(e) {
+      if (e.target === overlay) { // Clicked on the overlay itself
+        overlay.classList.remove('active');
+      }
+    });
+    // Add ESC key listener to close modals
+    overlay.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        overlay.classList.remove('active');
+      }
+    });
+  });
+
+  // ================================================================
+  // 4) MOBILE SERVICES TOGGLE
+  // ================================================================
+  const servicesToggleMobile = document.getElementById('mobile-services-toggle');
+  const mobileServicesMenu = document.getElementById('mobile-services-menu');
+
+  if (servicesToggleMobile && mobileServicesMenu) {
+    servicesToggleMobile.addEventListener('click', function() {
+      mobileServicesMenu.classList.toggle('active');
+    });
   }
 
-  // ================================
-  // FORM VALIDATION HELPERS
-  // ================================
-  function sanitizeInput(input) {
-    const div = document.createElement("div");
-    div.textContent = input;
-    return div.innerHTML;
-  }
-
-  // ================================
-  // FORM: JOIN US
-  // ================================
-  const joinForm = document.getElementById("join-form");
-
+  // ================================================================
+  // 5) FORM SUBMISSIONS (Alert + Reset + Close Modal)
+  // ================================================================
+  const joinForm = document.getElementById('join-form');
   if (joinForm) {
-    joinForm.addEventListener("submit", function (e) {
+    joinForm.addEventListener('submit', (e) => {
       e.preventDefault();
-
-      const honey = document.getElementById('honeypot-join');
-      if (honey && honey.value) {
-        alert('Submission blocked.');
-        return;
+      // Simple alert, replace with actual submission logic if needed
+      alert(currentLanguage === 'en' ? 'Thank you for joining us! We have received your details.' : '¡Gracias por unirte! Hemos recibido tus datos.');
+      joinForm.reset();
+      const joinModal = document.getElementById('join-modal');
+      if (joinModal) {
+        joinModal.classList.remove('active');
       }
-
-      if (typeof grecaptcha === 'undefined') {
-        alert('ReCAPTCHA not ready.');
-        return;
-      }
-
-      grecaptcha.ready(() => {
-        grecaptcha.execute('6LfAOV0rAAAAAPBGgn2swZWj5SjANoQ4rUH6XIMz', { action: 'join_us_submit' }).then((token) => {
-          const name = sanitizeInput(document.getElementById("join-name").value);
-          const email = sanitizeInput(document.getElementById("join-email").value);
-          const contact = sanitizeInput(document.getElementById("join-contact").value);
-          const date = document.getElementById("join-date").value;
-          const time = document.getElementById("join-time").value;
-          const comment = sanitizeInput(document.getElementById("join-comment").value);
-
-          const selectedInterests = [];
-          document.querySelectorAll('input[name="join_interest"]:checked').forEach(cb => selectedInterests.push(cb.value));
-
-          const formData = new FormData();
-          formData.append("name", name);
-          formData.append("email", email);
-          formData.append("contact", contact);
-          formData.append("date", date);
-          formData.append("time", time);
-          formData.append("comment", comment);
-          formData.append("interests", selectedInterests.join(","));
-          formData.append("g-recaptcha-response", token);
-
-          fetch("https://join.gabrieloor-cv1.workers.dev/", {
-            method: "POST",
-            body: formData
-          })
-            .then(res => res.json())
-            .then(data => {
-              if (data.success) {
-                alert("Form submitted successfully! " + data.message);
-                joinForm.reset();
-                document.getElementById("join-modal").classList.remove("active");
-              } else {
-                alert("Submission failed: " + (data.message || "Unknown error"));
-              }
-            })
-            .catch(err => {
-              console.error("Join Us form error:", err);
-              alert("Error submitting the form. Try again.");
-            });
-        });
-      });
     });
   }
 
-  // ================================
-  // FORM: CONTACT US
-  // ================================
-  const contactForm = document.getElementById("contact-form");
-
+  const contactForm = document.getElementById('contact-form');
   if (contactForm) {
-    contactForm.addEventListener("submit", function (e) {
+    contactForm.addEventListener('submit', (e) => {
       e.preventDefault();
-
-      const honey = document.getElementById('honeypot-contact');
-      if (honey && honey.value) {
-        alert('Submission blocked.');
-        return;
+      // Simple alert, replace with actual submission logic if needed
+      alert(currentLanguage === 'en' ? 'Thank you for contacting us! We will get back to you soon.' : '¡Gracias por contactarnos! Nos pondremos en contacto contigo pronto.');
+      contactForm.reset();
+      const contactModal = document.getElementById('contact-modal');
+      if (contactModal) {
+        contactModal.classList.remove('active');
       }
+    });
+  }
 
-      if (typeof grecaptcha === 'undefined') {
-        alert('ReCAPTCHA not ready.');
-        return;
-      }
-
-      grecaptcha.ready(() => {
-        grecaptcha.execute('6LfAOV0rAAAAAPBGgn2swZWj5SjANoQ4rUH6XIMz', { action: 'contact_us_submit' }).then((token) => {
-          const name = sanitizeInput(document.getElementById("contact-name").value);
-          const email = sanitizeInput(document.getElementById("contact-email").value);
-          const contactNumber = sanitizeInput(document.getElementById("contact-number").value);
-          const preferredDate = document.getElementById("contact-date").value;
-          const preferredTime = document.getElementById("contact-time").value;
-          const comments = sanitizeInput(document.getElementById("contact-comments").value);
-
-          const formData = new FormData();
-          formData.append("name", name);
-          formData.append("email", email);
-          formData.append("contactNumber", contactNumber);
-          formData.append("preferredDate", preferredDate);
-          formData.append("preferredTime", preferredTime);
-          formData.append("comments", comments);
-          formData.append("g-recaptcha-response", token);
-
-          fetch("https://contact.gabrieloor-cv1.workers.dev/", {
-            method: "POST",
-            body: formData
-          })
-            .then(res => res.json())
-            .then(data => {
-              if (data.success) {
-                alert("Message sent successfully! " + data.message);
-                contactForm.reset();
-                document.getElementById("contact-modal").classList.remove("active");
-              } else {
-                alert("Submission failed: " + (data.message || "Unknown error"));
-              }
-            })
-            .catch(err => {
-              console.error("Contact Us form error:", err);
-              alert("Error submitting the form. Try again.");
-            });
+  // ================================================================
+  // 6) SERVICE WORKER REGISTRATION
+  // ================================================================
+  if ('serviceWorker'in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/service-worker.js') // Ensure this path is correct
+        .then((registration) => {
+          console.log('Service Worker registered with scope:', registration.scope);
+        })
+        .catch((err) => {
+          console.error('Service Worker registration failed:', err);
         });
-      });
     });
   }
-  // Collapsible Areas of Interest for Join Us form
-  const areasTrigger = document.getElementById('join-areas-trigger');
-  const areasOptions = document.getElementById('join-areas-options');
-  const areasDone = document.getElementById('areas-done');
-  if (areasTrigger && areasOptions && areasDone) {
-    areasTrigger.addEventListener('click', () => {
-      const isExpanded = areasTrigger.getAttribute('aria-expanded') === 'true';
-      if (isExpanded) {
-        areasOptions.style.display = 'none';
-        areasTrigger.setAttribute('aria-expanded', 'false');
-      } else {
-        areasOptions.style.display = 'block';
-        areasTrigger.setAttribute('aria-expanded', 'true');
-      }
-    });
 
-    areasDone.addEventListener('click', () => {
-      areasOptions.style.display = 'none';
-      areasTrigger.setAttribute('aria-expanded', 'false');
-    });
-  }
 });
