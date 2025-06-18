@@ -159,70 +159,65 @@
                 <input type="month" id="exp-date-from-1" name="exp-date-from[]">
                 <label for="exp-date-to-1" data-en="Date to" data-es="Fecha hasta">Date to</label>
                 <input type="month" id="exp-date-to-1" name="exp-date-to[]">
-                <button type="button" class="remove-btn" data-remove="experience-item">-</button>
+                <button type="button" class="remove-btn action-btn-circle experience-remove-btn" data-remove="experience-item"><i class="fas fa-minus-circle"></i></button>
               </div>
             </div>
-            <button type="button" class="add-btn" data-add="experience-item" data-en="+Add Experience" data-es="+Añadir Experiencia">+Add Experience</button>
+            <button type="button" class="add-btn action-btn-circle experience-add-btn" data-add="experience-item" data-en="+Add Experience" data-es="+Añadir Experiencia"><i class="fas fa-plus-circle"></i> Add Experience</button>
           </div>
 
           <!-- Skills Section -->
           <div class="form-row dynamic-section" id="skills-section">
-            <label data-en="Skills" data-es="Habilidades">Skills</label>
+            <label data-en="Skills" data-es="Habilidades">Skills</label><button type="button" class="action-btn-circle section-title-btn add-field-btn" data-action="add-field" data-section="skills"><i class="fas fa-plus-circle"></i></button><button type="button" class="action-btn-circle section-title-btn remove-field-btn" data-action="remove-field" data-section="skills"><i class="fas fa-minus-circle"></i></button>
             <div id="skills-fields-container">
               <div class="dynamic-item skill-item">
                 <input type="text" name="skill[]" placeholder="Enter a skill / Ingresa una habilidad">
                 <button type="button" class="remove-btn" data-remove="skill-item">-</button>
               </div>
-            </div>
-            <button type="button" class="add-btn" data-add="skill-item" data-en="+Add Skill" data-es="+Añadir Habilidad">+Add Skill</button>
+            <button type="button" class="accept-section-btn" data-action="accept-section" data-section="skills" data-en="Accept" data-es="Aceptar">Accept</button></div>
           </div>
 
           <!-- Education Section -->
           <div class="form-row dynamic-section" id="education-section">
-            <label data-en="Education" data-es="Educación">Education</label>
+            <label data-en="Education" data-es="Educación">Education</label><button type="button" class="action-btn-circle section-title-btn add-field-btn" data-action="add-field" data-section="education"><i class="fas fa-plus-circle"></i></button><button type="button" class="action-btn-circle section-title-btn remove-field-btn" data-action="remove-field" data-section="education"><i class="fas fa-minus-circle"></i></button>
             <div id="education-fields-container">
               <div class="dynamic-item education-item">
                 <input type="text" name="education[]" placeholder="Enter degree or institution / Ingresa título o institución">
                 <button type="button" class="remove-btn" data-remove="education-item">-</button>
               </div>
-            </div>
-            <button type="button" class="add-btn" data-add="education-item" data-en="+Add Education" data-es="+Añadir Educación">+Add Education</button>
+            <button type="button" class="accept-section-btn" data-action="accept-section" data-section="education" data-en="Accept" data-es="Aceptar">Accept</button></div>
           </div>
 
           <!-- Continued Education Section -->
           <div class="form-row dynamic-section" id="continued-education-section">
-            <label data-en="Continued Education" data-es="Educación Continua">Continued Education</label>
+            <label data-en="Continued Education" data-es="Educación Continua">Continued Education</label><button type="button" class="action-btn-circle section-title-btn add-field-btn" data-action="add-field" data-section="continued-education"><i class="fas fa-plus-circle"></i></button><button type="button" class="action-btn-circle section-title-btn remove-field-btn" data-action="remove-field" data-section="continued-education"><i class="fas fa-minus-circle"></i></button>
             <div id="continued-education-fields-container">
               <div class="dynamic-item continued-education-item">
                 <input type="text" name="continued-education[]" placeholder="Enter course or program / Ingresa curso o programa">
                 <button type="button" class="remove-btn" data-remove="continued-education-item">-</button>
               </div>
-            </div>
-            <button type="button" class="add-btn" data-add="continued-education-item" data-en="+Add Continued Education" data-es="+Añadir Educación Continua">+Add Continued Education</button>
+            <button type="button" class="accept-section-btn" data-action="accept-section" data-section="continued-education" data-en="Accept" data-es="Aceptar">Accept</button></div>
           </div>
 
           <!-- Certification Section -->
           <div class="form-row dynamic-section" id="certification-section">
-            <label data-en="Certification" data-es="Certificación">Certification</label>
+            <label data-en="Certification" data-es="Certificación">Certification</label><button type="button" class="action-btn-circle section-title-btn add-field-btn" data-action="add-field" data-section="certification"><i class="fas fa-plus-circle"></i></button><button type="button" class="action-btn-circle section-title-btn remove-field-btn" data-action="remove-field" data-section="certification"><i class="fas fa-minus-circle"></i></button>
             <div id="certification-fields-container">
               <div class="dynamic-item certification-item">
                 <input type="text" name="certification[]" placeholder="Enter certification / Ingresa certificación">
                 <button type="button" class="remove-btn" data-remove="certification-item">-</button>
               </div>
-            </div>
-            <button type="button" class="add-btn" data-add="certification-item" data-en="+Add Certification" data-es="+Añadir Certificación">+Add Certification</button>
+            <button type="button" class="accept-section-btn" data-action="accept-section" data-section="certification" data-en="Accept" data-es="Aceptar">Accept</button></div>
           </div>
 
           <!-- Hobbies Section -->
           <div class="form-row dynamic-section" id="hobbies-section">
-            <label data-en="Hobbies" data-es="Pasatiempos">Hobbies</label>
+            <label data-en="Hobbies" data-es="Pasatiempos">Hobbies</label><button type="button" class="action-btn-circle section-title-btn add-field-btn" data-action="add-field" data-section="hobbies"><i class="fas fa-plus-circle"></i></button><button type="button" class="action-btn-circle section-title-btn remove-field-btn" data-action="remove-field" data-section="hobbies"><i class="fas fa-minus-circle"></i></button>
             <div id="hobbies-fields-container">
               <div class="dynamic-item hobby-item">
                 <input type="text" name="hobby[]" placeholder="Enter a hobby / Ingresa un pasatiempo">
                 <button type="button" class="remove-btn" data-remove="hobby-item">-</button>
               </div>
-            </div>
-            <button type="button" class="add-btn" data-add="hobby-item" data-en="+Add Hobby" data-es="+Añadir Pasatiempo">+Add Hobby</button>
+            <button type="button" class="accept-section-btn" data-action="accept-section" data-section="hobbies" data-en="Accept" data-es="Aceptar">Accept</button></div>
           </div>
 
           <!-- Services Interest Section -->

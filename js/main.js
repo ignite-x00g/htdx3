@@ -166,11 +166,49 @@ document.addEventListener('DOMContentLoaded', function() {
           // Reset counter
           counters[type.name] = 1;
           updateRemoveButtonVisibility(`${type.name}-fields-container`);
+          if (type.name !== 'experience') {
+            updateSectionRemoveButtonState(type.name);
+          }
         }
       });
       // Manually reset collapsible checkboxes
       const collapsibleCheckboxes = joinForm.querySelectorAll('.collapsible-content input[type="checkbox"]');
       collapsibleCheckboxes.forEach(checkbox => checkbox.checked = false);
+
+      // Reset "Accept" button states and section UI
+      document.querySelectorAll('button.accept-section-btn[data-action="accept-section"]').forEach(button => {
+        const sectionName = button.dataset.section;
+        const sectionElement = document.getElementById(`${sectionName}-section`);
+        const titleLabel = sectionElement ? sectionElement.querySelector(':scope > label') : null;
+
+        if (titleLabel) {
+          titleLabel.classList.remove('section-accepted');
+          const checkmark = titleLabel.querySelector('.accept-checkmark');
+          if (checkmark) checkmark.remove();
+        }
+
+        button.disabled = false;
+        // Reset text based on current language and original data attributes from HTML
+        const originalTextEn = button.getAttribute('data-en');
+        const originalTextEs = button.getAttribute('data-es');
+        button.textContent = currentLanguage === 'es' ? originalTextEs : originalTextEn;
+
+        const fieldsContainer = document.getElementById(`${sectionName}-fields-container`);
+        if (fieldsContainer) {
+          fieldsContainer.querySelectorAll('input, textarea, select').forEach(field => field.disabled = false);
+        }
+
+        const addBtn = document.querySelector(`[data-action="add-field"][data-section="${sectionName}"]`);
+        if (addBtn) addBtn.disabled = false;
+
+        const removeBtn = document.querySelector(`[data-action="remove-field"][data-section="${sectionName}"]`);
+        if (removeBtn) removeBtn.disabled = false;
+
+        // After re-enabling, ensure the section remove button state is accurate
+        if (sectionName !== 'experience') { // updateSectionRemoveButtonState is for non-experience sections
+            updateSectionRemoveButtonState(sectionName);
+        }
+      });
 
       const joinModal = document.getElementById('join-modal');
       if (joinModal) {
@@ -213,7 +251,7 @@ document.addEventListener('DOMContentLoaded', function() {
         <input type="month" id="exp-date-from-${id}" name="exp-date-from[]">
         <label for="exp-date-to-${id}" data-en="Date to" data-es="Fecha hasta">Date to</label>
         <input type="month" id="exp-date-to-${id}" name="exp-date-to[]">
-        <button type="button" class="remove-btn" data-remove="experience-item">-</button>
+        <button type="button" class="remove-btn action-btn-circle experience-remove-btn" data-remove="experience-item"><i class="fas fa-minus-circle"></i></button>
       </div>`;
   }
 
@@ -248,9 +286,28 @@ document.addEventListener('DOMContentLoaded', function() {
     tempWrapper.innerHTML = newItemHTML;
     const newItemElement = tempWrapper.firstChild;
 
-    container.appendChild(newItemElement);
+    // Find the 'Accept' button to insert before it
+    const acceptButton = container.querySelector('.accept-section-btn');
+    if (acceptButton) {
+      container.insertBefore(newItemElement, acceptButton);
+    } else {
+      container.appendChild(newItemElement); // Fallback if no accept button
+    }
+
     updateLanguageText(); // Update text for newly added elements
-    updateRemoveButtonVisibility(containerId);
+    updateRemoveButtonVisibility(containerId); // For per-item remove buttons
+    if (itemName !== 'experience') {
+      updateSectionRemoveButtonState(itemName); // For section's remove button
+    }
+  }
+
+  function updateSectionRemoveButtonState(sectionName) {
+    const removeButton = document.querySelector(`[data-action="remove-field"][data-section="${sectionName}"]`);
+    const container = document.getElementById(`${sectionName}-fields-container`);
+    if (removeButton && container) {
+      const items = container.querySelectorAll(`.dynamic-item.${sectionName}-item`);
+      removeButton.disabled = items.length === 0;
+    }
   }
 
   const dynamicFieldTypes = [
@@ -262,15 +319,54 @@ document.addEventListener('DOMContentLoaded', function() {
     { name: 'hobbies', template: (id) => getGenericItemHTML('hobbies', id, 'Enter a hobby', 'Ingresa un pasatiempo') }
   ];
 
-  dynamicFieldTypes.forEach(type => {
-    const addButton = document.querySelector(`[data-add="${type.name}-item"]`);
-    if (addButton) {
+  // Setup for "Experience" section specifically
+  const experienceAddButton = document.querySelector('[data-add="experience-item"]');
+  const experienceType = dynamicFieldTypes.find(t => t.name === 'experience');
+  if (experienceAddButton && experienceType) {
+    experienceAddButton.addEventListener('click', () => {
+      addDynamicField('experience-fields-container', 'experience', experienceType.template);
+    });
+    // Initial visibility for experience per-item remove buttons
+    updateRemoveButtonVisibility('experience-fields-container');
+  }
+
+  // Setup for other dynamic sections (Skills, Education, etc.)
+  document.querySelectorAll('[data-action="add-field"]').forEach(addButton => {
+    const sectionName = addButton.dataset.section;
+    const type = dynamicFieldTypes.find(t => t.name === sectionName);
+    if (type && type.name !== 'experience') {
       addButton.addEventListener('click', () => {
-        addDynamicField(`${type.name}-fields-container`, type.name, type.template);
+        addDynamicField(`${sectionName}-fields-container`, sectionName, type.template);
       });
     }
-    // Initial visibility update for remove buttons
-    updateRemoveButtonVisibility(`${type.name}-fields-container`);
+  });
+
+  document.querySelectorAll('[data-action="remove-field"]').forEach(removeButton => {
+    const sectionName = removeButton.dataset.section;
+    const type = dynamicFieldTypes.find(t => t.name === sectionName);
+    if (type && type.name !== 'experience') {
+      removeButton.addEventListener('click', () => {
+        const container = document.getElementById(`${sectionName}-fields-container`);
+        if (container) {
+          const items = container.querySelectorAll(`.dynamic-item.${sectionName}-item`);
+          if (items.length > 0) {
+            items[items.length - 1].remove();
+            // counters[sectionName]--; // Decrement counter if needed, though not strictly necessary if only adding
+            updateRemoveButtonVisibility(`${sectionName}-fields-container`); // For per-item buttons if they exist
+            updateSectionRemoveButtonState(sectionName); // For the section's remove button
+          }
+        }
+      });
+    }
+  });
+
+  // Initial state update for all dynamic sections
+  dynamicFieldTypes.forEach(type => {
+    const containerId = `${type.name}-fields-container`;
+    updateRemoveButtonVisibility(containerId); // For per-item remove buttons
+    if (type.name !== 'experience') {
+      updateSectionRemoveButtonState(type.name); // For section's remove button
+    }
   });
 
   if (joinForm) {
@@ -289,7 +385,40 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   // ================================================================
-  // 8) COLLAPSIBLE DROPDOWN FUNCTIONALITY (Join Us Form)
+  // 8) ACCEPT SECTION FUNCTIONALITY
+  // ================================================================
+  document.querySelectorAll('button.accept-section-btn[data-action="accept-section"]').forEach(button => {
+    button.addEventListener('click', function() {
+      const sectionName = this.dataset.section;
+      const sectionElement = document.getElementById(`${sectionName}-section`);
+      const titleLabel = sectionElement ? sectionElement.querySelector(':scope > label') : null;
+
+      if (titleLabel) {
+        titleLabel.classList.add('section-accepted');
+        if (!titleLabel.querySelector('.accept-checkmark')) {
+          titleLabel.insertAdjacentHTML('beforeend', ' <i class="fas fa-check accept-checkmark"></i>');
+        }
+      }
+
+      this.textContent = currentLanguage === 'es' ? 'Aceptado' : 'Accepted';
+      this.disabled = true;
+
+      const fieldsContainer = document.getElementById(`${sectionName}-fields-container`);
+      if (fieldsContainer) {
+        fieldsContainer.querySelectorAll('input, textarea, select').forEach(field => field.disabled = true);
+        // Disable per-item remove buttons inside the accepted section as well
+        fieldsContainer.querySelectorAll('.remove-btn').forEach(btn => btn.style.display = 'none');
+      }
+
+      const addBtn = document.querySelector(`[data-action="add-field"][data-section="${sectionName}"]`);
+      if (addBtn) addBtn.disabled = true;
+      const removeBtn = document.querySelector(`[data-action="remove-field"][data-section="${sectionName}"]`);
+      if (removeBtn) removeBtn.disabled = true;
+    });
+  });
+
+  // ================================================================
+  // 9) COLLAPSIBLE DROPDOWN FUNCTIONALITY (Join Us Form)
   // ================================================================
   const collapsibleToggles = document.querySelectorAll('.collapsible-toggle');
   collapsibleToggles.forEach(toggle => {
@@ -328,7 +457,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
   // ================================================================
-  // 9) SERVICE WORKER REGISTRATION
+  // 10) SERVICE WORKER REGISTRATION
   // ================================================================
   if ('serviceWorker'in navigator) {
     window.addEventListener('load', () => {
