@@ -662,3 +662,150 @@ body[data-theme="dark"] .collapsible-done-btn {
 body[data-theme="dark"] .collapsible-done-btn:hover {
   background-color: #01579b;
 }
+
+/* ==================================================================
+   New Action Button & Section State Styles
+   ================================================================== */
+
+/* General Styling for new action buttons */
+.action-btn-circle {
+    background-color: #f0f0f0; /* Light grey background */
+    border: 1px solid #ccc;
+    border-radius: 50%; /* Makes it circular */
+    width: 30px;   /* Fixed width */
+    height: 30px;  /* Fixed height */
+    padding: 0;    /* Remove padding to center icon */
+    margin-left: 8px;
+    cursor: pointer;
+    display: inline-flex; /* Align icon nicely */
+    align-items: center;
+    justify-content: center;
+    font-size: 1em; /* Icon size */
+    color: #333;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.action-btn-circle:hover {
+    background-color: #e0e0e0;
+    color: #000;
+}
+
+.action-btn-circle:disabled {
+    background-color: #e0e0e0;
+    color: #aaa;
+    cursor: not-allowed;
+    border-color: #ddd;
+}
+body[data-theme="dark"] .action-btn-circle:disabled {
+    background-color: #333;
+    color: #666;
+    border-color: #444;
+}
+
+
+body[data-theme="dark"] .action-btn-circle {
+    background-color: #404040; /* Darker grey for dark mode */
+    border-color: #555;
+    color: #e0e0e0;
+}
+
+body[data-theme="dark"] .action-btn-circle:hover {
+    background-color: #505050;
+    color: #fff;
+}
+
+.action-btn-circle i.fas {
+    margin: 0; /* Ensure icon is centered */
+}
+
+/* Specific for experience section add button if it needs different styling from title buttons */
+.experience-add-btn {
+    /* This class also uses action-btn-circle. It can be used for overrides. */
+    /* Example: if it needs to be larger or not circular */
+    /* For now, no specific overrides as it's a circle button too */
+}
+
+/* Styling for Add/Remove buttons next to section titles */
+.section-title-btn {
+    /* Already covered by action-btn-circle, this is for specificity or minor tweaks */
+}
+
+/* Styling for the "Accept" button */
+.accept-section-btn {
+    display: block; /* Make it take its own line */
+    margin-top: 10px; /* Space above it */
+    margin-bottom: 10px; /* Space below it */
+    padding: 8px 15px;
+    background-color: #28a745; /* Green background */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.accept-section-btn:hover {
+    background-color: #218838; /* Darker green on hover */
+}
+
+.accept-section-btn:disabled {
+    background-color: #5cb85c; /* Lighter green when accepted/disabled */
+    color: #e0e0e0; /* Light text on green */
+    cursor: not-allowed;
+}
+body[data-theme="dark"] .accept-section-btn {
+    background-color: #1e7e34; /* Dark mode green */
+}
+body[data-theme="dark"] .accept-section-btn:hover {
+    background-color: #155724; /* Darker green for hover in dark mode */
+}
+body[data-theme="dark"] .accept-section-btn:disabled {
+    background-color: #28a745; /* Similar to light mode disabled, but check contrast */
+    color: #aaa; /* Ensure text is visible on green */
+}
+
+
+/* Styling for the accepted section title */
+.section-accepted {
+    color: #28a745; /* Green color for text */
+    font-weight: bold;
+}
+body[data-theme="dark"] .section-accepted {
+    color: #38c172; /* Lighter green for dark mode */
+}
+
+.accept-checkmark {
+    color: #28a745; /* Green color for checkmark */
+    margin-left: 5px;
+}
+body[data-theme="dark"] .accept-checkmark {
+    color: #38c172; /* Lighter green for dark mode */
+}
+
+/*
+    Generic item remove buttons (skill-item .remove-btn, etc.) are currently
+    styled by the general .remove-btn class (red, rectangular).
+    The experience item's remove button (.experience-remove-btn)
+    has action-btn-circle applied via JS from a previous change.
+    If generic items' per-item remove buttons also need to be circular,
+    they would need similar JS updates or more specific CSS here.
+    For now, they remain as default red rectangular buttons, mostly hidden
+    by JS logic if only one item exists, with primary removal via section title's minus button.
+*/
+
+/* Adjustments for Join Modal dynamic sections for button layout */
+/* Make sure labels and their new buttons are on the same line nicely */
+#join-modal .dynamic-section > label {
+    display: inline-flex; /* Allows buttons to sit nicely next to it */
+    align-items: center; /* Vertically align label text and buttons */
+    /* margin-bottom: 10px; */ /* Keep existing margin from .dynamic-section > label */
+}
+
+/* Ensure the buttons don't cause too much of a line height increase */
+#join-modal .dynamic-section > label .action-btn-circle {
+    margin-bottom: 0; /* Override if it causes issues with label alignment */
+    /* margin-top: -2px; /* Optional: fine-tune vertical alignment */
+}
+
+/* Dark mode for new action buttons if not covered by general .action-btn-circle dark mode */
+/* (Already added above for .action-btn-circle itself) */
