@@ -913,14 +913,14 @@ body[data-theme="dark"] .accept-checkmark {
     }
     .completed h2 { color: green; }
     .completed h2::after { content: " ✅"; font-size: 1rem; }
-    .submit-button {
+/*    .submit-button {
       padding: 0.6rem 1.2rem;
       background: #007bff;
       border: none;
       color: white;
       cursor: pointer;
       border-radius: 4px;
-    }
+    } */
     .form-footer { text-align: right; margin-top: 2rem; }
     .form-row { margin-bottom: 1rem; }
 /*    label { font-weight: bold; } */
