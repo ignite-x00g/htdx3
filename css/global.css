@@ -809,3 +809,132 @@ body[data-theme="dark"] .accept-checkmark {
 
 /* Dark mode for new action buttons if not covered by general .action-btn-circle dark mode */
 /* (Already added above for .action-btn-circle itself) */
+
+/* ==================================================================
+   Styles for New Join Us Modal Content (from join_us_translated_aria.html)
+   ================================================================== */
+/*    body { font-family: Arial, sans-serif; margin: 0; } */
+/*    .modal-overlay {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.6);
+      z-index: 9999;
+      transition: opacity 0.2s;
+    } */
+/*    .modal-content {
+      background: #fff;
+      padding: 2rem;
+      max-width: 800px;
+      border-radius: 10px;
+      width: 100%;
+      position: relative;
+      overflow-y: auto;
+      max-height: 90vh;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.18);
+    } */
+/*    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.2rem;
+    } */
+/*    .close-modal {
+      font-size: 1.5rem;
+      background: none;
+      border: none;
+      cursor: pointer;
+    } */
+    .lang-toggle {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      user-select: none;
+    }
+    .form-section {
+      border: 1px solid #ddd;
+      padding: 1rem;
+      margin-bottom: 1.5rem;
+      border-radius: 8px;
+      background: #f9f9f9;
+    }
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .section-header h2 {
+      margin: 0;
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .circle-btn {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: none;
+      background-color: #007bff;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      margin-left: 0.5rem;
+      font-size: 1.2rem;
+    }
+    .circle-btn.remove { background-color: #dc3545; }
+    .inputs input {
+      display: block;
+      width: 100%;
+      padding: 0.5rem;
+      margin: 0.5rem 0;
+      box-sizing: border-box;
+    }
+    .accept-btn,
+    .edit-btn {
+      background-color: #28a745;
+      color: white;
+      padding: 0.4rem 1rem;
+      border: none;
+      margin-top: 0.5rem;
+      cursor: pointer;
+      border-radius: 4px;
+      margin-right: 0.5rem;
+      font-size: 0.9rem;
+    }
+    .edit-btn {
+      background-color: #ffc107;
+      color: #000;
+    }
+    .completed h2 { color: green; }
+    .completed h2::after { content: " ✅"; font-size: 1rem; }
+    .submit-button {
+      padding: 0.6rem 1.2rem;
+      background: #007bff;
+      border: none;
+      color: white;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+    .form-footer { text-align: right; margin-top: 2rem; }
+    .form-row { margin-bottom: 1rem; }
+/*    label { font-weight: bold; } */
+/*    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    textarea {
+      width: 100%;
+      padding: 0.5rem;
+      margin-top: 0.3rem;
+      box-sizing: border-box;
+    } */
+/*    textarea { resize: vertical; } */
+/*    @media (max-width: 600px) {
+      .modal-content { padding: 1rem; max-width: 98vw; }
+    } */
+

@@ -107,192 +107,108 @@
   <!-- ==================================================================
        Join Modal
        ================================================================== -->
-  <div id="join-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="joinModalTitle">
-    <div class="modal-content">
-      <!-- Modal Header: Title & Close Button -->
+  <div class="modal-overlay" id="join-modal">
+    <div class="modal-content" id="modal-content">
+      <div class="lang-toggle" onclick="toggleLang()">EN | ES</div>
       <div class="modal-header">
-        <h3 id="joinModalTitle" data-en="Join Us" data-es="Únete a Nosotros">Join Us</h3>
-        <button class="close-modal" data-close aria-label="Close">&times;</button>
+        <h3 data-en="Join Us" data-es="Únete a Nosotros">Join Us</h3>
+        <button class="close-modal" id="close-modal-btn" data-close aria-label="Close" data-aria-label-en="Close" data-aria-label-es="Cerrar">&times;</button>
       </div>
-      <!-- Modal Body: Form with Grid (Table-like) Layout -->
-      <div class="modal-body">
-        <form id="join-form">
-          <!-- Row 1 -->
-          <div class="form-row">
-            <div class="form-cell">
-              <label for="join-name" data-en="Name" data-es="Nombre">Name</label>
-              <input
-                type="text"
-                id="join-name"
-                placeholder="Enter your name / Ingrese su Nombre"
-                required>
-            </div>
-            <div class="form-cell">
-              <label for="join-email" data-en="Email" data-es="Correo Electrónico">Email</label>
-              <input
-                type="email"
-                id="join-email"
-                placeholder="Enter your email / Ingrese su correo electrónico"
-                required>
-            </div>
-          </div>
-          <!-- Row 2 -->
-          <div class="form-row">
-            <div class="form-cell">
-              <label for="join-contact" data-en="Contact | Phone Number" data-es="Contacto | Número de Teléfono">Contact | Phone Number</label>
-              <input
-                type="tel"
-                id="join-contact"
-                placeholder="Enter your phone number / Ingrese su número de teléfono"
-                required>
+      <form id="join-form" autocomplete="off">
+        <!-- Row: Name, Email, Phone -->
+        <div class="form-row">
+          <label for="name" data-en="Name" data-es="Nombre">Name</label>
+          <input type="text" id="name" name="name"
+            placeholder="Enter your name"
+            data-placeholder-en="Enter your name"
+            data-placeholder-es="Ingresa tu nombre" />
+
+          <label for="email" data-en="Email" data-es="Correo Electrónico">Email</label>
+          <input type="email" id="email" name="email"
+            placeholder="Enter your email"
+            data-placeholder-en="Enter your email"
+            data-placeholder-es="Ingresa tu correo" />
+
+          <label for="phone" data-en="Phone" data-es="Teléfono">Phone</label>
+          <input type="tel" id="phone" name="phone"
+            placeholder="Enter your phone"
+            data-placeholder-en="Enter your phone"
+            data-placeholder-es="Ingresa tu teléfono" />
+        </div>
+        <!-- Dynamic Sections -->
+        <div class="form-section" data-section="Skills">
+          <div class="section-header">
+            <h2 data-en="Skills" data-es="Habilidades">Skills</h2>
+            <div>
+              <button type="button" class="circle-btn add" aria-label="Add" data-aria-label-en="Add" data-aria-label-es="Añadir">+</button>
+              <button type="button" class="circle-btn remove" aria-label="Remove" data-aria-label-en="Remove" data-aria-label-es="Quitar">−</button>
             </div>
           </div>
-
-          <!-- Experience Section -->
-          <div class="form-row dynamic-section" id="experience-section">
-            <label data-en="Experience" data-es="Experiencia">Experience</label>
-            <div id="experience-fields-container">
-              <div class="dynamic-item experience-item">
-                <label for="exp-role-1" data-en="Describe your Roles" data-es="Describe tus Funciones">Describe your Roles</label>
-                <textarea id="exp-role-1" name="exp-role[]" placeholder="Describe your role... / Describe tu función..." rows="3"></textarea>
-                <label for="exp-date-from-1" data-en="Date from" data-es="Fecha desde">Date from</label>
-                <input type="month" id="exp-date-from-1" name="exp-date-from[]">
-                <label for="exp-date-to-1" data-en="Date to" data-es="Fecha hasta">Date to</label>
-                <input type="month" id="exp-date-to-1" name="exp-date-to[]">
-                <button type="button" class="remove-btn action-btn-circle experience-remove-btn" data-remove="experience-item"><i class="fas fa-minus-circle"></i></button>
-              </div>
-            </div>
-            <button type="button" class="add-btn action-btn-circle experience-add-btn" data-add="experience-item" data-en="+Add Experience" data-es="+Añadir Experiencia"><i class="fas fa-plus-circle"></i> Add Experience</button>
-          </div>
-
-          <!-- Skills Section -->
-          <div class="form-row dynamic-section" id="skills-section">
-            <label data-en="Skills" data-es="Habilidades">Skills</label><button type="button" class="action-btn-circle section-title-btn add-field-btn" data-action="add-field" data-section="skills"><i class="fas fa-plus-circle"></i></button><button type="button" class="action-btn-circle section-title-btn remove-field-btn" data-action="remove-field" data-section="skills"><i class="fas fa-minus-circle"></i></button>
-            <div id="skills-fields-container">
-              <div class="dynamic-item skill-item">
-                <input type="text" name="skill[]" placeholder="Enter a skill / Ingresa una habilidad">
-                <button type="button" class="remove-btn" data-remove="skill-item">-</button>
-              </div>
-            <button type="button" class="accept-section-btn" data-action="accept-section" data-section="skills" data-en="Accept" data-es="Aceptar">Accept</button></div>
-          </div>
-
-          <!-- Education Section -->
-          <div class="form-row dynamic-section" id="education-section">
-            <label data-en="Education" data-es="Educación">Education</label><button type="button" class="action-btn-circle section-title-btn add-field-btn" data-action="add-field" data-section="education"><i class="fas fa-plus-circle"></i></button><button type="button" class="action-btn-circle section-title-btn remove-field-btn" data-action="remove-field" data-section="education"><i class="fas fa-minus-circle"></i></button>
-            <div id="education-fields-container">
-              <div class="dynamic-item education-item">
-                <input type="text" name="education[]" placeholder="Enter degree or institution / Ingresa título o institución">
-                <button type="button" class="remove-btn" data-remove="education-item">-</button>
-              </div>
-            <button type="button" class="accept-section-btn" data-action="accept-section" data-section="education" data-en="Accept" data-es="Aceptar">Accept</button></div>
-          </div>
-
-          <!-- Continued Education Section -->
-          <div class="form-row dynamic-section" id="continued-education-section">
-            <label data-en="Continued Education" data-es="Educación Continua">Continued Education</label><button type="button" class="action-btn-circle section-title-btn add-field-btn" data-action="add-field" data-section="continued-education"><i class="fas fa-plus-circle"></i></button><button type="button" class="action-btn-circle section-title-btn remove-field-btn" data-action="remove-field" data-section="continued-education"><i class="fas fa-minus-circle"></i></button>
-            <div id="continued-education-fields-container">
-              <div class="dynamic-item continued-education-item">
-                <input type="text" name="continued-education[]" placeholder="Enter course or program / Ingresa curso o programa">
-                <button type="button" class="remove-btn" data-remove="continued-education-item">-</button>
-              </div>
-            <button type="button" class="accept-section-btn" data-action="accept-section" data-section="continued-education" data-en="Accept" data-es="Aceptar">Accept</button></div>
-          </div>
-
-          <!-- Certification Section -->
-          <div class="form-row dynamic-section" id="certification-section">
-            <label data-en="Certification" data-es="Certificación">Certification</label><button type="button" class="action-btn-circle section-title-btn add-field-btn" data-action="add-field" data-section="certification"><i class="fas fa-plus-circle"></i></button><button type="button" class="action-btn-circle section-title-btn remove-field-btn" data-action="remove-field" data-section="certification"><i class="fas fa-minus-circle"></i></button>
-            <div id="certification-fields-container">
-              <div class="dynamic-item certification-item">
-                <input type="text" name="certification[]" placeholder="Enter certification / Ingresa certificación">
-                <button type="button" class="remove-btn" data-remove="certification-item">-</button>
-              </div>
-            <button type="button" class="accept-section-btn" data-action="accept-section" data-section="certification" data-en="Accept" data-es="Aceptar">Accept</button></div>
-          </div>
-
-          <!-- Hobbies Section -->
-          <div class="form-row dynamic-section" id="hobbies-section">
-            <label data-en="Hobbies" data-es="Pasatiempos">Hobbies</label><button type="button" class="action-btn-circle section-title-btn add-field-btn" data-action="add-field" data-section="hobbies"><i class="fas fa-plus-circle"></i></button><button type="button" class="action-btn-circle section-title-btn remove-field-btn" data-action="remove-field" data-section="hobbies"><i class="fas fa-minus-circle"></i></button>
-            <div id="hobbies-fields-container">
-              <div class="dynamic-item hobby-item">
-                <input type="text" name="hobby[]" placeholder="Enter a hobby / Ingresa un pasatiempo">
-                <button type="button" class="remove-btn" data-remove="hobby-item">-</button>
-              </div>
-            <button type="button" class="accept-section-btn" data-action="accept-section" data-section="hobbies" data-en="Accept" data-es="Aceptar">Accept</button></div>
-          </div>
-
-          <!-- Services Interest Section -->
-          <div class="form-row collapsible-section" id="services-interest-section">
-            <button type="button" class="collapsible-toggle" aria-expanded="false" aria-controls="services-interest-content">
-              <span data-en="What Services are you interested in?" data-es="¿Qué Servicios te Interesan?">What Services are you interested in?</span> <i class="fas fa-chevron-down"></i>
-            </button>
-            <div id="services-interest-content" class="collapsible-content">
-              <label><input type="checkbox" name="interested_services[]" value="business_operations"> <span data-en="Business Operations" data-es="Operaciones Empresariales">Business Operations</span></label>
-              <label><input type="checkbox" name="interested_services[]" value="contact_center"> <span data-en="Contact Center" data-es="Centro de Contacto">Contact Center</span></label>
-              <label><input type="checkbox" name="interested_services[]" value="it_support"> <span data-en="IT Support" data-es="Soporte IT">IT Support</span></label>
-              <label><input type="checkbox" name="interested_services[]" value="professionals"> <span data-en="Professionals" data-es="Profesionales">Professionals</span></label>
-              <button type="button" class="collapsible-done-btn" data-en="DONE" data-es="HECHO">DONE</button>
+          <div class="inputs"></div>
+          <button type="button" class="accept-btn" data-en="Accept" data-es="Aceptar">Accept</button>
+          <button type="button" class="edit-btn" data-en="Edit" data-es="Editar" style="display:none;">Edit</button>
+        </div>
+        <div class="form-section" data-section="Education">
+          <div class="section-header">
+            <h2 data-en="Education" data-es="Educación">Education</h2>
+            <div>
+              <button type="button" class="circle-btn add" aria-label="Add" data-aria-label-en="Add" data-aria-label-es="Añadir">+</button>
+              <button type="button" class="circle-btn remove" aria-label="Remove" data-aria-label-en="Remove" data-aria-label-es="Quitar">−</button>
             </div>
           </div>
+          <div class="inputs"></div>
+          <button type="button" class="accept-btn" data-en="Accept" data-es="Aceptar">Accept</button>
+          <button type="button" class="edit-btn" data-en="Edit" data-es="Editar" style="display:none;">Edit</button>
+        </div>
+        <div class="form-section" data-section="Continued Education">
+          <div class="section-header">
+            <h2 data-en="Continued Education" data-es="Educación Continua">Continued Education</h2>
+            <div>
+              <button type="button" class="circle-btn add" aria-label="Add" data-aria-label-en="Add" data-aria-label-es="Añadir">+</button>
+              <button type="button" class="circle-btn remove" aria-label="Remove" data-aria-label-en="Remove" data-aria-label-es="Quitar">−</button>
+            </div>
 
-          <!-- Work Mode Section -->
-          <div class="form-row collapsible-section" id="work-mode-section">
-            <button type="button" class="collapsible-toggle" aria-expanded="false" aria-controls="work-mode-content">
-              <span data-en="Interested in Work Mode" data-es="Interesado en Modalidad de Trabajo">Interested in Work Mode</span> <i class="fas fa-chevron-down"></i>
-            </button>
-            <div id="work-mode-content" class="collapsible-content">
-              <label><input type="checkbox" name="work_mode[]" value="remote"> <span data-en="Remote" data-es="Remoto">Remote</span></label>
-              <label><input type="checkbox" name="work_mode[]" value="freelance"> <span data-en="Freelance" data-es="Freelance">Freelance</span></label>
-              <label><input type="checkbox" name="work_mode[]" value="on_site"> <span data-en="On-Site" data-es="Presencial">On-Site</span></label>
-              <label><input type="checkbox" name="work_mode[]" value="hybrid"> <span data-en="Hybrid" data-es="Híbrido">Hybrid</span></label>
-              <button type="button" class="collapsible-done-btn" data-en="DONE" data-es="HECHO">DONE</button>
+          </div>
+          <div class="inputs"></div>
+          <button type="button" class="accept-btn" data-en="Accept" data-es="Aceptar">Accept</button>
+          <button type="button" class="edit-btn" data-en="Edit" data-es="Editar" style="display:none;">Edit</button>
+        </div>
+        <div class="form-section" data-section="Certification">
+          <div class="section-header">
+            <h2 data-en="Certification" data-es="Certificación">Certification</h2>
+            <div>
+              <button type="button" class="circle-btn add" aria-label="Add" data-aria-label-en="Add" data-aria-label-es="Añadir">+</button>
+              <button type="button" class="circle-btn remove" aria-label="Remove" data-aria-label-en="Remove" data-aria-label-es="Quitar">−</button>
             </div>
           </div>
-
-          <!-- Contract Type Section -->
-          <div class="form-row collapsible-section" id="contract-type-section">
-            <button type="button" class="collapsible-toggle" aria-expanded="false" aria-controls="contract-type-content">
-              <span data-en="Would like my contract as:" data-es="Me gustaría mi contrato como:">Would like my contract as:</span> <i class="fas fa-chevron-down"></i>
-            </button>
-            <div id="contract-type-content" class="collapsible-content">
-              <label><input type="checkbox" name="contract_type[]" value="full_time"> <span data-en="Full-time contract" data-es="Contrato a tiempo completo">Full-time contract</span></label>
-              <label><input type="checkbox" name="contract_type[]" value="part_time"> <span data-en="Part-time contract" data-es="Contrato a tiempo parcial">Part-time contract</span></label>
-              <label><input type="checkbox" name="contract_type[]" value="freelance_contract"> <span data-en="Freelance contract" data-es="Contrato freelance">Freelance contract</span></label>
-              <label><input type="checkbox" name="contract_type[]" value="executive"> <span data-en="Executive contract" data-es="Contrato ejecutivo">Executive contract</span></label>
-              <label><input type="checkbox" name="contract_type[]" value="fixed_term"> <span data-en="Fixed-term contract" data-es="Contrato a plazo fijo">Fixed-term contract</span></label>
-              <label><input type="checkbox" name="contract_type[]" value="seasonal"> <span data-en="Seasonal contract" data-es="Contrato de temporada">Seasonal contract</span></label>
-              <label><input type="checkbox" name="contract_type[]" value="project_based"> <span data-en="Project Base contract" data-es="Contrato por proyecto">Project Base contract</span></label>
-              <label><input type="checkbox" name="contract_type[]" value="startup"> <span data-en="Start-Up" data-es="Start-Up">Start-Up</span></label>
-              <label><input type="checkbox" name="contract_type[]" value="non_profit"> <span data-en="Non-Profit" data-es="Sin fines de lucro">Non-Profit</span></label>
-              <button type="button" class="collapsible-done-btn" data-en="DONE" data-es="HECHO">DONE</button>
+          <div class="inputs"></div>
+          <button type="button" class="accept-btn" data-en="Accept" data-es="Aceptar">Accept</button>
+          <button type="button" class="edit-btn" data-en="Edit" data-es="Editar" style="display:none;">Edit</button>
+        </div>
+        <div class="form-section" data-section="Hobbies">
+          <div class="section-header">
+            <h2 data-en="Hobbies" data-es="Pasatiempos">Hobbies</h2>
+            <div>
+              <button type="button" class="circle-btn add" aria-label="Add" data-aria-label-en="Add" data-aria-label-es="Añadir">+</button>
+              <button type="button" class="circle-btn remove" aria-label="Remove" data-aria-label-en="Remove" data-aria-label-es="Quitar">−</button>
             </div>
           </div>
-
-          <!-- Row 4 (Comment Section) -->
-          <div class="form-row">
-            <div class="form-cell">
-              <label for="join-comment" data-en="Tell us about Yourself" data-es="Cuéntanos sobre ti">Tell us about Yourself</label>
-              <textarea
-                id="join-comment"
-                rows="4"
-                placeholder="Tell us about yourself"
-                data-en="Tell us about yourself"
-                data-es="Cuéntanos sobre ti"
-                required
-              ></textarea>
-            </div>
-          </div>
-        </form>
-      </div>
-      <!-- Modal Footer: Submit Button -->
-      <div class="modal-footer">
-        <button
-          type="submit"
-          form="join-form"
-          class="submit-button"
-          data-en="Submit"
-          data-es="Enviar"
-        >Submit</button>
-      </div>
+          <div class="inputs"></div>
+          <button type="button" class="accept-btn" data-en="Accept" data-es="Aceptar">Accept</button>
+          <button type="button" class="edit-btn" data-en="Edit" data-es="Editar" style="display:none;">Edit</button>
+        </div>
+        <!-- Comments -->
+        <div class="form-row">
+          <label for="comment" data-en="Tell us about yourself" data-es="Cuéntanos sobre ti">Tell us about yourself</label>
+          <textarea id="comment" name="comment" rows="4"
+            data-placeholder-en="Tell us about yourself..."
+            data-placeholder-es="Cuéntanos sobre ti..."></textarea>
+        </div>
+        <!-- Submit -->
+        <div class="form-footer">
+          <button type="submit" class="submit-button" data-en="Submit" data-es="Enviar">Submit</button>
+        </div>
+      </form>
     </div>
   </div>
 
@@ -304,7 +220,7 @@
       <!-- Modal Header: Title & Close Button -->
       <div class="modal-header">
         <h3 id="contactModalTitle" data-en="Contact Us" data-es="Contáctenos">Contact Us</h3>
-        <button class="close-modal" data-close aria-label="Close">&times;</button>
+        <button class="close-modal" data-close aria-label="Close" data-aria-label-en="Close" data-aria-label-es="Cerrar">&times;</button>
       </div>
       <!-- Modal Body: Form with Grid (Table-like) Layout -->
       <div class="modal-body">

@@ -27,60 +27,108 @@ document.addEventListener('DOMContentLoaded', function() {
   setupThemeButton(themeToggleDesktop);
 
   // ================================================================
-  // 2) LANGUAGE TOGGLE (Desktop & Mobile)
+  // 2) LANGUAGE TOGGLE (Desktop, Mobile & New Modal)
   // ================================================================
-  const langToggleMobile = document.getElementById('mobile-language-toggle');
-  const langToggleDesktop = document.getElementById('language-toggle-desktop');
-  let currentLanguage = localStorage.getItem('language') || 'en';
+  let currentLang = localStorage.getItem('language') || 'en'; // Consolidated language variable
 
-  function updateLanguageText() {
-    const translatableElements = document.querySelectorAll('[data-en]');
-    translatableElements.forEach((el) => {
-      const text = (currentLanguage === 'en') ? el.getAttribute('data-en') : el.getAttribute('data-es');
+  const alertMessages = {
+    addEntry: {
+      en: "Please add at least one entry in {sectionName}.",
+      es: "Agrega al menos una entrada en {sectionName}."
+    },
+    formSubmitted: {
+      en: "Form submitted.",
+      es: "Formulario enviado."
+    },
+    // Added from original main.js for contact form
+    contactThankYou: {
+        en: "Thank you for contacting us! We will get back to you soon.",
+        es: "¡Gracias por contactarnos! Nos pondremos en contacto contigo pronto."
+    }
+  };
+
+  function updateLanguageDisplay() {
+    // Update text content for elements with data-en/data-es
+    document.querySelectorAll('[data-en]').forEach(el => {
+      const text = el.getAttribute(`data-${currentLang}`);
       if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
-        if (el.placeholder) el.placeholder = text;
-      } else {
-        // Check if the element is a button with an icon to preserve the icon
-        if (el.tagName === 'BUTTON' && el.querySelector('i.fas')) {
-            const icon = el.querySelector('i.fas').outerHTML;
-            el.innerHTML = text + ' ' + icon;
-        } else {
-            el.textContent = text;
+        // Handle placeholders separately
+        if (el.placeholder && el.hasAttribute(`data-placeholder-${currentLang}`)) {
+            el.placeholder = el.getAttribute(`data-placeholder-${currentLang}`);
+        } else if (el.placeholder && el.hasAttribute('data-en') && !el.hasAttribute(`data-placeholder-${currentLang}`)) {
+            // Fallback for inputs that only have data-en for placeholder
+             el.placeholder = el.getAttribute(`data-${currentLang}`);
         }
+      } else if (el.classList.contains('circle-btn') || (el.classList.contains('close-modal') && el.id !== 'close-modal-btn')) {
+        // circle-btn from new modal has fixed text '+' or '-'
+        // old close-modal buttons (not the one with id 'close-modal-btn' from new modal) might have icons
+        if (el.querySelector('i.fas')) { // Preserve icon if present (for old modal structure if any part remains)
+            const icon = el.querySelector('i.fas').outerHTML;
+            if (text) el.innerHTML = text + ' ' + icon;
+        }
+        // else: do nothing to textContent for circle-btn or new close-modal, aria-label is king
+      } else {
+        if (text) el.textContent = text;
       }
     });
+
+    // Update placeholders specifically for elements with data-placeholder attributes
+    document.querySelectorAll('[data-placeholder-en], [data-placeholder-es]').forEach(el => {
+        const placeholder = el.getAttribute(`data-placeholder-${currentLang}`);
+        if (placeholder) el.placeholder = placeholder;
+    });
+
+    // Update ARIA labels
+    document.querySelectorAll('[data-aria-label-en], [data-aria-label-es]').forEach(el => {
+      const ariaLabel = el.getAttribute(`data-aria-label-${currentLang}`);
+      if (ariaLabel) el.setAttribute('aria-label', ariaLabel);
+    });
+
+    // Update lang toggle button texts
+    const langToggleMobileEl = document.getElementById('mobile-language-toggle');
+    const langToggleDesktopEl = document.getElementById('language-toggle-desktop');
+    const langToggleModalEl = document.querySelector('#join-modal .lang-toggle'); // New modal's lang toggle
+
+    const newToggleLabel = currentLang === 'en' ? 'ES' : 'EN';
+    if (langToggleMobileEl) langToggleMobileEl.textContent = newToggleLabel;
+    if (langToggleDesktopEl) langToggleDesktopEl.textContent = newToggleLabel;
+
+    const newModalToggleText = currentLang === 'en' ? 'EN | ES' : 'ES | EN';
+    if (langToggleModalEl) langToggleModalEl.textContent = newModalToggleText;
+
+    // Update page title (main page title)
+    // const mainTitleTag = document.querySelector('head > title');
+    // if (mainTitleTag && mainTitleTag.hasAttribute('data-en') && mainTitleTag.hasAttribute('data-es')) {
+    //    document.title = mainTitleTag.getAttribute(`data-${currentLang}`);
+    // }
+    // The main index.html title is static. The title tag in join_us_translated_aria.html was data-driven.
+    // If the main page title needs to be dynamic, it requires data-en/es attributes.
+     bodyElement.setAttribute('lang', currentLang);
   }
 
-  function setLanguageButtonLabels() {
-    const label = (currentLanguage === 'en') ? 'ES' : 'EN';
-    if (langToggleMobile) langToggleMobile.textContent = label;
-    if (langToggleDesktop) langToggleDesktop.textContent = label;
+  function toggleLang() {
+    currentLang = currentLang === 'en' ? 'es' : 'en';
+    localStorage.setItem('language', currentLang);
+    updateLanguageDisplay();
   }
 
-  bodyElement.setAttribute('lang', currentLanguage);
-  updateLanguageText();
-  setLanguageButtonLabels();
+  // Attach to existing global toggles
+  const langToggleMobileGlobal = document.getElementById('mobile-language-toggle');
+  const langToggleDesktopGlobal = document.getElementById('language-toggle-desktop');
+  if (langToggleMobileGlobal) langToggleMobileGlobal.addEventListener('click', toggleLang);
+  if (langToggleDesktopGlobal) langToggleDesktopGlobal.addEventListener('click', toggleLang);
 
-  function toggleLanguage() {
-    currentLanguage = (currentLanguage === 'en') ? 'es' : 'en';
-    localStorage.setItem('language', currentLanguage);
-    bodyElement.setAttribute('lang', currentLanguage);
-    updateLanguageText();
-    setLanguageButtonLabels();
-  }
+  // The new modal's internal toggle (if present and with onclick="toggleLang()") will also call the new unified toggleLang.
 
-  if (langToggleMobile) {
-    langToggleMobile.addEventListener('click', toggleLanguage);
-  }
-  if (langToggleDesktop) {
-    langToggleDesktop.addEventListener('click', toggleLanguage);
-  }
+  // Initial language setup
+  updateLanguageDisplay();
+
 
   // ================================================================
-  // 3) MODAL FUNCTIONALITY (Join Us & Contact Us)
+  // 3) MODAL FUNCTIONALITY (Join Us & Contact Us) - Remains largely the same
   // ================================================================
   const modalOverlays = document.querySelectorAll('.modal-overlay');
-  const closeModalButtons = document.querySelectorAll('[data-close]');
+  const closeModalButtons = document.querySelectorAll('[data-close]'); //This will now also include the new modal's close button if it has data-close
   const floatingIcons = document.querySelectorAll('.floating-icon');
   floatingIcons.forEach((icon) => {
     icon.addEventListener('click', function() {
@@ -148,32 +196,36 @@ document.addEventListener('DOMContentLoaded', function() {
   // ================================================================
   // 6) FORM SUBMISSIONS (Alert + Reset + Close Modal)
   // ================================================================
-  const joinForm = document.getElementById('join-form');
+  const joinForm = document.getElementById('join-form'); // Assuming new modal form also has id 'join-form'
   if (joinForm) {
     joinForm.addEventListener('submit', (e) => {
       e.preventDefault();
-      alert(currentLanguage === 'en' ? 'Thank you for joining us! We have received your details.' : '¡Gracias por unirte! Hemos recibido tus datos.');
-      joinForm.reset(); // Reset form fields
-       // Manually reset dynamic fields and hide remove buttons again
-      dynamicFieldTypes.forEach(type => {
-        const container = document.getElementById(`${type.name}-fields-container`);
-        if (container) {
-          // Remove all but the first item
-          const items = container.querySelectorAll(`.dynamic-item.${type.name}-item`);
-          for (let i = items.length - 1; i > 0; i--) {
-            items[i].remove();
+      alert(alertMessages.formSubmitted[currentLang]); // Use new alert message
+      joinForm.reset(); // Reset form fields (name, email, phone, comment on the new form)
+
+      // New Reset Logic for the new form structure in #join-modal
+      document.querySelectorAll('#join-modal .form-section').forEach(section => {
+          const inputsContainer = section.querySelector('.inputs');
+          if (inputsContainer) inputsContainer.innerHTML = ''; // Remove all dynamically added inputs
+
+          section.classList.remove('completed');
+          const acceptBtn = section.querySelector('.accept-btn');
+          const editBtn = section.querySelector('.edit-btn');
+          const addBtnSection = section.querySelector('.circle-btn.add'); // Specific to new modal
+          const removeBtnSection = section.querySelector('.circle-btn.remove'); // Specific to new modal
+
+
+          if (acceptBtn) {
+              acceptBtn.style.display = 'inline-block';
+              // Reset acceptBtn text using its data attributes and currentLang
+              const acceptText = acceptBtn.getAttribute(`data-${currentLang}`);
+              if(acceptText) acceptBtn.textContent = acceptText;
+              acceptBtn.disabled = false;
           }
-          // Reset counter
-          counters[type.name] = 1;
-          updateRemoveButtonVisibility(`${type.name}-fields-container`);
-          if (type.name !== 'experience') {
-            updateSectionRemoveButtonState(type.name);
-          }
-        }
+          if (editBtn) editBtn.style.display = 'none';
+          if (addBtnSection) addBtnSection.disabled = false;
+          if (removeBtnSection) removeBtnSection.disabled = false;
       });
-      // Manually reset collapsible checkboxes
-      const collapsibleCheckboxes = joinForm.querySelectorAll('.collapsible-content input[type="checkbox"]');
-      collapsibleCheckboxes.forEach(checkbox => checkbox.checked = false);
 
       // Reset "Accept" button states and section UI
       document.querySelectorAll('button.accept-section-btn[data-action="accept-section"]').forEach(button => {
@@ -221,7 +273,7 @@ document.addEventListener('DOMContentLoaded', function() {
   if (contactForm) {
     contactForm.addEventListener('submit', (e) => {
       e.preventDefault();
-      alert(currentLanguage === 'en' ? 'Thank you for contacting us! We will get back to you soon.' : '¡Gracias por contactarnos! Nos pondremos en contacto contigo pronto.');
+      alert(alertMessages.contactThankYou[currentLang]);
       contactForm.reset();
       const contactModal = document.getElementById('contact-modal');
       if (contactModal) {
@@ -231,233 +283,64 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   // ================================================================
-  // 7) DYNAMIC FIELD FUNCTIONALITY (Join Us Form)
+  // 7) NEW DYNAMIC FORM LOGIC (for the new Join Us modal)
   // ================================================================
-  const counters = {
-    experience: 1,
-    skills: 1,
-    education: 1,
-    'continued-education': 1,
-    certification: 1,
-    hobbies: 1
-  };
+  document.querySelectorAll('#join-modal .form-section').forEach(section => {
+    const addBtn = section.querySelector('.add');
+    const removeBtn = section.querySelector('.remove');
+    const acceptBtn = section.querySelector('.accept-btn');
+    const editBtn = section.querySelector('.edit-btn');
+    const inputsContainer = section.querySelector('.inputs');
+    const sectionNameEn = section.querySelector('h2')?.getAttribute('data-en');
+    const sectionNameEs = section.querySelector('h2')?.getAttribute('data-es');
 
-  function getExperienceItemHTML(id) {
-    return `
-      <div class="dynamic-item experience-item">
-        <label for="exp-role-${id}" data-en="Describe your Roles" data-es="Describe tus Funciones">Describe your Roles</label>
-        <textarea id="exp-role-${id}" name="exp-role[]" placeholder="Describe your role... / Describe tu función..." data-en="Describe your role..." data-es="Describe tu función..." rows="3"></textarea>
-        <label for="exp-date-from-${id}" data-en="Date from" data-es="Fecha desde">Date from</label>
-        <input type="month" id="exp-date-from-${id}" name="exp-date-from[]">
-        <label for="exp-date-to-${id}" data-en="Date to" data-es="Fecha hasta">Date to</label>
-        <input type="month" id="exp-date-to-${id}" name="exp-date-to[]">
-        <button type="button" class="remove-btn action-btn-circle experience-remove-btn" data-remove="experience-item"><i class="fas fa-minus-circle"></i></button>
-      </div>`;
-  }
+    if (!addBtn || !removeBtn || !acceptBtn || !editBtn || !inputsContainer || !sectionNameEn || !sectionNameEs) return;
 
-  function getGenericItemHTML(type, id, placeholderEn, placeholderEs) {
-    return `
-      <div class="dynamic-item ${type}-item">
-        <input type="text" id="${type}-${id}" name="${type}[]" placeholder="${placeholderEn} / ${placeholderEs}" data-en="${placeholderEn}" data-es="${placeholderEs}">
-        <button type="button" class="remove-btn" data-remove="${type}-item">-</button>
-      </div>`;
-  }
+    addBtn.addEventListener('click', () => {
+      const input = document.createElement('input');
+      input.type = 'text';
+      const placeholderEn = `Enter ${sectionNameEn} info`;
+      const placeholderEs = `Ingresa ${sectionNameEs} (info)`;
+      input.setAttribute('data-placeholder-en', placeholderEn);
+      input.setAttribute('data-placeholder-es', placeholderEs);
+      input.placeholder = currentLang === 'es' ? placeholderEs : placeholderEn;
+      inputsContainer.appendChild(input);
+    });
 
-  function updateRemoveButtonVisibility(containerId) {
-    const container = document.getElementById(containerId);
-    if (!container) return;
-    const items = container.querySelectorAll('.dynamic-item');
-    items.forEach((item) => {
-      const removeBtn = item.querySelector('.remove-btn');
-      if (removeBtn) {
-        removeBtn.style.display = items.length === 1 ? 'none' : '';
+    removeBtn.addEventListener('click', () => {
+      const inputs = inputsContainer.querySelectorAll('input');
+      if (inputs.length > 0) {
+        inputsContainer.removeChild(inputs[inputs.length - 1]);
       }
     });
-  }
-
-  function addDynamicField(containerId, itemName, templateFn) {
-    const container = document.getElementById(containerId);
-    if (!container) return;
-
-    counters[itemName]++;
-    const newItemHTML = templateFn(counters[itemName]);
-
-    const tempWrapper = document.createElement('div');
-    tempWrapper.innerHTML = newItemHTML;
-    const newItemElement = tempWrapper.firstChild;
-
-    // Find the 'Accept' button to insert before it
-    const acceptButton = container.querySelector('.accept-section-btn');
-    if (acceptButton) {
-      container.insertBefore(newItemElement, acceptButton);
-    } else {
-      container.appendChild(newItemElement); // Fallback if no accept button
-    }
-
-    updateLanguageText(); // Update text for newly added elements
-    updateRemoveButtonVisibility(containerId); // For per-item remove buttons
-    if (itemName !== 'experience') {
-      updateSectionRemoveButtonState(itemName); // For section's remove button
-    }
-  }
-
-  function updateSectionRemoveButtonState(sectionName) {
-    const removeButton = document.querySelector(`[data-action="remove-field"][data-section="${sectionName}"]`);
-    const container = document.getElementById(`${sectionName}-fields-container`);
-    if (removeButton && container) {
-      const items = container.querySelectorAll(`.dynamic-item.${sectionName}-item`);
-      removeButton.disabled = items.length === 0;
-    }
-  }
-
-  const dynamicFieldTypes = [
-    { name: 'experience', template: getExperienceItemHTML, placeholderEn: '', placeholderEs: '' }, // Experience is special
-    { name: 'skills', template: (id) => getGenericItemHTML('skills', id, 'Enter a skill', 'Ingresa una habilidad') },
-    { name: 'education', template: (id) => getGenericItemHTML('education', id, 'Enter degree or institution', 'Ingresa título o institución') },
-    { name: 'continued-education', template: (id) => getGenericItemHTML('continued-education', id, 'Enter course or program', 'Ingresa curso o programa') },
-    { name: 'certification', template: (id) => getGenericItemHTML('certification', id, 'Enter certification', 'Ingresa certificación') },
-    { name: 'hobbies', template: (id) => getGenericItemHTML('hobbies', id, 'Enter a hobby', 'Ingresa un pasatiempo') }
-  ];
-
-  // Setup for "Experience" section specifically
-  const experienceAddButton = document.querySelector('[data-add="experience-item"]');
-  const experienceType = dynamicFieldTypes.find(t => t.name === 'experience');
-  if (experienceAddButton && experienceType) {
-    experienceAddButton.addEventListener('click', () => {
-      addDynamicField('experience-fields-container', 'experience', experienceType.template);
+    acceptBtn.addEventListener('click', () => {
+      const inputs = inputsContainer.querySelectorAll('input');
+      const currentSectionNameText = currentLang === 'es' ? sectionNameEs : sectionNameEn;
+      if (inputs.length === 0) {
+        alert(alertMessages.addEntry[currentLang].replace('{sectionName}', currentSectionNameText));
+        return;
+      }
+      inputs.forEach(inputField => inputField.disabled = true);
+      section.classList.add('completed');
+      acceptBtn.style.display = 'none';
+      editBtn.style.display = 'inline-block';
+      addBtn.disabled = true;
+      removeBtn.disabled = true;
     });
-    // Initial visibility for experience per-item remove buttons
-    updateRemoveButtonVisibility('experience-fields-container');
-  }
 
-  // Setup for other dynamic sections (Skills, Education, etc.)
-  document.querySelectorAll('[data-action="add-field"]').forEach(addButton => {
-    const sectionName = addButton.dataset.section;
-    const type = dynamicFieldTypes.find(t => t.name === sectionName);
-    if (type && type.name !== 'experience') {
-      addButton.addEventListener('click', () => {
-        addDynamicField(`${sectionName}-fields-container`, sectionName, type.template);
-      });
-    }
-  });
-
-  document.querySelectorAll('[data-action="remove-field"]').forEach(removeButton => {
-    const sectionName = removeButton.dataset.section;
-    const type = dynamicFieldTypes.find(t => t.name === sectionName);
-    if (type && type.name !== 'experience') {
-      removeButton.addEventListener('click', () => {
-        const container = document.getElementById(`${sectionName}-fields-container`);
-        if (container) {
-          const items = container.querySelectorAll(`.dynamic-item.${sectionName}-item`);
-          if (items.length > 0) {
-            items[items.length - 1].remove();
-            // counters[sectionName]--; // Decrement counter if needed, though not strictly necessary if only adding
-            updateRemoveButtonVisibility(`${sectionName}-fields-container`); // For per-item buttons if they exist
-            updateSectionRemoveButtonState(sectionName); // For the section's remove button
-          }
-        }
-      });
-    }
-  });
-
-  // Initial state update for all dynamic sections
-  dynamicFieldTypes.forEach(type => {
-    const containerId = `${type.name}-fields-container`;
-    updateRemoveButtonVisibility(containerId); // For per-item remove buttons
-    if (type.name !== 'experience') {
-      updateSectionRemoveButtonState(type.name); // For section's remove button
-    }
-  });
-
-  if (joinForm) {
-    joinForm.addEventListener('click', function(event) {
-      if (event.target.classList.contains('remove-btn')) {
-        const itemToRemove = event.target.closest('.dynamic-item');
-        if (itemToRemove) {
-          const container = itemToRemove.parentElement;
-          itemToRemove.remove();
-          if (container && container.id) {
-            updateRemoveButtonVisibility(container.id);
-          }
-        }
-      }
-    });
-  }
-
-  // ================================================================
-  // 8) ACCEPT SECTION FUNCTIONALITY
-  // ================================================================
-  document.querySelectorAll('button.accept-section-btn[data-action="accept-section"]').forEach(button => {
-    button.addEventListener('click', function() {
-      const sectionName = this.dataset.section;
-      const sectionElement = document.getElementById(`${sectionName}-section`);
-      const titleLabel = sectionElement ? sectionElement.querySelector(':scope > label') : null;
-
-      if (titleLabel) {
-        titleLabel.classList.add('section-accepted');
-        if (!titleLabel.querySelector('.accept-checkmark')) {
-          titleLabel.insertAdjacentHTML('beforeend', ' <i class="fas fa-check accept-checkmark"></i>');
-        }
-      }
-
-      this.textContent = currentLanguage === 'es' ? 'Aceptado' : 'Accepted';
-      this.disabled = true;
-
-      const fieldsContainer = document.getElementById(`${sectionName}-fields-container`);
-      if (fieldsContainer) {
-        fieldsContainer.querySelectorAll('input, textarea, select').forEach(field => field.disabled = true);
-        // Disable per-item remove buttons inside the accepted section as well
-        fieldsContainer.querySelectorAll('.remove-btn').forEach(btn => btn.style.display = 'none');
-      }
-
-      const addBtn = document.querySelector(`[data-action="add-field"][data-section="${sectionName}"]`);
-      if (addBtn) addBtn.disabled = true;
-      const removeBtn = document.querySelector(`[data-action="remove-field"][data-section="${sectionName}"]`);
-      if (removeBtn) removeBtn.disabled = true;
+    editBtn.addEventListener('click', () => {
+      const inputs = inputsContainer.querySelectorAll('input');
+      inputs.forEach(inputField => inputField.disabled = false);
+      section.classList.remove('completed');
+      acceptBtn.style.display = 'inline-block';
+      editBtn.style.display = 'none';
+      addBtn.disabled = false;
+      removeBtn.disabled = false;
     });
   });
 
   // ================================================================
-  // 9) COLLAPSIBLE DROPDOWN FUNCTIONALITY (Join Us Form)
-  // ================================================================
-  const collapsibleToggles = document.querySelectorAll('.collapsible-toggle');
-  collapsibleToggles.forEach(toggle => {
-    toggle.addEventListener('click', function() {
-      const contentId = this.getAttribute('aria-controls');
-      const content = document.getElementById(contentId);
-      const isExpanded = this.getAttribute('aria-expanded') === 'true';
-
-      this.setAttribute('aria-expanded', !isExpanded);
-      content.classList.toggle('active');
-      const icon = this.querySelector('i.fas');
-      if (icon) {
-        icon.classList.toggle('fa-chevron-down');
-        icon.classList.toggle('fa-chevron-up');
-      }
-    });
-
-    // Done button functionality
-    const contentId = toggle.getAttribute('aria-controls');
-    const content = document.getElementById(contentId);
-    if (content) {
-      const doneBtn = content.querySelector('.collapsible-done-btn');
-      if (doneBtn) {
-        doneBtn.addEventListener('click', function() {
-          toggle.setAttribute('aria-expanded', 'false');
-          content.classList.remove('active');
-          const icon = toggle.querySelector('i.fas');
-          if (icon) {
-            icon.classList.remove('fa-chevron-up');
-            icon.classList.add('fa-chevron-down');
-          }
-        });
-      }
-    }
-  });
-
-
-  // ================================================================
-  // 10) SERVICE WORKER REGISTRATION
+  // 8) SERVICE WORKER REGISTRATION (was 10, renumbered)
   // ================================================================
   if ('serviceWorker'in navigator) {
     window.addEventListener('load', () => {
