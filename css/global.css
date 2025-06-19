@@ -628,6 +628,20 @@ body[data-theme="dark"] .submit-button:hover {
   background-color: #9850f5;
 }
 
+/* Dark Theme for .circle-btn and .accept-btn */
+body[data-theme="dark"] .circle-btn {
+    background-color: #bb86fc; /* Standard dark mode purple for positive actions */
+    color: #121212;           /* Standard dark text for these buttons */
+}
+
+body[data-theme="dark"] .accept-btn {
+    background-color: #bb86fc;
+    color: #121212;
+}
+body[data-theme="dark"] .accept-btn:hover {
+    background-color: #9850f5; /* Standard dark mode hover for #bb86fc */
+}
+
 /* Dark Mode for Join Us Form Extensions */
 body[data-theme="dark"] .dynamic-section {
   background-color: #2a2a2a;
@@ -909,14 +923,14 @@ body[data-theme="dark"] .accept-checkmark {
       height: 28px;
       border-radius: 50%;
       border: none;
-      background-color: #007bff;
+      background-color: #9b87f5;
       color: white;
       font-weight: bold;
       cursor: pointer;
       margin-left: 0.5rem;
       font-size: 1.2rem;
     }
-    .circle-btn.remove { background-color: #dc3545; }
+    .circle-btn.remove { background-color: #7e69ab; }
     .inputs input {
       display: block;
       width: 100%;
@@ -924,9 +938,9 @@ body[data-theme="dark"] .accept-checkmark {
       margin: 0.5rem 0;
       box-sizing: border-box;
     }
-    .accept-btn,
+    /* .accept-btn, Removed .accept-btn from this combined rule */
     .edit-btn {
-      background-color: #28a745;
+      background-color: #28a745; /* Base for edit, then overridden */
       color: white;
       padding: 0.4rem 1rem;
       border: none;
@@ -936,6 +950,24 @@ body[data-theme="dark"] .accept-checkmark {
       margin-right: 0.5rem;
       font-size: 0.9rem;
     }
+
+    .accept-btn {
+        background-color: #9b87f5; /* Main theme purple */
+        color: white; /* Ensure text remains white */
+        padding: 0.4rem 1rem;
+        border: none;
+        margin-top: 0.5rem;
+        cursor: pointer;
+        border-radius: 4px;
+        margin-right: 0.5rem;
+        font-size: 0.9rem;
+        transition: background-color 0.3s; /* Add transition for smooth hover */
+    }
+
+    .accept-btn:hover {
+        background-color: #7e69ab; /* Darker purple for hover */
+    }
+
     .edit-btn {
       background-color: #ffc107;
       color: #000;
