@@ -645,23 +645,50 @@ body[data-theme="dark"] .accept-btn:hover {
 /* Dark Theme for Join Us Modal Text Elements */
 body[data-theme="dark"] #join-modal .form-row > label,
 body[data-theme="dark"] #join-modal .form-cell > label {
-    color: #e0e0e0; /* Standard light text for dark theme */
+    color: #ffffff;
 }
 
 body[data-theme="dark"] #join-modal .form-section .section-header h2 {
-    color: #e0e0e0; /* Standard light text for dark theme */
+    color: #ffffff;
 }
 
 body[data-theme="dark"] #join-modal .form-section {
-    color: #e0e0e0; /* Default text color for content within the section */
+    color: #ffffff; /* For general text within sections if not overridden by more specific elements */
 }
 
-body[data-theme="dark"] #join-modal input[type="text"],
+/* body[data-theme="dark"] #join-modal input[type="text"],
 body[data-theme="dark"] #join-modal input[type="email"],
 body[data-theme="dark"] #join-modal input[type="tel"],
 body[data-theme="dark"] #join-modal textarea,
 body[data-theme="dark"] #join-modal .inputs input[type="text"] {
     color: #e0e0e0;
+} */
+
+/* Dark Mode for Join Us Modal Input Fields (to match Contact Us modal) */
+body[data-theme="dark"] #join-modal .form-cell input[type="text"],
+body[data-theme="dark"] #join-modal .form-cell input[type="email"],
+body[data-theme="dark"] #join-modal .form-cell input[type="tel"],
+body[data-theme="dark"] #join-modal textarea#comment {
+    background-color: #2a2a2a;
+    border-color: #444;
+    color: #e0e0e0;
+}
+
+body[data-theme="dark"] #join-modal .form-section .inputs input[type="text"] {
+    background-color: #2a2a2a;
+    border-color: #444;
+    color: #e0e0e0;
+}
+
+body[data-theme="dark"] #join-modal .form-cell input[type="text"]::placeholder,
+body[data-theme="dark"] #join-modal .form-cell input[type="email"]::placeholder,
+body[data-theme="dark"] #join-modal .form-cell input[type="tel"]::placeholder,
+body[data-theme="dark"] #join-modal textarea#comment::placeholder {
+    color: #888;
+}
+
+body[data-theme="dark"] #join-modal .form-section .inputs input[type="text"]::placeholder {
+    color: #888;
 }
 
 /* Dark Mode for Join Us Form Extensions */
