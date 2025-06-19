@@ -347,7 +347,6 @@ footer {
 }
 
 /* Ensure other sections span both columns */
-#join-form .form-section,
 #join-form .form-row, /* This will target the comment's form-row */
 #join-form .form-footer {
   grid-column: 1 / -1; /* Span across both columns */
