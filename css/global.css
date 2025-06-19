@@ -215,12 +215,12 @@ footer {
   background-color: #fff;
   border-radius: 10px;
   width: 90%; /* Responsive width */
-  max-width: 800px; /* Max width for larger screens */
+  max-width: 1000px; /* Max width for larger screens */
   max-height: 90vh; /* Max height to prevent overflow */
   display: flex;
   flex-direction: column;
   position: relative;
-  overflow: hidden; /* Prevent content from spilling */
+  overflow-y: auto; /* Ensure vertical scrolling is enabled */
 }
 
 /* ==================================================================
@@ -293,6 +293,14 @@ footer {
   width: 100%; /* Ensure inputs take full width of the cell */
 }
 
+/* Specific padding for Join Us modal inputs to make them smaller */
+#join-modal .form-cell input,
+#join-modal .form-cell textarea,
+#join-modal .inputs input,
+#join-modal textarea#comment {
+    padding: 0.35rem;
+}
+
 /* For single column elements spanning full width if needed */
 .form-cell.full-width {
   grid-column: 1 / -1; /* Span across both columns */
@@ -321,6 +329,27 @@ footer {
 
 .submit-button:hover {
   background-color: #7e69ab;
+}
+
+/* ==================================================================
+   Join Us Form (#join-form) Specific Layout
+   ================================================================== */
+#join-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Two equal columns */
+  gap: 1rem; /* Space between grid items */
+  padding: 1rem; /* Add padding to the form itself, similar to modal-body */
+}
+
+/* Make the first form-row (Name, Email, Phone) part of the grid flow */
+#join-form > .form-row:first-child {
+  display: contents;
+}
+
+/* Ensure other sections span both columns */
+#join-form .form-row, /* This will target the comment's form-row */
+#join-form .form-footer {
+  grid-column: 1 / -1; /* Span across both columns */
 }
 
 /* ==================================================================
@@ -597,6 +626,69 @@ body[data-theme="dark"] .submit-button {
 }
 body[data-theme="dark"] .submit-button:hover {
   background-color: #9850f5;
+}
+
+/* Dark Theme for .circle-btn and .accept-btn */
+body[data-theme="dark"] .circle-btn {
+    background-color: #bb86fc; /* Standard dark mode purple for positive actions */
+    color: #121212;           /* Standard dark text for these buttons */
+}
+
+body[data-theme="dark"] .accept-btn {
+    background-color: #bb86fc;
+    color: #121212;
+}
+body[data-theme="dark"] .accept-btn:hover {
+    background-color: #9850f5; /* Standard dark mode hover for #bb86fc */
+}
+
+/* Dark Theme for Join Us Modal Text Elements */
+body[data-theme="dark"] #join-modal .form-row > label,
+body[data-theme="dark"] #join-modal .form-cell > label {
+    color: #ffffff;
+}
+
+body[data-theme="dark"] #join-modal .form-section .section-header h2 {
+    color: #ffffff;
+}
+
+body[data-theme="dark"] #join-modal .form-section {
+    color: #ffffff; /* For general text within sections if not overridden by more specific elements */
+}
+
+/* body[data-theme="dark"] #join-modal input[type="text"],
+body[data-theme="dark"] #join-modal input[type="email"],
+body[data-theme="dark"] #join-modal input[type="tel"],
+body[data-theme="dark"] #join-modal textarea,
+body[data-theme="dark"] #join-modal .inputs input[type="text"] {
+    color: #e0e0e0;
+} */
+
+/* Dark Mode for Join Us Modal Input Fields (to match Contact Us modal) */
+body[data-theme="dark"] #join-modal .form-cell input[type="text"],
+body[data-theme="dark"] #join-modal .form-cell input[type="email"],
+body[data-theme="dark"] #join-modal .form-cell input[type="tel"],
+body[data-theme="dark"] #join-modal textarea#comment {
+    background-color: #2a2a2a;
+    border-color: #444;
+    color: #e0e0e0;
+}
+
+body[data-theme="dark"] #join-modal .form-section .inputs input[type="text"] {
+    background-color: #2a2a2a;
+    border-color: #444;
+    color: #e0e0e0;
+}
+
+body[data-theme="dark"] #join-modal .form-cell input[type="text"]::placeholder,
+body[data-theme="dark"] #join-modal .form-cell input[type="email"]::placeholder,
+body[data-theme="dark"] #join-modal .form-cell input[type="tel"]::placeholder,
+body[data-theme="dark"] #join-modal textarea#comment::placeholder {
+    color: #888;
+}
+
+body[data-theme="dark"] #join-modal .form-section .inputs input[type="text"]::placeholder {
+    color: #888;
 }
 
 /* Dark Mode for Join Us Form Extensions */
@@ -880,14 +972,14 @@ body[data-theme="dark"] .accept-checkmark {
       height: 28px;
       border-radius: 50%;
       border: none;
-      background-color: #007bff;
+      background-color: #9b87f5;
       color: white;
       font-weight: bold;
       cursor: pointer;
       margin-left: 0.5rem;
       font-size: 1.2rem;
     }
-    .circle-btn.remove { background-color: #dc3545; }
+    .circle-btn.remove { background-color: #7e69ab; }
     .inputs input {
       display: block;
       width: 100%;
@@ -895,9 +987,9 @@ body[data-theme="dark"] .accept-checkmark {
       margin: 0.5rem 0;
       box-sizing: border-box;
     }
-    .accept-btn,
+    /* .accept-btn, Removed .accept-btn from this combined rule */
     .edit-btn {
-      background-color: #28a745;
+      background-color: #28a745; /* Base for edit, then overridden */
       color: white;
       padding: 0.4rem 1rem;
       border: none;
@@ -907,20 +999,38 @@ body[data-theme="dark"] .accept-checkmark {
       margin-right: 0.5rem;
       font-size: 0.9rem;
     }
+
+    .accept-btn {
+        background-color: #9b87f5; /* Main theme purple */
+        color: white; /* Ensure text remains white */
+        padding: 0.4rem 1rem;
+        border: none;
+        margin-top: 0.5rem;
+        cursor: pointer;
+        border-radius: 4px;
+        margin-right: 0.5rem;
+        font-size: 0.9rem;
+        transition: background-color 0.3s; /* Add transition for smooth hover */
+    }
+
+    .accept-btn:hover {
+        background-color: #7e69ab; /* Darker purple for hover */
+    }
+
     .edit-btn {
       background-color: #ffc107;
       color: #000;
     }
     .completed h2 { color: green; }
     .completed h2::after { content: " ✅"; font-size: 1rem; }
-    .submit-button {
+/*    .submit-button {
       padding: 0.6rem 1.2rem;
       background: #007bff;
       border: none;
       color: white;
       cursor: pointer;
       border-radius: 4px;
-    }
+    } */
     .form-footer { text-align: right; margin-top: 2rem; }
     .form-row { margin-bottom: 1rem; }
 /*    label { font-weight: bold; } */
@@ -934,6 +1044,18 @@ body[data-theme="dark"] .accept-checkmark {
       box-sizing: border-box;
     } */
 /*    textarea { resize: vertical; } */
+
+@media (max-width: 768px) {
+    #join-form {
+        grid-template-columns: 1fr; /* Switch to a single column layout */
+        padding: 0.5rem; /* Adjust padding for smaller screens if needed */
+    }
+
+    /* The form-cell elements within #join-form > .form-row:first-child will now stack naturally. */
+    /* The .form-section, comment's .form-row, and .form-footer already span full width */
+    /* and will adapt to the single column layout correctly. */
+}
+
 /*    @media (max-width: 600px) {
       .modal-content { padding: 1rem; max-width: 98vw; }
     } */
