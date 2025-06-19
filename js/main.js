@@ -227,6 +227,41 @@ document.addEventListener('DOMContentLoaded', function() {
           if (removeBtnSection) removeBtnSection.disabled = false;
       });
 
+      // Reset "Accept" button states and section UI
+      document.querySelectorAll('button.accept-section-btn[data-action="accept-section"]').forEach(button => {
+        const sectionName = button.dataset.section;
+        const sectionElement = document.getElementById(`${sectionName}-section`);
+        const titleLabel = sectionElement ? sectionElement.querySelector(':scope > label') : null;
+
+        if (titleLabel) {
+          titleLabel.classList.remove('section-accepted');
+          const checkmark = titleLabel.querySelector('.accept-checkmark');
+          if (checkmark) checkmark.remove();
+        }
+
+        button.disabled = false;
+        // Reset text based on current language and original data attributes from HTML
+        const originalTextEn = button.getAttribute('data-en');
+        const originalTextEs = button.getAttribute('data-es');
+        button.textContent = currentLanguage === 'es' ? originalTextEs : originalTextEn;
+
+        const fieldsContainer = document.getElementById(`${sectionName}-fields-container`);
+        if (fieldsContainer) {
+          fieldsContainer.querySelectorAll('input, textarea, select').forEach(field => field.disabled = false);
+        }
+
+        const addBtn = document.querySelector(`[data-action="add-field"][data-section="${sectionName}"]`);
+        if (addBtn) addBtn.disabled = false;
+
+        const removeBtn = document.querySelector(`[data-action="remove-field"][data-section="${sectionName}"]`);
+        if (removeBtn) removeBtn.disabled = false;
+
+        // After re-enabling, ensure the section remove button state is accurate
+        if (sectionName !== 'experience') { // updateSectionRemoveButtonState is for non-experience sections
+            updateSectionRemoveButtonState(sectionName);
+        }
+      });
+
       const joinModal = document.getElementById('join-modal');
       if (joinModal) {
         joinModal.classList.remove('active');
@@ -278,7 +313,6 @@ document.addEventListener('DOMContentLoaded', function() {
         inputsContainer.removeChild(inputs[inputs.length - 1]);
       }
     });
-
     acceptBtn.addEventListener('click', () => {
       const inputs = inputsContainer.querySelectorAll('input');
       const currentSectionNameText = currentLang === 'es' ? sectionNameEs : sectionNameEn;
