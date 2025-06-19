@@ -220,7 +220,7 @@ footer {
   display: flex;
   flex-direction: column;
   position: relative;
-  overflow: hidden; /* Prevent content from spilling */
+  overflow-y: auto; /* Ensure vertical scrolling is enabled */
 }
 
 /* ==================================================================
