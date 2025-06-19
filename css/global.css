@@ -642,6 +642,28 @@ body[data-theme="dark"] .accept-btn:hover {
     background-color: #9850f5; /* Standard dark mode hover for #bb86fc */
 }
 
+/* Dark Theme for Join Us Modal Text Elements */
+body[data-theme="dark"] #join-modal .form-row > label,
+body[data-theme="dark"] #join-modal .form-cell > label {
+    color: #e0e0e0; /* Standard light text for dark theme */
+}
+
+body[data-theme="dark"] #join-modal .form-section .section-header h2 {
+    color: #e0e0e0; /* Standard light text for dark theme */
+}
+
+body[data-theme="dark"] #join-modal .form-section {
+    color: #e0e0e0; /* Default text color for content within the section */
+}
+
+body[data-theme="dark"] #join-modal input[type="text"],
+body[data-theme="dark"] #join-modal input[type="email"],
+body[data-theme="dark"] #join-modal input[type="tel"],
+body[data-theme="dark"] #join-modal textarea,
+body[data-theme="dark"] #join-modal .inputs input[type="text"] {
+    color: #e0e0e0;
+}
+
 /* Dark Mode for Join Us Form Extensions */
 body[data-theme="dark"] .dynamic-section {
   background-color: #2a2a2a;
