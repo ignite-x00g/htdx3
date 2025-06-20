@@ -309,11 +309,11 @@ footer {
     font-style: normal; /* Normalize font style, some browsers italicize placeholders */
     color: #757575;       /* Default light mode placeholder color */
 }
+
 /* For single column elements spanning full width if needed */
 .form-cell.full-width {
   grid-column: 1 / -1; /* Span across both columns */
 }
-
 
 /* ==================================================================
    Modal Footer: Submit Button Aligned Right
@@ -657,7 +657,7 @@ body[data-theme="dark"] #join-modal .form-cell > label {
 }
 
 body[data-theme="dark"] #join-modal .form-section .section-header h2 {
-    color: #ffffff;
+    color: #ffffff !important; /* Adding !important as a test, if it still fails, there's a deeper issue */
 }
 
 body[data-theme="dark"] #join-modal .form-section {
