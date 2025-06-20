@@ -16,15 +16,18 @@
   display: flex;
   position: fixed;
   bottom: 0;
-  right: 0; /* Align to the right margin */
+  /* Change from right: 0; and width: 85%; */
+  left: 0;
+  right: 0;
+  width: 100%;
   background: #fff;
   border-top: 1px solid #ccc;
   justify-content: space-around;
   align-items: center;
   padding: 0.5rem 0;
-  z-index: 3000; /* on top of floating icons */
-  width: 85%; /* Set the width to 85% */
-  border-radius: 20px; /* Add rounded corners */
+  z-index: 3000;
+  /* Temporarily remove border-radius for testing, can be added back later */
+  /* border-radius: 20px; */
 }
 
   .mobile-nav-item {
@@ -44,21 +47,27 @@
 .mobile-services-menu {
   position: fixed;
   bottom: 60px;
-  left: 85px; /* Aligns to the left side */
+  left: 5%; /* Changed from 85px */
+  width: 90%; /* Added for responsiveness */
   background: #fff;
-  border-top: 1px solid #ccc;
-  display: none;
-  z-index: 1001;
+  border: 1px solid #ccc; /* Add full border for better visibility if it was just border-top */
+  border-radius: 10px; /* Add some rounding */
+  display: none; /* Initially hidden */
+  z-index: 3005; /* Increased z-index */
   max-height: 50%;
   overflow-y: auto;
   padding: 1rem;
-  transition: transform 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Add a subtle shadow */
+  transition: transform 0.3s ease, opacity 0.3s ease; /* Added opacity transition */
   transform: translateY(100%);
+  opacity: 0; /* Start fully transparent for fade-in effect */
 }
-  .mobile-services-menu.active {
-    display: block;
-    transform: translateY(0);
-  }
+
+.mobile-services-menu.active {
+  display: block;
+  transform: translateY(0);
+  opacity: 1; /* Fade in */
+}
 
   .mobile-services-menu ul {
     list-style: none;

@@ -13,6 +13,7 @@
   <link rel="stylesheet" media="(max-width: 768px)" href="css/small-screens.css">
   <!-- Font Awesome Stylesheet -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" crossorigin="anonymous">
+  <link rel="stylesheet" href="css/chatbot.css">
   <link rel="manifest" href="manifest.json">
   <link rel="icon" href="assets/favicon.ico">
 </head>
@@ -101,6 +102,10 @@
     </button>
     <button class="floating-icon" data-modal="contact-modal" aria-label="Contact Us" tabindex="0">
       <i class="fas fa-envelope-open-text"></i>
+    </button>
+    <button class="floating-icon" id="chatbot-icon-toggle" aria-label="Chat with AI" tabindex="0">
+      <i class="fas fa-user"></i>
+      <span class="floating-icon-text">Chat</span>
     </button>
   </div>
 
@@ -316,6 +321,27 @@
   </div>
 
   <!-- ==================================================================
+       Chatbot UI Modal
+       ================================================================== -->
+  <div id="chatbot-ui" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="chatbotModalTitle" style="display: none;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="chatbotModalTitle" data-en="AI Chatbot" data-es="Chatbot IA">AI Chatbot</h3>
+        <button class="close-modal" id="chatbot-close-button" aria-label="Close Chat" data-aria-label-en="Close Chat" data-aria-label-es="Cerrar Chat">&times;</button>
+      </div>
+      <div class="modal-body" id="chatbot-body">
+        <div class="chat-messages" id="chatbot-messages">
+          <!-- Chat messages will be appended here by JavaScript -->
+        </div>
+        <div class="chat-input-area">
+          <input type="text" id="chatbot-input" placeholder="Type your message..." data-placeholder-en="Type your message..." data-placeholder-es="Escribe tu mensaje...">
+          <button id="chatbot-send-button" class="submit-button" data-en="Send" data-es="Enviar">Send</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================================================================
        Mobile Bottom Navigation & Services Menu (Small Screens)
        ================================================================== -->
   <!-- Mobile Bottom Navigation Bar -->
@@ -360,5 +386,6 @@
        ================================================================== -->
   <script src="js/main.js" defer></script>
   <script src="js/service-worker.js" defer></script>
+  <script src="js/chatbot.js" defer></script>
 </body>
 </html>
