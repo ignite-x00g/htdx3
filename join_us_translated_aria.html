@@ -7,7 +7,7 @@
   <style>
     body { font-family: Arial, sans-serif; margin: 0; }
     .modal-overlay {
-      display: flex;
+      display: none;
       align-items: center;
       justify-content: center;
       position: fixed;
@@ -40,13 +40,23 @@
       border: none;
       cursor: pointer;
     }
-    .lang-toggle {
+    .lang-toggle, #theme-toggle {
       position: absolute;
       top: 1rem;
-      right: 1rem;
       font-weight: bold;
       cursor: pointer;
       user-select: none;
+      background: none;
+      border: none;
+      padding: 0.25rem; /* Base padding */
+    }
+    .lang-toggle {
+      right: 4rem; /* Adjusted to make space for theme toggle */
+      font-size: 0.9rem; /* Base font size */
+    }
+    #theme-toggle {
+      right: 1rem;
+      font-size: 1.2rem; /* Adjust as needed */
     }
     .form-section {
       border: 1px solid #ddd;
@@ -63,9 +73,6 @@
     .section-header h2 {
       margin: 0;
       font-size: 1.1rem;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
     }
     .circle-btn {
       width: 28px;
@@ -128,242 +135,412 @@
     textarea { resize: vertical; }
     @media (max-width: 600px) {
       .modal-content { padding: 1rem; max-width: 98vw; }
+      .lang-toggle, #theme-toggle {
+        top: 0.8rem;
+        padding: 0.4rem; /* Increased touch area */
+      }
+      .lang-toggle {
+        right: 3.8rem; /* Adjust if padding makes it too close to theme toggle */
+        font-size: 0.85rem;
+      }
+      #theme-toggle {
+        right: 0.8rem;
+        font-size: 1.1rem;
+      }
+    }
+
+    /* Dark Mode Styles */
+    body.dark-mode {
+        background-color: #121212;
+        color: #e0e0e0;
+    }
+    .dark-mode .modal-content {
+        background: #1e1e1e;
+        color: #e0e0e0;
+        box-shadow: 0 8px 40px rgba(255,255,255,0.1);
+    }
+    .dark-mode .form-section {
+        background: #2c2c2c;
+        border-color: #444;
+    }
+    .dark-mode input[type="text"],
+    .dark-mode input[type="email"],
+    .dark-mode input[type="tel"],
+    .dark-mode textarea {
+        background-color: #333;
+        color: #e0e0e0;
+        border-color: #555;
+    }
+    .dark-mode .circle-btn {
+        background-color: #0056b3;
+    }
+    .dark-mode .circle-btn.remove {
+        background-color: #b22222;
+    }
+    .dark-mode .accept-btn {
+        background-color: #1e7e34;
+    }
+    .dark-mode .edit-btn {
+        background-color: #d39e00;
+        color: #121212;
+    }
+    .dark-mode .submit-button {
+        background-color: #0056b3;
+    }
+    .dark-mode .completed h2 {
+        color: #4caf50;
+    }
+    .dark-mode .lang-toggle, .dark-mode #theme-toggle, .dark-mode .close-modal {
+        color: #e0e0e0; /* Ensure toggles are visible */
+    }
+
+    /* Mobile Menu Styles */
+    .mobile-menu-toggle-btn {
+        display: none; /* Hidden by default */
+        position: fixed;
+        top: 1rem;
+        left: 1rem;
+        z-index: 10001;
+        background: #007bff;
+        color: white;
+        border: none;
+        padding: 0.5rem 0.8rem;
+        font-size: 1.5rem;
+        cursor: pointer;
+        border-radius: 4px;
+    }
+
+    #mobile-services-menu {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0.9);
+        color: white;
+        z-index: 10000;
+        padding-top: 5rem; /* Increased padding for space from top */
+        text-align: center;
+        box-sizing: border-box;
+        overflow-y: auto; /* Allow scrolling if content exceeds height */
+    }
+
+    #mobile-services-menu.open {
+        display: block;
+    }
+     /* Adjustments for dark mode mobile menu */
+    .dark-mode .mobile-menu-toggle-btn {
+        background: #0056b3; /* Darker blue for dark mode */
+    }
+    .dark-mode #mobile-services-menu {
+        background-color: rgba(20,20,20,0.95); /* Darker overlay for dark mode */
+    }
+
+
+    /* Show toggle button only on mobile */
+    @media (max-width: 600px) {
+        .mobile-menu-toggle-btn {
+            display: block;
+        }
+        /* Ensure modal is below mobile nav if both could be active */
+        /* body.mobile-menu-active .modal-overlay { */
+             /* z-index: 9998;  */
+        /* } */
     }
   </style>
 </head>
 <body>
+
+  <button id="mobile-menu-toggle" class="mobile-menu-toggle-btn" aria-label="Open menu" data-aria-label-en="Open menu" data-aria-label-es="Abrir menú" aria-expanded="false">☰</button>
+  <div class="mobile-services-menu" id="mobile-services-menu">
+    <p data-en="Mobile Menu Placeholder" data-es="Marcador de posición del menú móvil">Mobile Menu Placeholder</p>
+    <!-- More links can be added here -->
+  </div>
+
+  <!-- Trigger -->
+  <button onclick="document.getElementById('join-modal').style.display = 'flex';">
+    Open Join Modal
+  </button>
+
+  <!-- Modal -->
   <div class="modal-overlay" id="join-modal">
     <div class="modal-content" id="modal-content">
-      <div class="lang-toggle" onclick="toggleLang()">EN | ES</div>
+      <button id="theme-toggle" aria-label="Toggle theme" data-aria-label-en="Toggle theme" data-aria-label-es="Cambiar tema">🌓</button>
+      <button class="lang-toggle" onclick="toggleLang()" data-aria-label-en="Toggle language" data-aria-label-es="Cambiar idioma">EN | ES</button>
       <div class="modal-header">
         <h3 data-en="Join Us" data-es="Únete a Nosotros">Join Us</h3>
         <button class="close-modal" id="close-modal-btn" aria-label="Close" data-aria-label-en="Close" data-aria-label-es="Cerrar">&times;</button>
       </div>
+
       <form id="join-form" autocomplete="off">
-        <!-- Row: Name, Email, Phone -->
         <div class="form-row">
           <label for="name" data-en="Name" data-es="Nombre">Name</label>
-          <input type="text" id="name" name="name"
-            placeholder="Enter your name"
+          <input type="text" id="name" name="name" required
             data-placeholder-en="Enter your name"
-            data-placeholder-es="Ingresa tu nombre" />
+            data-placeholder-es="Ingresa tu nombre"
+            placeholder="Enter your name" />
 
           <label for="email" data-en="Email" data-es="Correo Electrónico">Email</label>
-          <input type="email" id="email" name="email"
-            placeholder="Enter your email"
+          <input type="email" id="email" name="email" required
             data-placeholder-en="Enter your email"
-            data-placeholder-es="Ingresa tu correo" />
+            data-placeholder-es="Ingresa tu correo"
+            placeholder="Enter your email" />
 
           <label for="phone" data-en="Phone" data-es="Teléfono">Phone</label>
-          <input type="tel" id="phone" name="phone"
-            placeholder="Enter your phone"
+          <input type="tel" id="phone" name="phone" required
             data-placeholder-en="Enter your phone"
-            data-placeholder-es="Ingresa tu teléfono" />
+            data-placeholder-es="Ingresa tu teléfono"
+            placeholder="Enter your phone" />
         </div>
+
         <!-- Dynamic Sections -->
         <div class="form-section" data-section="Skills">
           <div class="section-header">
             <h2 data-en="Skills" data-es="Habilidades">Skills</h2>
             <div>
-              <button type="button" class="circle-btn add" aria-label="Add" data-aria-label-en="Add" data-aria-label-es="Añadir">+</button>
-              <button type="button" class="circle-btn remove" aria-label="Remove" data-aria-label-en="Remove" data-aria-label-es="Quitar">−</button>
+              <button type="button" class="circle-btn add">+</button>
+              <button type="button" class="circle-btn remove">−</button>
             </div>
           </div>
           <div class="inputs"></div>
           <button type="button" class="accept-btn" data-en="Accept" data-es="Aceptar">Accept</button>
           <button type="button" class="edit-btn" data-en="Edit" data-es="Editar" style="display:none;">Edit</button>
         </div>
+
         <div class="form-section" data-section="Education">
           <div class="section-header">
             <h2 data-en="Education" data-es="Educación">Education</h2>
             <div>
-              <button type="button" class="circle-btn add" aria-label="Add" data-aria-label-en="Add" data-aria-label-es="Añadir">+</button>
-              <button type="button" class="circle-btn remove" aria-label="Remove" data-aria-label-en="Remove" data-aria-label-es="Quitar">−</button>
+              <button type="button" class="circle-btn add">+</button>
+              <button type="button" class="circle-btn remove">−</button>
             </div>
           </div>
           <div class="inputs"></div>
           <button type="button" class="accept-btn" data-en="Accept" data-es="Aceptar">Accept</button>
           <button type="button" class="edit-btn" data-en="Edit" data-es="Editar" style="display:none;">Edit</button>
         </div>
+
         <div class="form-section" data-section="Continued Education">
           <div class="section-header">
             <h2 data-en="Continued Education" data-es="Educación Continua">Continued Education</h2>
             <div>
-              <button type="button" class="circle-btn add" aria-label="Add" data-aria-label-en="Add" data-aria-label-es="Añadir">+</button>
-              <button type="button" class="circle-btn remove" aria-label="Remove" data-aria-label-en="Remove" data-aria-label-es="Quitar">−</button>
+              <button type="button" class="circle-btn add">+</button>
+              <button type="button" class="circle-btn remove">−</button>
             </div>
           </div>
           <div class="inputs"></div>
           <button type="button" class="accept-btn" data-en="Accept" data-es="Aceptar">Accept</button>
           <button type="button" class="edit-btn" data-en="Edit" data-es="Editar" style="display:none;">Edit</button>
         </div>
+
         <div class="form-section" data-section="Certification">
           <div class="section-header">
             <h2 data-en="Certification" data-es="Certificación">Certification</h2>
             <div>
-              <button type="button" class="circle-btn add" aria-label="Add" data-aria-label-en="Add" data-aria-label-es="Añadir">+</button>
-              <button type="button" class="circle-btn remove" aria-label="Remove" data-aria-label-en="Remove" data-aria-label-es="Quitar">−</button>
+              <button type="button" class="circle-btn add">+</button>
+              <button type="button" class="circle-btn remove">−</button>
             </div>
           </div>
           <div class="inputs"></div>
           <button type="button" class="accept-btn" data-en="Accept" data-es="Aceptar">Accept</button>
           <button type="button" class="edit-btn" data-en="Edit" data-es="Editar" style="display:none;">Edit</button>
         </div>
+
         <div class="form-section" data-section="Hobbies">
           <div class="section-header">
             <h2 data-en="Hobbies" data-es="Pasatiempos">Hobbies</h2>
             <div>
-              <button type="button" class="circle-btn add" aria-label="Add" data-aria-label-en="Add" data-aria-label-es="Añadir">+</button>
-              <button type="button" class="circle-btn remove" aria-label="Remove" data-aria-label-en="Remove" data-aria-label-es="Quitar">−</button>
+              <button type="button" class="circle-btn add">+</button>
+              <button type="button" class="circle-btn remove">−</button>
             </div>
           </div>
           <div class="inputs"></div>
           <button type="button" class="accept-btn" data-en="Accept" data-es="Aceptar">Accept</button>
           <button type="button" class="edit-btn" data-en="Edit" data-es="Editar" style="display:none;">Edit</button>
         </div>
-        <!-- Comments -->
+
         <div class="form-row">
           <label for="comment" data-en="Tell us about yourself" data-es="Cuéntanos sobre ti">Tell us about yourself</label>
           <textarea id="comment" name="comment" rows="4"
             data-placeholder-en="Tell us about yourself..."
-            data-placeholder-es="Cuéntanos sobre ti..."></textarea>
+            data-placeholder-es="Cuéntanos sobre ti..."
+            placeholder="Tell us about yourself..."></textarea>
         </div>
-        <!-- Submit -->
+
         <div class="form-footer">
           <button type="submit" class="submit-button" data-en="Submit" data-es="Enviar">Submit</button>
         </div>
       </form>
     </div>
   </div>
+
   <script>
-    // Modal Close: X and click outside
-    const modalOverlay = document.getElementById('join-modal');
-    const modalContent = document.getElementById('modal-content');
-    document.getElementById('close-modal-btn').onclick = () => modalOverlay.style.display = 'none';
-    modalOverlay.onclick = (e) => {
-      if (e.target === modalOverlay) modalOverlay.style.display = 'none';
-    };
+    let currentLang = 'en';
 
-    // Language toggle and translation
-    let currentLang = 'en'; // Default language
+    // Mobile Menu Toggle Logic
+    const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+    const mobileServicesMenu = document.getElementById('mobile-services-menu');
 
-    const alertMessages = {
-      addEntry: {
-        en: "Please add at least one entry in {sectionName}.",
-        es: "Agrega al menos una entrada en {sectionName}."
-      },
-      formSubmitted: {
-        en: "Form submitted.",
-        es: "Formulario enviado."
-      }
-    };
+    if (mobileMenuToggle && mobileServicesMenu) {
+        mobileMenuToggle.addEventListener('click', () => {
+            mobileServicesMenu.classList.toggle('open');
+            const isExpanded = mobileServicesMenu.classList.contains('open');
+            mobileMenuToggle.setAttribute('aria-expanded', isExpanded);
 
-    function updateLanguageDisplay() {
-      // Update text content for elements with data-en/data-es
-      document.querySelectorAll('[data-en]').forEach(el => {
-        const text = el.getAttribute(`data-${currentLang}`);
-        // Preserve child elements for certain buttons, update text around them if necessary
-        if (el.classList.contains('circle-btn') || el.classList.contains('close-modal')) {
-          // These buttons have fixed text content like '+' or '×'
-          // Their translatable part is aria-label, handled below
-        } else {
-           if (text) el.textContent = text;
-        }
-      });
-
-      // Update placeholders
-      document.querySelectorAll('[data-placeholder-en], [data-placeholder-es]').forEach(el => {
-        const placeholder = el.getAttribute(`data-placeholder-${currentLang}`);
-        if (placeholder) el.placeholder = placeholder;
-      });
-
-      // Update ARIA labels
-      document.querySelectorAll('[data-aria-label-en], [data-aria-label-es]').forEach(el => {
-        const ariaLabel = el.getAttribute(`data-aria-label-${currentLang}`);
-        if (ariaLabel) el.setAttribute('aria-label', ariaLabel);
-      });
-
-      // Update lang toggle button text
-      const langToggleButton = document.querySelector('.lang-toggle');
-      if (langToggleButton) {
-        langToggleButton.textContent = currentLang === 'en' ? 'EN | ES' : 'ES | EN';
-      }
-
-      // Update page title
-      const titleTag = document.querySelector('title[data-en]');
-      if (titleTag) {
-        document.title = titleTag.getAttribute(`data-${currentLang}`);
-      }
+            if (isExpanded) {
+                mobileMenuToggle.innerHTML = '&times;'; // Close icon
+                // The data-aria-label attributes will be updated by updateLang if it's called
+                // We need to ensure updateLang can find and update these specific attributes dynamically if they change
+                mobileMenuToggle.setAttribute('data-aria-label-en-alt', 'Close menu'); // Temp store for alt text
+                mobileMenuToggle.setAttribute('data-aria-label-es-alt', 'Cerrar menú');
+            } else {
+                mobileMenuToggle.innerHTML = '☰'; // Hamburger icon
+                mobileMenuToggle.removeAttribute('data-aria-label-en-alt');
+                mobileMenuToggle.removeAttribute('data-aria-label-es-alt');
+            }
+            updateLang(); // Update aria-labels after changing them or button state
+        });
     }
+
+    document.getElementById('close-modal-btn').onclick = () => {
+      document.getElementById('join-modal').style.display = 'none';
+    };
+
+    document.getElementById('join-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      alert(currentLang === 'es' ? 'Formulario enviado.' : 'Form submitted.');
+    });
 
     function toggleLang() {
       currentLang = currentLang === 'en' ? 'es' : 'en';
-      updateLanguageDisplay();
+      updateLang();
     }
 
-    // Initial language setup on page load
-    updateLanguageDisplay();
+    function updateLang() {
+      document.querySelectorAll('[data-en]').forEach(el => {
+        const translation = el.getAttribute(`data-${currentLang}`);
+        if (translation) {
+            // For elements that primarily use text content for their function (like most labels, titles)
+            // and for buttons that have specific translated text (like Accept, Edit, Submit)
+            if (el.tagName !== 'BUTTON' || (el.tagName === 'BUTTON' && !['theme-toggle', 'lang-toggle'].includes(el.id || el.className))) {
+                 if (el.childElementCount === 0) { // Only change textContent if no children, to avoid breaking complex elements
+                    el.textContent = translation;
+                 }
+            }
+            // For lang-toggle, set its text content based on currentLang
+            else if (el.classList.contains('lang-toggle')) {
+                el.textContent = currentLang === 'en' ? 'EN | ES' : 'ES | EN';
+            }
+            // Theme toggle's icon is handled in applyTheme.
+            // Mobile menu toggle's icon is handled by its click listener.
+        }
+      });
 
-    // Dynamic Sections
+      document.querySelectorAll('[data-placeholder-en]').forEach(el => {
+        el.placeholder = el.getAttribute(`data-placeholder-${currentLang}`);
+      });
+
+      document.querySelectorAll('[data-aria-label-en]').forEach(el => {
+        // Handle dynamic aria-labels for mobile menu toggle
+        if (el.id === 'mobile-menu-toggle' && el.hasAttribute(`data-aria-label-${currentLang}-alt`)) {
+            el.setAttribute('aria-label', el.getAttribute(`data-aria-label-${currentLang}-alt`));
+        } else {
+            el.setAttribute('aria-label', el.getAttribute(`data-aria-label-${currentLang}`));
+        }
+      });
+
+      document.title = document.querySelector('title').getAttribute(`data-${currentLang}`);
+
+      const langToggle = document.querySelector('.lang-toggle');
+      if (langToggle) {
+        // Ensure langToggle text is updated correctly (already handled in the forEach loop above)
+        // but also ensure its aria-label is updated if it wasn't caught by the generic [data-aria-label-en]
+        // For now, it is, because we added data-aria-label-en to it.
+      }
+      // Theme toggle's icon and aria-label are handled.
+    }
+
+    // Theme Toggling Logic
+    const themeToggle = document.getElementById('theme-toggle');
+    const body = document.body;
+
+    function applyTheme(theme) {
+        if (theme === 'dark') {
+            body.classList.add('dark-mode');
+            if (themeToggle) themeToggle.textContent = '☀️';
+        } else {
+            body.classList.remove('dark-mode');
+            if (themeToggle) themeToggle.textContent = '🌓';
+        }
+    }
+
+    function toggleTheme() {
+        let newTheme = body.classList.contains('dark-mode') ? 'light' : 'dark';
+        localStorage.setItem('theme', newTheme);
+        applyTheme(newTheme);
+        // No need to call updateLang() here unless theme change affects translatable text on theme button itself
+    }
+
+    if (themeToggle) {
+        themeToggle.addEventListener('click', toggleTheme);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const savedTheme = localStorage.getItem('theme');
+        const systemPrefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (savedTheme) {
+            applyTheme(savedTheme);
+        } else if (systemPrefersDark) {
+            applyTheme('dark');
+        } else {
+            applyTheme('light');
+        }
+        updateLang(); // Initial language setup
+    });
+
+
     document.querySelectorAll('.form-section').forEach(section => {
       const addBtn = section.querySelector('.add');
       const removeBtn = section.querySelector('.remove');
       const acceptBtn = section.querySelector('.accept-btn');
       const editBtn = section.querySelector('.edit-btn');
-      const inputsContainer = section.querySelector('.inputs');
-      const sectionNameKey = section.dataset.section; // e.g., "Skills", "Education"
-      const sectionNameEn = section.querySelector('h2').getAttribute('data-en');
-      const sectionNameEs = section.querySelector('h2').getAttribute('data-es');
+      const inputs = section.querySelector('.inputs');
+      const title = section.querySelector('h2');
 
-
-      if (!addBtn || !removeBtn || !acceptBtn || !editBtn || !inputsContainer) return;
-
-      addBtn.addEventListener('click', () => {
+      addBtn.onclick = () => {
         const input = document.createElement('input');
-        input.type = 'text';
-        // Use generic placeholders and specific ones if available
-        const placeholderEn = `Enter ${sectionNameEn} info`;
-        const placeholderEs = `Ingresa ${sectionNameEs} (info)`;
-        input.setAttribute('data-placeholder-en', placeholderEn);
-        input.setAttribute('data-placeholder-es', placeholderEs);
-        input.placeholder = currentLang === 'es' ? placeholderEs : placeholderEn;
-        inputsContainer.appendChild(input);
-      });
+        const en = `Enter ${title.getAttribute('data-en')} info`;
+        const es = `Ingresa ${title.getAttribute('data-es')} info`;
+        input.setAttribute('data-placeholder-en', en);
+        input.setAttribute('data-placeholder-es', es);
+        input.placeholder = currentLang === 'es' ? es : en;
+        inputs.appendChild(input);
+      };
 
-      removeBtn.addEventListener('click', () => {
-        const inputs = inputsContainer.querySelectorAll('input');
-        if (inputs.length > 0) {
-          inputsContainer.removeChild(inputs[inputs.length - 1]);
-        }
-      });
+      removeBtn.onclick = () => {
+        const all = inputs.querySelectorAll('input');
+        if (all.length) inputs.removeChild(all[all.length - 1]);
+      };
 
-      acceptBtn.addEventListener('click', () => {
-        const inputs = inputsContainer.querySelectorAll('input');
-        const currentSectionName = currentLang === 'es' ? sectionNameEs : sectionNameEn;
-        if (inputs.length === 0) {
-          alert(alertMessages.addEntry[currentLang].replace('{sectionName}', currentSectionName));
+      acceptBtn.onclick = () => {
+        if (!inputs.querySelector('input')) {
+          const msg = currentLang === 'es' ? 'Agrega al menos una entrada.' : 'Please add at least one entry.';
+          alert(msg);
           return;
         }
-        inputs.forEach(input => input.disabled = true);
-        section.classList.add('completed');
+        inputs.querySelectorAll('input').forEach(input => input.disabled = true);
         acceptBtn.style.display = 'none';
         editBtn.style.display = 'inline-block';
-      });
+        section.classList.add('completed');
+      };
 
-      editBtn.addEventListener('click', () => {
-        const inputs = inputsContainer.querySelectorAll('input');
-        inputs.forEach(input => input.disabled = false);
-        section.classList.remove('completed');
+      editBtn.onclick = () => {
+        inputs.querySelectorAll('input').forEach(input => input.disabled = false);
         acceptBtn.style.display = 'inline-block';
         editBtn.style.display = 'none';
-      });
-    });
-
-    // Optional: Prevent form submit default (custom logic goes here)
-    document.getElementById('join-form').addEventListener('submit', function(e) {
-      e.preventDefault();
-      // Handle form data here if needed
-      alert(alertMessages.formSubmitted[currentLang]);
+        section.classList.remove('completed');
+      };
     });
   </script>
 </body>
