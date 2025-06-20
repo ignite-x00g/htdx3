@@ -301,6 +301,14 @@ footer {
     padding: 0.35rem;
 }
 
+/* General Placeholder Styling for Join Us Modal */
+#join-modal input::placeholder,
+#join-modal textarea::placeholder {
+    font-family: inherit; /* Ensures same font family as typed text */
+    font-size: inherit;   /* Ensures same font size as typed text */
+    font-style: normal; /* Normalize font style, some browsers italicize placeholders */
+    color: #757575;       /* Default light mode placeholder color */
+}
 /* For single column elements spanning full width if needed */
 .form-cell.full-width {
   grid-column: 1 / -1; /* Span across both columns */
