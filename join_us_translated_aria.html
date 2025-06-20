@@ -243,10 +243,6 @@
         .mobile-menu-toggle-btn {
             display: block;
         }
-        /* Ensure modal is below mobile nav if both could be active */
-        /* body.mobile-menu-active .modal-overlay { */
-             /* z-index: 9998;  */
-        /* } */
     }
   </style>
 </head>
@@ -291,7 +287,6 @@
             data-placeholder-es="Ingresa tu teléfono"
             placeholder="Enter your phone" />
         </div>
-
         <!-- Dynamic Sections -->
         <div class="form-section" data-section="Skills">
           <div class="section-header">
@@ -378,7 +373,6 @@
     // Mobile Menu Toggle Logic
     const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
     const mobileServicesMenu = document.getElementById('mobile-services-menu');
-
     if (mobileMenuToggle && mobileServicesMenu) {
         mobileMenuToggle.addEventListener('click', () => {
             mobileServicesMenu.classList.toggle('open');
@@ -495,7 +489,6 @@
         }
         updateLang(); // Initial language setup
     });
-
     document.querySelectorAll('.form-section').forEach(section => {
       const addBtn = section.querySelector('.add');
       const removeBtn = section.querySelector('.remove');
