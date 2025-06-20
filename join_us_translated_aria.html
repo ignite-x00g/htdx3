@@ -247,13 +247,11 @@
   </style>
 </head>
 <body>
-
   <button id="mobile-menu-toggle" class="mobile-menu-toggle-btn" aria-label="Open menu" data-aria-label-en="Open menu" data-aria-label-es="Abrir menú" aria-expanded="false">☰</button>
   <div class="mobile-services-menu" id="mobile-services-menu">
     <p data-en="Mobile Menu Placeholder" data-es="Marcador de posición del menú móvil">Mobile Menu Placeholder</p>
     <!-- More links can be added here -->
   </div>
-
   <!-- Trigger -->
   <button onclick="document.getElementById('join-modal').style.display = 'flex';">
     Open Join Modal
@@ -289,7 +287,6 @@
             data-placeholder-es="Ingresa tu teléfono"
             placeholder="Enter your phone" />
         </div>
-
         <!-- Dynamic Sections -->
         <div class="form-section" data-section="Skills">
           <div class="section-header">
@@ -373,11 +370,9 @@
 
   <script>
     let currentLang = 'en';
-
     // Mobile Menu Toggle Logic
     const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
     const mobileServicesMenu = document.getElementById('mobile-services-menu');
-
     if (mobileMenuToggle && mobileServicesMenu) {
         mobileMenuToggle.addEventListener('click', () => {
             mobileServicesMenu.classList.toggle('open');
@@ -464,10 +459,10 @@
     function applyTheme(theme) {
         if (theme === 'dark') {
             body.classList.add('dark-mode');
-            if (themeToggle) themeToggle.textContent = '☀️';
+            if (themeToggle) themeToggle.textContent = 'Light';
         } else {
             body.classList.remove('dark-mode');
-            if (themeToggle) themeToggle.textContent = '🌓';
+            if (themeToggle) themeToggle.textContent = 'Dark';
         }
     }
 
@@ -494,8 +489,6 @@
         }
         updateLang(); // Initial language setup
     });
-
-
     document.querySelectorAll('.form-section').forEach(section => {
       const addBtn = section.querySelector('.add');
       const removeBtn = section.querySelector('.remove');
