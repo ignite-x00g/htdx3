@@ -1,0 +1,148 @@
+/* --- Added for chatbot visibility toggle --- */
+#chat-container {
+    display: none; /* Hidden by default */
+    /* Existing flex properties will be below, this ensures it's initially hidden */
+    flex-direction: column; /* Retain this from original if #chat-container needs it when visible */
+    /* Add other necessary #chat-container styles here if they were previously combined */
+}
+
+/* Basic styling for the open chatbot button/trigger */
+#open-chatbot-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #6a0dad; /* Purple shade */
+    color: white;
+    padding: 15px 25px;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    font-size: 1em;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 10000;
+}
+
+#open-chatbot-button:hover {
+    background-color: #5a0cac; /* Darker purple on hover */
+}
+/* --- End added CSS for toggle --- */
+
+body { /* This body style is for chatbot.html context */
+    font-family: sans-serif;
+    margin: 0;
+    background-color: #f4f4f9; /* Or transparent if it's meant to overlay a page in an iframe */
+    display: flex; /* This might be relevant if chat-container is not full page */
+    justify-content: center; /* Aligns #open-chatbot-button if body is the container for it and chat-container is hidden */
+    align-items: flex-end; /* Aligns #open-chatbot-button to bottom if body is container */
+    min-height: 100vh; /* Ensures button is visible if page has no other content */
+    color: #333;
+}
+
+/* Styles for the chat container itself, when visible */
+/* Ensure the #chat-container rule above this doesn't conflict heavily, or merge them */
+#chat-container {
+    /* display: none; IS SET AT THE TOP TO HIDE INITIALLY */
+    /* The script will change it to 'flex' or 'block' as needed */
+    width: 400px;
+    max-width: 90%;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    /* flex-direction: column; -- already added above with display:none */
+    overflow: hidden;
+    /* Added position fixed to make it overlay, adjust as needed */
+    position: fixed;
+    bottom: 90px; /* Above the open button */
+    right: 20px;
+    z-index: 9999; /* Below open button if open button is not hidden */
+}
+
+
+#chat-header {
+    background-color: #6a0dad; /* Purple shade */
+    color: white;
+    padding: 15px;
+    text-align: center;
+    border-bottom: 1px solid #5a0cac;
+}
+
+#chat-header h2 {
+    margin: 0;
+    font-size: 1.2em;
+}
+
+#chat-messages {
+    flex-grow: 1;
+    padding: 15px;
+    overflow-y: auto;
+    min-height: 200px;
+    max-height: 300px;
+    background-color: #ede7f6; /* Lighter purple shade for message area */
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.message {
+    padding: 8px 12px;
+    border-radius: 15px;
+    max-width: 70%;
+    word-wrap: break-word;
+}
+
+.user-message {
+    background-color: #9c27b0; /* User message purple */
+    color: white;
+    align-self: flex-end;
+    border-bottom-right-radius: 5px;
+}
+
+.bot-message {
+    background-color: #e1bee7; /* Bot message lighter purple */
+    color: #333;
+    align-self: flex-start;
+    border-bottom-left-radius: 5px;
+}
+
+#chat-input-area {
+    display: flex;
+    padding: 15px;
+    border-top: 1px solid #ddd;
+    background-color: #fff;
+}
+
+#user-input {
+    flex-grow: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    margin-right: 10px;
+    font-size: 1em;
+}
+
+#user-input:focus {
+    outline: none;
+    border-color: #6a0dad;
+    box-shadow: 0 0 0 2px rgba(106, 13, 173, 0.2);
+}
+
+#send-button {
+    padding: 10px 20px;
+    background-color: #6a0dad; /* Purple shade */
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s ease;
+}
+
+#send-button:hover {
+    background-color: #5a0cac; /* Darker purple on hover */
+}
+
+#recaptcha-placeholder {
+    font-size: 0.9em;
+    color: #777;
+    text-align: center;
+}
