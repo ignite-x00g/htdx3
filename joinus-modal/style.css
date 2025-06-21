@@ -1,0 +1,182 @@
+/* Styles for Join Us Modal in index.html */
+
+/* These styles would be specific to the #join-modal in index.html if it differs from other modals */
+/* For example, if its padding or input sizes are unique */
+
+#join-modal .form-cell input,
+#join-modal .form-cell textarea {
+    padding: 0.35rem; /* This was a specific style noted in global.css for #join-modal */
+}
+
+/* General Placeholder Styling for Join Us Modal */
+#join-modal input::placeholder,
+#join-modal textarea::placeholder {
+    font-family: inherit;
+    font-size: inherit;
+    font-style: normal;
+    color: #757575;
+}
+
+
+/* Dark Mode Styles for Join Us Modal in index.html */
+body[data-theme="dark"] #join-modal .form-cell input,
+body[data-theme="dark"] #join-modal .form-cell textarea {
+    background-color: #2a2a2a; /* Copied from global.css specific dark mode for #join-modal inputs */
+    border-color: #444;
+    color: #e0e0e0;
+}
+
+body[data-theme="dark"] #join-modal input::placeholder,
+body[data-theme="dark"] #join-modal textarea::placeholder {
+    color: #888; /* Copied from global.css specific dark mode for #join-modal placeholders */
+}
+
+/* If #join-modal in index.html had other unique styles, they would be extracted here.
+   Currently, most of its styling comes from generic .modal-overlay, .modal-content,
+   .modal-header, .modal-body, .form-row, .form-cell, .submit-button rules in global.css.
+*/
+
+/* Styles for the dynamic sections that were part of the original joinus.html,
+   if these are also intended for the #join-modal in index.html.
+   The current #join-modal in index.html is simpler and does not use .form-section, .circle-btn etc.
+   If the plan implies making the index.html #join-modal identical to the standalone joinus/index.html page,
+   then all those styles (.form-section, .circle-btn, .accept-btn, .edit-btn, .two-column-row etc.)
+   would need to be copied here. However, the current plan focuses on extraction, not feature parity.
+   The existing #join-modal in index.html uses the general modal form layout.
+*/
+
+/* The following styles are related to the more complex form structure seen in the standalone joinus.html,
+   and were previously in global.css under #join-modal selectors or similar.
+   These are only needed if the modal in index.html is meant to have these features.
+   Based on current index.html structure, it does NOT use these.
+   These are commented out but kept for reference if scope changes.
+*/
+
+/*
+#join-modal .form-section {
+  border: 1px solid #ddd;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  border-radius: 8px;
+  background: #f9f9f9;
+}
+
+#join-modal .section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#join-modal .section-header h2 {
+  margin: 0;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+#join-modal .circle-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: none;
+  background-color: #9b87f5;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  margin-left: 0.5rem;
+  font-size: 1.2rem;
+}
+
+#join-modal .circle-btn.remove {
+  background-color: #7e69ab;
+}
+
+#join-modal .inputs input {
+  display: block;
+  width: 100%;
+  padding: 0.35rem; // Kept specific padding
+  margin: 0.5rem 0;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+#join-modal .accept-btn {
+    background-color: #9b87f5;
+    color: white;
+    padding: 0.4rem 1rem;
+    border: none;
+    margin-top: 0.5rem;
+    cursor: pointer;
+    border-radius: 4px;
+    margin-right: 0.5rem;
+    font-size: 0.9rem;
+    transition: background-color 0.3s;
+}
+
+#join-modal .accept-btn:hover {
+    background-color: #7e69ab;
+}
+
+#join-modal .edit-btn {
+  background-color: #ffc107;
+  color: #000;
+  padding: 0.4rem 1rem;
+  border: none;
+  margin-top: 0.5rem;
+  cursor: pointer;
+  border-radius: 4px;
+  margin-right: 0.5rem;
+  font-size: 0.9rem;
+}
+
+#join-modal .completed h2 {
+  color: green;
+}
+
+#join-modal .completed h2::after {
+  content: " ✅";
+  font-size: 1rem;
+}
+
+body[data-theme="dark"] #join-modal .form-section {
+  background-color: #2a2a2a;
+  border-color: #333;
+}
+
+body[data-theme="dark"] #join-modal .form-section .section-header h2 {
+    color: #ffffff !important;
+}
+
+body[data-theme="dark"] #join-modal .form-section {
+    color: #ffffff;
+}
+
+body[data-theme="dark"] #join-modal .circle-btn {
+    background-color: #bb86fc;
+    color: #121212;
+}
+body[data-theme="dark"] #join-modal .circle-btn.remove {
+    background-color: #9850f5;
+}
+
+
+body[data-theme="dark"] #join-modal .accept-btn {
+    background-color: #bb86fc;
+    color: #121212;
+}
+body[data-theme="dark"] #join-modal .accept-btn:hover {
+    background-color: #9850f5;
+}
+
+body[data-theme="dark"] #join-modal .edit-btn {
+  background-color: #ffc107;
+  color: #000;
+}
+
+body[data-theme="dark"] #join-modal .completed h2 {
+  color: #38c172;
+}
+
+*/
