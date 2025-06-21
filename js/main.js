@@ -123,7 +123,6 @@ document.addEventListener('DOMContentLoaded', function() {
   // Initial language setup
   updateLanguageDisplay();
 
-
   // ================================================================
   // 3) MODAL FUNCTIONALITY (Join Us & Contact Us) - Remains largely the same
   // ================================================================
@@ -225,8 +224,6 @@ document.addEventListener('DOMContentLoaded', function() {
           const editBtn = section.querySelector('.edit-btn');
           const addBtnSection = section.querySelector('.circle-btn.add'); // Specific to new modal
           const removeBtnSection = section.querySelector('.circle-btn.remove'); // Specific to new modal
-
-
           if (acceptBtn) {
               acceptBtn.style.display = 'inline-block';
               // Reset acceptBtn text using its data attributes and currentLang

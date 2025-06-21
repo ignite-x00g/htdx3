@@ -4,7 +4,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const sendButton = document.getElementById('send-button');
     const recaptchaPlaceholder = document.getElementById('recaptcha-placeholder');
     const honeypotField = document.getElementById('honeypot-field');
-
     // --- START NEW/MODIFIED CODE ---
     const chatContainer = document.getElementById('chat-container');
     const openChatbotButton = document.getElementById('open-chatbot-button');
@@ -46,7 +45,6 @@ document.addEventListener('DOMContentLoaded', () => {
             userInput.focus();
         };
     }
-
     // Modified initializeChat: Now it doesn't directly start ReCaptcha or disable inputs.
     // It just ensures the chatbot is ready if it were to be shown.
     // The actual showing and ReCaptcha start is handled by openChatbotButton click.
@@ -95,7 +93,6 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
         // --- END MODIFIED CHECK ---
-
 
         if (userText === '') {
             return;
