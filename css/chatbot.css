@@ -1,0 +1,117 @@
+/* css/chatbot.css */
+
+/* Styling for the new floating chatbot icon with text */
+#chatbot-icon-toggle {
+    flex-direction: column; /* Stack icon and text vertically */
+    height: auto; /* Adjust height to fit content */
+    padding-top: 8px; /* Add some padding for the icon */
+    padding-bottom: 4px; /* Add some padding for the text */
+}
+
+#chatbot-icon-toggle .fa-user {
+    margin-bottom: 4px; /* Space between icon and text */
+}
+
+.floating-icon-text {
+    font-size: 0.7rem; /* Smaller font size for the text "Chat" */
+    line-height: 1;
+    display: block; /* Ensure it takes its own line if not already */
+}
+
+/* Basic Chatbot UI Styling */
+/* #chatbot-ui specific overrides or additions if needed. */
+/* For now, assuming .modal-overlay, .modal-content, etc., from global.css provide base styling. */
+
+#chatbot-ui .modal-content {
+    max-width: 500px; /* Adjust width for a typical chat interface */
+    height: 70vh;    /* Adjust height */
+    max-height: 600px; /* Max height */
+}
+
+.chat-messages {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px; /* Space between messages */
+}
+
+.chat-message {
+    padding: 8px 12px;
+    border-radius: 15px;
+    max-width: 70%;
+    line-height: 1.4;
+}
+
+.chat-message.user {
+    background-color: #9b87f5; /* Theme color for user messages */
+    color: white;
+    align-self: flex-end;
+    border-bottom-right-radius: 5px; /* Typical chat bubble style */
+}
+
+.chat-message.ai {
+    background-color: #f1f0f8; /* Lighter background for AI messages */
+    color: #333;
+    align-self: flex-start;
+    border-bottom-left-radius: 5px; /* Typical chat bubble style */
+}
+
+.chat-input-area {
+    display: flex;
+    padding: 10px;
+    border-top: 1px solid #eee; /* Optional: if chat-messages doesn't have border-bottom */
+}
+
+#chatbot-input {
+    flex-grow: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 20px; /* Rounded input field */
+    margin-right: 10px;
+}
+
+#chatbot-send-button {
+    /* Assuming .submit-button from global.css provides base style */
+    /* Add specific overrides if needed, e.g., make it rounder */
+    border-radius: 20px;
+    padding: 10px 20px;
+}
+
+/* Dark mode considerations for chatbot UI */
+body[data-theme="dark"] #chatbot-ui .modal-content {
+    background-color: #1e1e1e; /* Match other dark modals */
+}
+
+body[data-theme="dark"] .chat-messages {
+    border-bottom-color: #333;
+}
+
+body[data-theme="dark"] .chat-message.user {
+    background-color: #bb86fc; /* Dark mode theme color */
+    color: #121212;
+}
+
+body[data-theme="dark"] .chat-message.ai {
+    background-color: #2a2a2a;
+    color: #e0e0e0;
+    border-color: #444;
+}
+
+body[data-theme="dark"] .chat-input-area {
+    border-top-color: #333;
+}
+
+body[data-theme="dark"] #chatbot-input {
+    background-color: #2a2a2a;
+    border-color: #444;
+    color: #e0e0e0;
+}
+
+body[data-theme="dark"] #chatbot-input::placeholder {
+    color: #888;
+}
+/* Send button dark mode should be handled by .submit-button dark styles */
