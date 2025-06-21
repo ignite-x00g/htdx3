@@ -12,8 +12,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const chatbotSendButton = document.getElementById('chatbot-send-button');
     const chatbotInput = document.getElementById('chatbot-input');
     const chatbotMessages = document.getElementById('chatbot-messages');
-    // New openChatbot function
+    // Reference to the contact modal (assuming its ID is 'contact-modal')
+    const contactModal = document.getElementById('contact-modal');
+
+    // Function to open the chatbot
     function openChatbot() {
+        // --- START FIX ---
+        // Ensure contact modal is hidden when chatbot opens
+        if (contactModal && contactModal.classList.contains('active')) {
+            contactModal.classList.remove('active');
+        }
+        // --- END FIX ---
+
         if (chatbotUi) {
             chatbotUi.classList.add('active'); // Use .active class
             if (chatbotInput) {

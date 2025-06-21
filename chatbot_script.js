@@ -4,34 +4,31 @@ document.addEventListener('DOMContentLoaded', () => {
     const sendButton = document.getElementById('send-button');
     const recaptchaPlaceholder = document.getElementById('recaptcha-placeholder');
     const honeypotField = document.getElementById('honeypot-field');
-    // --- START NEW/MODIFIED CODE ---
     const chatContainer = document.getElementById('chat-container');
     const openChatbotButton = document.getElementById('open-chatbot-button');
 
     let recaptchaVerified = false;
 
-    // Function to show the chatbot and start ReCaptcha
     function showChatbotAndStartRecaptcha() {
         if (chatContainer) {
-            chatContainer.style.display = 'flex'; // Or 'block' if that was its original display for visibility
+            // Ensure chat container gets the correct display style from CSS when made visible
+            // The CSS has #chat-container { display: none; flex-direction: column; ... }
+            // So, when we make it visible, we should use 'flex' to match its intended layout.
+            chatContainer.style.display = 'flex';
         }
         if (openChatbotButton) {
-            openChatbotButton.style.display = 'none'; // Hide the button itself
+            openChatbotButton.style.display = 'none';
         }
 
-        // Disable input until ReCaptcha is "verified"
         userInput.disabled = true;
         sendButton.disabled = true;
-        simulateRecaptcha(); // Start ReCaptcha simulation
+        simulateRecaptcha();
     }
 
-    // Add event listener to the new button
     if (openChatbotButton) {
         openChatbotButton.addEventListener('click', showChatbotAndStartRecaptcha);
     }
-    // --- END NEW/MODIFIED CODE ---
 
-    // ReCaptcha Placeholder Logic
     function simulateRecaptcha() {
         recaptchaPlaceholder.innerHTML = '<em>ReCaptcha: Click to verify (simulated)</em>';
         recaptchaPlaceholder.style.cursor = 'pointer';
@@ -45,16 +42,12 @@ document.addEventListener('DOMContentLoaded', () => {
             userInput.focus();
         };
     }
-    // Modified initializeChat: Now it doesn't directly start ReCaptcha or disable inputs.
-    // It just ensures the chatbot is ready if it were to be shown.
-    // The actual showing and ReCaptcha start is handled by openChatbotButton click.
+
     function initializeChat() {
-        // Chatbot is hidden by CSS initially.
-        // Inputs will be disabled by showChatbotAndStartRecaptcha before ReCaptcha.
-        // No direct action needed here for initial state regarding visibility or ReCaptcha.
+        // Initial state is now fully controlled by CSS (chat-container hidden)
+        // and the openChatbotButton's event listener.
     }
 
-    // Honeypot Detection (remains the same)
     honeypotField.addEventListener('input', () => {
         if (honeypotField.value !== '') {
             console.warn('Honeypot triggered! Possible bot activity.');
@@ -66,6 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     function addMessage(text, sender) {
+        if (!chatMessages) return; // Guard against chatMessages not being found
         const messageDiv = document.createElement('div');
         messageDiv.classList.add('message', sender === 'user' ? 'user-message' : 'bot-message');
         messageDiv.textContent = text;
@@ -81,10 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        // --- MODIFIED CHECK ---
-        // Ensure chat container is visible AND recaptcha is verified
         if (!chatContainer || chatContainer.style.display === 'none') {
-             // Should not happen if UI logic is correct, but as a safeguard
             alert('Chat is not active.');
             return;
         }
@@ -92,7 +83,6 @@ document.addEventListener('DOMContentLoaded', () => {
             alert('Please complete the ReCaptcha verification first.');
             return;
         }
-        // --- END MODIFIED CHECK ---
 
         if (userText === '') {
             return;
@@ -116,12 +106,37 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 1000);
     }
 
-    sendButton.addEventListener('click', handleSendMessage);
-    userInput.addEventListener('keypress', (event) => {
+    if (sendButton) sendButton.addEventListener('click', handleSendMessage);
+    if (userInput) userInput.addEventListener('keypress', (event) => {
         if (event.key === 'Enter') {
             handleSendMessage();
         }
     });
 
-    initializeChat(); // Call initializeChat (it does less now)
+    initializeChat();
+
+    // --- Moved from chatbot.html inline script ---
+    // Basic anti-cloning / context menu prevention
+    document.addEventListener('contextmenu', event => event.preventDefault());
+
+    document.addEventListener('keydown', function(e) {
+        if (e.ctrlKey && (e.key === 's' || e.key === 'u' || e.key === 'c' || e.key === 'a')) {
+            e.preventDefault();
+            // console.warn('Operation prevented by security policy.'); // Optional
+        }
+        if (e.key === 'F12') {
+            e.preventDefault();
+            // console.warn('Developer tools access prevented.'); // Optional
+        }
+    });
+
+    // Anti-Phishing Domain Check (Placeholder - requires actual domain)
+    // const expectedDomain = "your-chatbot-domain.com";
+    // if (window.location.hostname !== expectedDomain && window.location.hostname !== "localhost") {
+    //     // Potentially disable functionality or warn user more prominently.
+    //     // For example, by not initializing the chat or showing a warning.
+    //     // if (chatContainer) chatContainer.innerHTML = "<h1>Security Alert: Invalid Domain for Chatbot</h1>";
+    //     console.warn(`Domain mismatch for chatbot: current is ${window.location.hostname}`);
+    // }
+    // --- End moved script ---
 });
