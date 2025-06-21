@@ -4,12 +4,34 @@ document.addEventListener('DOMContentLoaded', () => {
     const sendButton = document.getElementById('send-button');
     const recaptchaPlaceholder = document.getElementById('recaptcha-placeholder');
     const honeypotField = document.getElementById('honeypot-field');
+    // --- START NEW/MODIFIED CODE ---
+    const chatContainer = document.getElementById('chat-container');
+    const openChatbotButton = document.getElementById('open-chatbot-button');
 
-    let recaptchaVerified = false; // This will be set by ReCaptcha callback
+    let recaptchaVerified = false;
 
-    // --- ReCaptcha Placeholder Logic ---
-    // In a real scenario, you would load Google ReCaptcha script and it would call a function like this.
-    // For now, we'll simulate it.
+    // Function to show the chatbot and start ReCaptcha
+    function showChatbotAndStartRecaptcha() {
+        if (chatContainer) {
+            chatContainer.style.display = 'flex'; // Or 'block' if that was its original display for visibility
+        }
+        if (openChatbotButton) {
+            openChatbotButton.style.display = 'none'; // Hide the button itself
+        }
+
+        // Disable input until ReCaptcha is "verified"
+        userInput.disabled = true;
+        sendButton.disabled = true;
+        simulateRecaptcha(); // Start ReCaptcha simulation
+    }
+
+    // Add event listener to the new button
+    if (openChatbotButton) {
+        openChatbotButton.addEventListener('click', showChatbotAndStartRecaptcha);
+    }
+    // --- END NEW/MODIFIED CODE ---
+
+    // ReCaptcha Placeholder Logic
     function simulateRecaptcha() {
         recaptchaPlaceholder.innerHTML = '<em>ReCaptcha: Click to verify (simulated)</em>';
         recaptchaPlaceholder.style.cursor = 'pointer';
@@ -17,31 +39,29 @@ document.addEventListener('DOMContentLoaded', () => {
             recaptchaVerified = true;
             recaptchaPlaceholder.innerHTML = '<em>ReCaptcha: Verified! (simulated)</em>';
             recaptchaPlaceholder.style.color = 'green';
-            recaptchaPlaceholder.onclick = null; // Remove click listener
+            recaptchaPlaceholder.onclick = null;
             userInput.disabled = false;
             sendButton.disabled = false;
             userInput.focus();
         };
     }
-
+    // Modified initializeChat: Now it doesn't directly start ReCaptcha or disable inputs.
+    // It just ensures the chatbot is ready if it were to be shown.
+    // The actual showing and ReCaptcha start is handled by openChatbotButton click.
     function initializeChat() {
-        // Disable input until ReCaptcha is "verified"
-        userInput.disabled = true;
-        sendButton.disabled = true;
-        simulateRecaptcha(); // Start ReCaptcha simulation
+        // Chatbot is hidden by CSS initially.
+        // Inputs will be disabled by showChatbotAndStartRecaptcha before ReCaptcha.
+        // No direct action needed here for initial state regarding visibility or ReCaptcha.
     }
 
-    // --- Honeypot Detection ---
+    // Honeypot Detection (remains the same)
     honeypotField.addEventListener('input', () => {
         if (honeypotField.value !== '') {
             console.warn('Honeypot triggered! Possible bot activity.');
             alert('Chat disabled due to suspicious activity.');
-            // Disable chat functionality
             userInput.disabled = true;
             sendButton.disabled = true;
             userInput.placeholder = 'Chat disabled.';
-            // In a real application, you would also send an alert to your backend/workers
-            // and potentially block the IP.
         }
     });
 
@@ -50,7 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
         messageDiv.classList.add('message', sender === 'user' ? 'user-message' : 'bot-message');
         messageDiv.textContent = text;
         chatMessages.appendChild(messageDiv);
-        chatMessages.scrollTop = chatMessages.scrollHeight; // Scroll to the latest message
+        chatMessages.scrollTop = chatMessages.scrollHeight;
     }
 
     async function handleSendMessage() {
@@ -60,12 +80,18 @@ document.addEventListener('DOMContentLoaded', () => {
             alert('Cannot send message. Chat disabled due to suspicious activity.');
             return;
         }
-
+        // --- MODIFIED CHECK ---
+        // Ensure chat container is visible AND recaptcha is verified
+        if (!chatContainer || chatContainer.style.display === 'none') {
+             // Should not happen if UI logic is correct, but as a safeguard
+            alert('Chat is not active.');
+            return;
+        }
         if (!recaptchaVerified) {
             alert('Please complete the ReCaptcha verification first.');
             return;
         }
-
+        // --- END MODIFIED CHECK ---
         if (userText === '') {
             return;
         }
@@ -73,29 +99,11 @@ document.addEventListener('DOMContentLoaded', () => {
         addMessage(userText, 'user');
         userInput.value = '';
         userInput.focus();
-
-        // --- Cloudflare AI Integration Placeholder ---
-        // Simulate bot thinking and response
         sendButton.disabled = true;
         setTimeout(async () => {
             try {
-                // Replace this with actual API call to your backend,
-                // which then interacts with Cloudflare AI.
-                // const response = await fetch('/api/chat', {
-                //     method: 'POST',
-                //     headers: { 'Content-Type': 'application/json' },
-                //     body: JSON.stringify({ message: userText })
-                // });
-                // if (!response.ok) {
-                //     throw new Error('Network response was not ok');
-                // }
-                // const data = await response.json();
-                // addMessage(data.reply, 'bot');
-
-                // Simulated bot response:
                 const botReply = "This is a simulated response from the AI. Cloudflare integration is pending.";
                 addMessage(botReply, 'bot');
-
             } catch (error) {
                 console.error("Error fetching AI response:", error);
                 addMessage("Sorry, I couldn't connect to the AI. Please try again later.", 'bot');
@@ -111,6 +119,5 @@ document.addEventListener('DOMContentLoaded', () => {
             handleSendMessage();
         }
     });
-
-    initializeChat();
+    initializeChat(); // Call initializeChat (it does less now)
 });
