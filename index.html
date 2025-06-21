@@ -183,6 +183,7 @@
           <label for="phone" data-en="Phone" data-es="Teléfono">Phone</label>
           <input type="tel" id="phone" name="phone" placeholder="Enter your phone" data-placeholder-en="Enter your phone" data-placeholder-es="Ingresa tu teléfono" />
         </div>
+
         <!-- Dynamic Sections -->
         <div class="form-section" data-section="Skills">
           <div class="section-header">
@@ -259,13 +260,16 @@
         <div class="form-footer">
           <button type="submit" class="submit-button" data-en="Submit" data-es="Enviar">Submit</button>
         </div>
+      </form>
     </div>
   </div>
 
   <script>
     let currentLang = 'en';
+
     function toggleLang() {
       currentLang = currentLang === 'en' ? 'es' : 'en';
+
       document.querySelectorAll('[data-en]').forEach(el => {
         // Check if the element is not a button or if it is a button, it's not one of the special ones
         if (el.tagName !== 'BUTTON' || (el.tagName === 'BUTTON' && !el.classList.contains('circle-btn') && !el.classList.contains('lang-toggle') && !el.classList.contains('close-modal') && !el.classList.contains('accept-btn') && !el.classList.contains('edit-btn') && !el.classList.contains('submit-button'))) {
