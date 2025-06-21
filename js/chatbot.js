@@ -2,19 +2,16 @@
 document.addEventListener('DOMContentLoaded', () => {
     const chatbotToggle = document.getElementById('chatbot-icon-toggle');
     const chatbotUi = document.getElementById('chatbot-ui');
-
     if (!chatbotToggle) {
         console.error('Chatbot toggle icon (#chatbot-icon-toggle) not found!');
     }
     if (!chatbotUi) {
         console.error('Chatbot UI element (#chatbot-ui) not found!');
     }
-
     const chatbotCloseButton = document.getElementById('chatbot-close-button');
     const chatbotSendButton = document.getElementById('chatbot-send-button');
     const chatbotInput = document.getElementById('chatbot-input');
     const chatbotMessages = document.getElementById('chatbot-messages');
-
     // New openChatbot function
     function openChatbot() {
         if (chatbotUi) {
@@ -47,7 +44,6 @@ document.addEventListener('DOMContentLoaded', () => {
             openChatbot();
         });
     }
-
     // Event listener for the chatbot close button
     if (chatbotCloseButton) {
         chatbotCloseButton.addEventListener('click', closeChatbot);

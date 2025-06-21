@@ -145,94 +145,20 @@
               data-placeholder-es="Ingresa tu teléfono" />
           </div>
         </div>
-        <!-- Dynamic Sections -->
-        <div class="form-section" data-section="Experience">
-          <div class="section-header">
-            <h2 data-en="Experience" data-es="Experiencias">Skills</h2>
-            <div>
-              <button type="button" class="circle-btn add" aria-label="Add" data-aria-label-en="Add" data-aria-label-es="Añadir">+</button>
-              <button type="button" class="circle-btn remove" aria-label="Remove" data-aria-label-en="Remove" data-aria-label-es="Quitar">−</button>
-            </div>
-          </div>
-          <div class="inputs"></div>
-          <button type="button" class="accept-btn" data-en="Accept" data-es="Aceptar">Accept</button>
-          <button type="button" class="edit-btn" data-en="Edit" data-es="Editar" style="display:none;">Edit</button>
-        </div>  
-        <div class="form-section" data-section="Skills">
-          <div class="section-header">
-            <h2 data-en="Skills" data-es="Habilidades">Skills</h2>
-            <div>
-              <button type="button" class="circle-btn add" aria-label="Add" data-aria-label-en="Add" data-aria-label-es="Añadir">+</button>
-              <button type="button" class="circle-btn remove" aria-label="Remove" data-aria-label-en="Remove" data-aria-label-es="Quitar">−</button>
-            </div>
-          </div>
-          <div class="inputs"></div>
-          <button type="button" class="accept-btn" data-en="Accept" data-es="Aceptar">Accept</button>
-          <button type="button" class="edit-btn" data-en="Edit" data-es="Editar" style="display:none;">Edit</button>
+        <div id="chat-messages">
+            <!-- Messages will appear here -->
         </div>
-        <div class="form-section" data-section="Education">
-          <div class="section-header">
-            <h2 data-en="Education" data-es="Educación">Education</h2>
-            <div>
-              <button type="button" class="circle-btn add" aria-label="Add" data-aria-label-en="Add" data-aria-label-es="Añadir">+</button>
-              <button type="button" class="circle-btn remove" aria-label="Remove" data-aria-label-en="Remove" data-aria-label-es="Quitar">−</button>
+        <div id="chat-input-area">
+            <div id="recaptcha-placeholder" style="margin-bottom: 10px;">
+                <!-- ReCaptcha will be loaded here -->
+                <p><em>ReCaptcha placeholder</em></p>
             </div>
-          </div>
-          <div class="inputs"></div>
-          <button type="button" class="accept-btn" data-en="Accept" data-es="Aceptar">Accept</button>
-          <button type="button" class="edit-btn" data-en="Edit" data-es="Editar" style="display:none;">Edit</button>
-        </div>
-        <div class="form-section" data-section="Continued Education">
-          <div class="section-header">
-            <h2 data-en="Continued Education" data-es="Educación Continua">Continued Education</h2>
-            <div>
-              <button type="button" class="circle-btn add" aria-label="Add" data-aria-label-en="Add" data-aria-label-es="Añadir">+</button>
-              <button type="button" class="circle-btn remove" aria-label="Remove" data-aria-label-en="Remove" data-aria-label-es="Quitar">−</button>
-            </div>
+            <!-- Honeypot: hidden field for bots -->
+            <input type="text" id="honeypot-field" name="honeypot" style="display:none;" aria-hidden="true">
 
-          </div>
-          <div class="inputs"></div>
-          <button type="button" class="accept-btn" data-en="Accept" data-es="Aceptar">Accept</button>
-          <button type="button" class="edit-btn" data-en="Edit" data-es="Editar" style="display:none;">Edit</button>
+            <input type="text" id="user-input" placeholder="Type your message..." autocomplete="off">
+            <button id="send-button">Send</button>
         </div>
-        <div class="form-section" data-section="Certification">
-          <div class="section-header">
-            <h2 data-en="Certification" data-es="Certificación">Certification</h2>
-            <div>
-              <button type="button" class="circle-btn add" aria-label="Add" data-aria-label-en="Add" data-aria-label-es="Añadir">+</button>
-              <button type="button" class="circle-btn remove" aria-label="Remove" data-aria-label-en="Remove" data-aria-label-es="Quitar">−</button>
-            </div>
-          </div>
-          <div class="inputs"></div>
-          <button type="button" class="accept-btn" data-en="Accept" data-es="Aceptar">Accept</button>
-          <button type="button" class="edit-btn" data-en="Edit" data-es="Editar" style="display:none;">Edit</button>
-        </div>
-        <div class="form-section" data-section="Hobbies">
-          <div class="section-header">
-            <h2 data-en="Hobbies" data-es="Pasatiempos">Hobbies</h2>
-            <div>
-              <button type="button" class="circle-btn add" aria-label="Add" data-aria-label-en="Add" data-aria-label-es="Añadir">+</button>
-              <button type="button" class="circle-btn remove" aria-label="Remove" data-aria-label-en="Remove" data-aria-label-es="Quitar">−</button>
-            </div>
-          </div>
-          <div class="inputs"></div>
-          <button type="button" class="accept-btn" data-en="Accept" data-es="Aceptar">Accept</button>
-          <button type="button" class="edit-btn" data-en="Edit" data-es="Editar" style="display:none;">Edit</button>
-        </div>
-        <!-- Comments -->
-        <div class="form-row">
-          <div class="form-cell">
-            <label for="comment" data-en="Tell us about yourself" data-es="Cuéntanos sobre ti">Tell us about yourself</label>
-            <textarea id="comment" name="comment" rows="4"
-              data-placeholder-en="Tell us about yourself..."
-              data-placeholder-es="Cuéntanos sobre ti..."></textarea>
-          </div>
-        </div>
-        <!-- Submit -->
-        <div class="form-footer">
-          <button type="submit" class="submit-button" data-en="Submit" data-es="Enviar">Submit</button>
-        </div>
-      </form>
     </div>
   </div>
 

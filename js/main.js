@@ -194,6 +194,12 @@ document.addEventListener('DOMContentLoaded', function() {
         event.preventDefault();
         const contactModal = document.getElementById('contact-modal');
         if (contactModal) {
+          // --- START FIX ---
+          // Ensure chatbot is hidden when opening contact modal via this link
+          if (chatbotUi) {
+              chatbotUi.style.display = 'none';
+          }
+          // --- END FIX ---
           contactModal.classList.add('active');
           contactModal.focus();
         }
