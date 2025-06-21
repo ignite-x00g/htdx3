@@ -131,18 +131,20 @@ document.addEventListener('DOMContentLoaded', function() {
   const closeModalButtons = document.querySelectorAll('[data-close]'); //This will now also include the new modal's close button if it has data-close
   const floatingIcons = document.querySelectorAll('.floating-icon');
   floatingIcons.forEach((icon) => {
-    icon.addEventListener('click', function() {
-      const modalId = icon.getAttribute('data-modal');
-      const modalElement = document.getElementById(modalId);
-      if (modalElement) {
-        // --- START FIX ---
-        // If opening contact-modal, ensure chatbot is hidden.
-        if (modalId === 'contact-modal' && chatbotUi) {
-            chatbotUi.style.display = 'none';
+    icon.addEventListener('click', function(event) { // Added 'event'
+      const modalId = this.getAttribute('data-modal');
+      if (modalId) {
+        // Stop the event from bubbling up or triggering other listeners on common ancestors unnecessarily.
+        // Although sibling listeners shouldn't be affected by default, this is a safeguard.
+        event.stopPropagation();
+
+        const modalElement = document.getElementById(modalId);
+        if (modalElement) {
+          modalElement.classList.add('active');
+          modalElement.focus();
+        } else {
+          console.error(`Modal element with ID '${modalId}' not found.`);
         }
-        // --- END FIX ---
-        modalElement.classList.add('active');
-        modalElement.focus();
       }
     });
   });

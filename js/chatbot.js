@@ -2,44 +2,48 @@
 document.addEventListener('DOMContentLoaded', () => {
     const chatbotToggle = document.getElementById('chatbot-icon-toggle');
     const chatbotUi = document.getElementById('chatbot-ui');
+    if (!chatbotToggle) {
+        console.error('Chatbot toggle icon (#chatbot-icon-toggle) not found!');
+    }
+    if (!chatbotUi) {
+        console.error('Chatbot UI element (#chatbot-ui) not found!');
+    }
     const chatbotCloseButton = document.getElementById('chatbot-close-button');
     const chatbotSendButton = document.getElementById('chatbot-send-button');
     const chatbotInput = document.getElementById('chatbot-input');
     const chatbotMessages = document.getElementById('chatbot-messages');
-
-    // Reference to the contact modal (assuming its ID is 'contact-modal')
-    const contactModal = document.getElementById('contact-modal');
-
-    // Function to open the chatbot
+    // New openChatbot function
     function openChatbot() {
-        // --- START FIX ---
-        // Ensure contact modal is hidden when chatbot opens
-        if (contactModal && contactModal.classList.contains('active')) {
-            contactModal.classList.remove('active');
-        }
-        // --- END FIX ---
-
         if (chatbotUi) {
-            chatbotUi.style.display = 'flex'; // Or 'block' depending on modal styling
-            // Focus on the input field when chat opens
+            chatbotUi.classList.add('active'); // Use .active class
             if (chatbotInput) {
                 chatbotInput.focus();
             }
+        } else {
+            console.error('Chatbot UI element not found for openChatbot!');
         }
     }
 
-    // Function to close the chatbot
+    // New closeChatbot function
     function closeChatbot() {
         if (chatbotUi) {
-            chatbotUi.style.display = 'none';
+            chatbotUi.classList.remove('active'); // Use .active class
+        } else {
+            console.error('Chatbot UI element not found for closeChatbot!');
         }
     }
 
     // Event listener for the chatbot toggle icon
     if (chatbotToggle) {
-        chatbotToggle.addEventListener('click', openChatbot);
+        chatbotToggle.addEventListener('click', function(event) {
+            // Ensure this event listener is responding to a direct click on chatbotToggle itself.
+            if (event.currentTarget !== chatbotToggle) {
+                return; // Should not happen with direct getElementById and direct listener.
+            }
+            // console.log('Chatbot toggle icon clicked:', event.currentTarget); // For debugging if possible
+            openChatbot();
+        });
     }
-
     // Event listener for the chatbot close button
     if (chatbotCloseButton) {
         chatbotCloseButton.addEventListener('click', closeChatbot);
@@ -56,7 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Event listener for Escape key to close chatbot
     document.addEventListener('keydown', (event) => {
-        if (event.key === 'Escape' && chatbotUi && chatbotUi.style.display !== 'none') {
+        if (event.key === 'Escape' && chatbotUi && chatbotUi.classList.contains('active')) {
             closeChatbot();
         }
     });
@@ -103,8 +107,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (chatbotToggle) { // Re-using toggle check to ensure this runs if chatbot elements are present
          const observer = new MutationObserver((mutationsList, observer) => {
             for(const mutation of mutationsList) {
-                if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
-                    if (chatbotUi.style.display === 'flex' && chatbotMessages && chatbotMessages.children.length === 0) {
+                // Check if the 'active' class has been added to chatbotUi
+                if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+                    if (chatbotUi.classList.contains('active') && chatbotMessages && chatbotMessages.children.length === 0) {
                          setTimeout(() => {
                             addMessage('Hello! How can I help you today?', 'ai');
                         }, 500);
@@ -113,7 +118,8 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
         if(chatbotUi) {
-            observer.observe(chatbotUi, { attributes: true });
+            // Observe 'class' attribute changes instead of 'style'
+            observer.observe(chatbotUi, { attributes: true, attributeFilter: ['class'] });
         }
     }
 });
