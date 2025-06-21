@@ -13,7 +13,9 @@
   <link rel="stylesheet" media="(max-width: 768px)" href="css/small-screens.css">
   <!-- Font Awesome Stylesheet -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" crossorigin="anonymous">
-   <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="contactus/style.css"> <!-- Contact Us CSS -->
+  <link rel="stylesheet" href="joinus-modal/style.css"> <!-- Join Us Modal CSS -->
+  <link rel="manifest" href="manifest.json">
   <link rel="icon" href="assets/favicon.ico">
 </head>
 
@@ -97,9 +99,9 @@
        Floating Icons (Triggers for Modals)
        ================================================================== -->
   <div class="floating-icons">
-    <button class="floating-icon" data-modal="join-modal" aria-label="Join Us" tabindex="0">
+    <a href="joinus/" class="floating-icon" aria-label="Join Us" tabindex="0">
       <i class="fas fa-user-plus"></i>
-    </button>
+    </a>
     <button class="floating-icon" data-modal="contact-modal" aria-label="Contact Us" tabindex="0">
       <i class="fas fa-envelope-open-text"></i>
     </button>
@@ -347,6 +349,8 @@
        JavaScript: Main Functionality & Mobile Menu Toggle
        ================================================================== -->
   <script src="js/main.js" defer></script>
+  <script src="contactus/script.js" defer></script> <!-- Contact Us JS -->
+  <script src="joinus-modal/script.js" defer></script> <!-- Join Us Modal JS -->
   <script src="js/service-worker.js" defer></script>
 </body>
 </html>
