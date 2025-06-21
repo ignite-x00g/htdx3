@@ -4,7 +4,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const sendButton = document.getElementById('send-button');
     const recaptchaPlaceholder = document.getElementById('recaptcha-placeholder');
     const honeypotField = document.getElementById('honeypot-field');
-
     // --- START NEW/MODIFIED CODE ---
     const chatContainer = document.getElementById('chat-container');
     const openChatbotButton = document.getElementById('open-chatbot-button');
@@ -46,7 +45,6 @@ document.addEventListener('DOMContentLoaded', () => {
             userInput.focus();
         };
     }
-
     // Modified initializeChat: Now it doesn't directly start ReCaptcha or disable inputs.
     // It just ensures the chatbot is ready if it were to be shown.
     // The actual showing and ReCaptcha start is handled by openChatbotButton click.
@@ -82,7 +80,6 @@ document.addEventListener('DOMContentLoaded', () => {
             alert('Cannot send message. Chat disabled due to suspicious activity.');
             return;
         }
-
         // --- MODIFIED CHECK ---
         // Ensure chat container is visible AND recaptcha is verified
         if (!chatContainer || chatContainer.style.display === 'none') {
@@ -95,8 +92,6 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
         // --- END MODIFIED CHECK ---
-
-
         if (userText === '') {
             return;
         }
@@ -104,7 +99,6 @@ document.addEventListener('DOMContentLoaded', () => {
         addMessage(userText, 'user');
         userInput.value = '';
         userInput.focus();
-
         sendButton.disabled = true;
         setTimeout(async () => {
             try {
@@ -125,6 +119,5 @@ document.addEventListener('DOMContentLoaded', () => {
             handleSendMessage();
         }
     });
-
     initializeChat(); // Call initializeChat (it does less now)
 });
