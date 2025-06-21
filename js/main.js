@@ -135,6 +135,12 @@ document.addEventListener('DOMContentLoaded', function() {
       const modalId = icon.getAttribute('data-modal');
       const modalElement = document.getElementById(modalId);
       if (modalElement) {
+        // --- START FIX ---
+        // If opening contact-modal, ensure chatbot is hidden.
+        if (modalId === 'contact-modal' && chatbotUi) {
+            chatbotUi.style.display = 'none';
+        }
+        // --- END FIX ---
         modalElement.classList.add('active');
         modalElement.focus();
       }
@@ -186,6 +192,12 @@ document.addEventListener('DOMContentLoaded', function() {
         event.preventDefault();
         const contactModal = document.getElementById('contact-modal');
         if (contactModal) {
+          // --- START FIX ---
+          // Ensure chatbot is hidden when opening contact modal via this link
+          if (chatbotUi) {
+              chatbotUi.style.display = 'none';
+          }
+          // --- END FIX ---
           contactModal.classList.add('active');
           contactModal.focus();
         }
