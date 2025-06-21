@@ -39,11 +39,11 @@ document.addEventListener('DOMContentLoaded', () => {
           const ariaLabel = el.getAttribute(`data-aria-label-${currentLang}`);
           if (ariaLabel) el.setAttribute('aria-label', ariaLabel);
         });
-
-        const langToggleModalEl = document.querySelector('.lang-toggle');
-        if (langToggleModalEl) {
-            langToggleModalEl.textContent = currentLang === 'en' ? 'EN | ES' : 'ES | EN';
-        }
+        // Removed specific update for local langToggleModalEl as the element is removed
+        // const langToggleModalEl = document.querySelector('.lang-toggle');
+        // if (langToggleModalEl) {
+        //     langToggleModalEl.textContent = currentLang === 'en' ? 'EN | ES' : 'ES | EN';
+        // }
 
         const pageTitleTag = document.querySelector('title[data-en]');
         if (pageTitleTag) {
@@ -69,14 +69,14 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
     }
+    // Removed event listener for the local .lang-toggle as the element is removed.
+    // The page will now rely on localStorage for language setting.
+    // const langToggleElement = document.querySelector('.lang-toggle');
+    // if (langToggleElement) {
+    //     langToggleElement.addEventListener('click', toggleLang);
+    // }
 
-    // Attach to language toggle
-    const langToggleElement = document.querySelector('.lang-toggle');
-    if (langToggleElement) {
-        langToggleElement.addEventListener('click', toggleLang);
-    }
-
-    // Initial language setup
+    // Initial language setup - this will run on page load and use localStorage
     updateLanguageDisplay();
 
 
@@ -193,13 +193,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const modalOverlay = document.getElementById('join-modal'); // Assuming this is the ID of the overlay
     if(closeModalButton && modalOverlay) {
         closeModalButton.addEventListener('click', () => {
-            // Instead of hiding, redirect or inform user, as this is a standalone page.
-            // For testing, we can just log. In a real app, might redirect to home.
-            console.log("Close button clicked on standalone joinus page.");
-            // Or, if it's meant to behave like a modal that can be "closed" (hidden):
-            // modalOverlay.style.display = 'none';
-            // For now, let's assume it's a full page and close means navigating away or similar.
-            // If this page is always full screen, the close button might be removed or repurposed.
+            // Redirect to the main page (index.html in the parent directory)
+            window.location.href = '../index.html';
         });
     }
 });
