@@ -69,7 +69,6 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
     }
-
     // Removed event listener for the local .lang-toggle as the element is removed.
     // The page will now rely on localStorage for language setting.
     // const langToggleElement = document.querySelector('.lang-toggle');
