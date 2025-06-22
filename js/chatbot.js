@@ -226,23 +226,35 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // The actual FAB button needs to be added to index.html
-    // For now, let's assume a button with id="chatbot-fab" will exist
-    const fabButton = document.getElementById('chatbot-fab'); // This ID needs to be created in HTML
+    // The actual FAB button (chatbot-fab) is now part of index.html
+    const fabButton = document.getElementById('chatbot-fab');
     if (fabButton) {
         fabButton.addEventListener('click', (event) => {
-            event.stopPropagation(); // Prevent the click from bubbling to the document listener
+            event.stopPropagation(); // Prevent this click from bubbling to the document listener
             if (chatContainer && chatContainer.style.display === 'none') {
                 openChatbot();
-            } else {
-                // If chat is open and FAB is clicked, standard behavior might be to do nothing or toggle.
-                // For now, let's assume clicking FAB when open does nothing, or it's a toggle.
-                // If it's a toggle:
-                // closeChatbot();
-                // If it should only open: handled by the condition above.
+            } else if (chatContainer) { // If chat is open, clicking FAB should close it
+                closeChatbot();
             }
         });
     }
+
+    // Event listener for clicking outside the chat container OR floating icons to close
+    document.addEventListener('click', (event) => {
+        const floatingIconsContainer = document.querySelector('.floating-icons');
+
+        if (chatContainer && chatContainer.style.display !== 'none') {
+            // Check if the click is outside the chatContainer AND outside the floatingIconsContainer
+            const clickedInsideChat = chatContainer.contains(event.target);
+            const clickedInsideFloatingIcons = floatingIconsContainer ? floatingIconsContainer.contains(event.target) : false;
+
+            if (!clickedInsideChat && !clickedInsideFloatingIcons) {
+                closeChatbot();
+            }
+        }
+    });
+    // Note: The original document click listener for closing chat was removed and replaced by the one above.
+    // The original Escape key listener is still valid.
 
     // Call initializeChat if it had any specific setup logic, though most is event-driven now.
     // initializeChat(); // from chatbot/script.js - seems to be empty, so can be omitted.

@@ -6,15 +6,17 @@
 #chat-container {
     display: none; /* Hidden by default, JS changes to 'flex' */
     flex-direction: column;
-    width: 400px;
+    width: 360px; /* Adjusted width */
     max-width: 90%; /* Responsive for smaller screens */
+    height: auto; /* Content determines height */
+    max-height: calc(100vh - 40px - 50px); /* Adjusted max-height */
     background-color: #fff;
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
-    overflow: hidden;
+    overflow: hidden; /* Contains children, allows internal scroll */
     position: fixed;
-    bottom: 90px; /* Positioned above the FAB (20px FAB offset + 60px FAB height + 10px spacing) */
-    right: 20px;
+    bottom: 20px; /* Align with floating-icons */
+    right: calc(20px + 60px + 10px); /* Position to the left of floating-icons (screen edge + icon width + gap) */
     z-index: 9999; /* High z-index to float above other content */
     font-family: sans-serif; /* Basic font */
     color: #333;
