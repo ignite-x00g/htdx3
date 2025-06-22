@@ -1,5 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
   const bodyElement = document.body;
+  const chatbotUi = document.getElementById('chatbot-ui'); // Ensure chatbot UI element is accessible
+
   // ================================================================
   // 1) THEME TOGGLE (Desktop & Mobile)
   // ================================================================
@@ -182,27 +184,30 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   // ================================================================
-  // 5) MOBILE CHAT LINK TO OPEN CONTACT MODAL
+  // 5) MOBILE CHAT LINK TO OPEN CHATBOT
   // ================================================================
-  const mobileChatLink = document.querySelector('.mobile-nav a[href="#"]');
+  const mobileChatLink = document.getElementById('mobile-chat-link');
   if (mobileChatLink) {
-    const chatIcon = mobileChatLink.querySelector('.fa-comment-alt');
-    if (chatIcon) {
-      mobileChatLink.addEventListener('click', function(event) {
-        event.preventDefault();
+    mobileChatLink.addEventListener('click', function(event) {
+      event.preventDefault();
+      // Attempt to open the chatbot
+      if (typeof openChatbot === 'function') {
+        openChatbot();
+      } else {
+        // Fallback if chatbot system is not yet fully integrated:
+        // Log a warning and temporarily open the contact modal.
+        // This ensures the link remains functional during development.
+        console.warn('openChatbot function not found. Mobile chat link opening contact modal as fallback.');
         const contactModal = document.getElementById('contact-modal');
         if (contactModal) {
-          // --- START FIX ---
-          // Ensure chatbot is hidden when opening contact modal via this link
-          if (chatbotUi) {
-              chatbotUi.style.display = 'none';
+          if (chatbotUi && chatbotUi.style.display !== 'none') {
+            chatbotUi.style.display = 'none'; // Hide chatbot if it's somehow open
           }
-          // --- END FIX ---
           contactModal.classList.add('active');
           contactModal.focus();
         }
-      });
-    }
+      }
+    });
   }
 
   // ================================================================
