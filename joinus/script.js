@@ -69,18 +69,14 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
     }
-
     // Removed event listener for the local .lang-toggle as the element is removed.
     // The page will now rely on localStorage for language setting.
     // const langToggleElement = document.querySelector('.lang-toggle');
     // if (langToggleElement) {
     //     langToggleElement.addEventListener('click', toggleLang);
     // }
-
     // Initial language setup - this will run on page load and use localStorage
     updateLanguageDisplay();
-
-
     // Dynamic Form Sections Logic (from original joinus.html)
     document.querySelectorAll('.form-section').forEach(section => {
         const addBtn = section.querySelector('.add');
