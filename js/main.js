@@ -208,148 +208,34 @@ document.addEventListener('DOMContentLoaded', function() {
   // ================================================================
   // 6) FORM SUBMISSIONS (Alert + Reset + Close Modal)
   // ================================================================
-  const joinForm = document.getElementById('join-form'); // Assuming new modal form also has id 'join-form'
-  if (joinForm) {
-    joinForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      alert(alertMessages.formSubmitted[currentLang]); // Use new alert message
-      joinForm.reset(); // Reset form fields (name, email, phone, comment on the new form)
+  // const joinForm = document.getElementById('join-form'); // Logic for this specific ID moved to joinus-modal/script.js
+  // if (joinForm) {
+    // ... submit listener and reset logic for #join-modal from index.html ...
+  // }
 
-      // New Reset Logic for the new form structure in #join-modal
-      document.querySelectorAll('#join-modal .form-section').forEach(section => {
-          const inputsContainer = section.querySelector('.inputs');
-          if (inputsContainer) inputsContainer.innerHTML = ''; // Remove all dynamically added inputs
-
-          section.classList.remove('completed');
-          const acceptBtn = section.querySelector('.accept-btn');
-          const editBtn = section.querySelector('.edit-btn');
-          const addBtnSection = section.querySelector('.circle-btn.add'); // Specific to new modal
-          const removeBtnSection = section.querySelector('.circle-btn.remove'); // Specific to new modal
-
-
-          if (acceptBtn) {
-              acceptBtn.style.display = 'inline-block';
-              // Reset acceptBtn text using its data attributes and currentLang
-              const acceptText = acceptBtn.getAttribute(`data-${currentLang}`);
-              if(acceptText) acceptBtn.textContent = acceptText;
-              acceptBtn.disabled = false;
-          }
-          if (editBtn) editBtn.style.display = 'none';
-          if (addBtnSection) addBtnSection.disabled = false;
-          if (removeBtnSection) removeBtnSection.disabled = false;
-      });
-
-      // Reset "Accept" button states and section UI
-      document.querySelectorAll('button.accept-section-btn[data-action="accept-section"]').forEach(button => {
-        const sectionName = button.dataset.section;
-        const sectionElement = document.getElementById(`${sectionName}-section`);
-        const titleLabel = sectionElement ? sectionElement.querySelector(':scope > label') : null;
-
-        if (titleLabel) {
-          titleLabel.classList.remove('section-accepted');
-          const checkmark = titleLabel.querySelector('.accept-checkmark');
-          if (checkmark) checkmark.remove();
-        }
-
-        button.disabled = false;
-        // Reset text based on current language and original data attributes from HTML
-        const originalTextEn = button.getAttribute('data-en');
-        const originalTextEs = button.getAttribute('data-es');
-        button.textContent = currentLanguage === 'es' ? originalTextEs : originalTextEn;
-
-        const fieldsContainer = document.getElementById(`${sectionName}-fields-container`);
-        if (fieldsContainer) {
-          fieldsContainer.querySelectorAll('input, textarea, select').forEach(field => field.disabled = false);
-        }
-
-        const addBtn = document.querySelector(`[data-action="add-field"][data-section="${sectionName}"]`);
-        if (addBtn) addBtn.disabled = false;
-
-        const removeBtn = document.querySelector(`[data-action="remove-field"][data-section="${sectionName}"]`);
-        if (removeBtn) removeBtn.disabled = false;
-
-        // After re-enabling, ensure the section remove button state is accurate
-        if (sectionName !== 'experience') { // updateSectionRemoveButtonState is for non-experience sections
-            updateSectionRemoveButtonState(sectionName);
-        }
-      });
-
-      const joinModal = document.getElementById('join-modal');
-      if (joinModal) {
-        joinModal.classList.remove('active');
-      }
-    });
-  }
-
-  const contactForm = document.getElementById('contact-form');
-  if (contactForm) {
-    contactForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      alert(alertMessages.contactThankYou[currentLang]);
-      contactForm.reset();
-      const contactModal = document.getElementById('contact-modal');
-      if (contactModal) {
-        contactModal.classList.remove('active');
-      }
-    });
-  }
+  // const contactForm = document.getElementById('contact-form'); // Moved to contactus/script.js
+  // if (contactForm) {
+  //   contactForm.addEventListener('submit', (e) => {
+  //     e.preventDefault();
+  //     alert(alertMessages.contactThankYou[currentLang]);
+  //     contactForm.reset();
+  //     const contactModal = document.getElementById('contact-modal');
+  //     if (contactModal) {
+  //       contactModal.classList.remove('active');
+  //     }
+  //   });
+  // }
 
   // ================================================================
-  // 7) NEW DYNAMIC FORM LOGIC (for the new Join Us modal)
+  // 7) NEW DYNAMIC FORM LOGIC (for the new Join Us modal) - MOVED
   // ================================================================
-  document.querySelectorAll('#join-modal .form-section').forEach(section => {
-    const addBtn = section.querySelector('.add');
-    const removeBtn = section.querySelector('.remove');
-    const acceptBtn = section.querySelector('.accept-btn');
-    const editBtn = section.querySelector('.edit-btn');
-    const inputsContainer = section.querySelector('.inputs');
-    const sectionNameEn = section.querySelector('h2')?.getAttribute('data-en');
-    const sectionNameEs = section.querySelector('h2')?.getAttribute('data-es');
-
-    if (!addBtn || !removeBtn || !acceptBtn || !editBtn || !inputsContainer || !sectionNameEn || !sectionNameEs) return;
-
-    addBtn.addEventListener('click', () => {
-      const input = document.createElement('input');
-      input.type = 'text';
-      const placeholderEn = `Enter ${sectionNameEn} info`;
-      const placeholderEs = `Ingresa ${sectionNameEs} (info)`;
-      input.setAttribute('data-placeholder-en', placeholderEn);
-      input.setAttribute('data-placeholder-es', placeholderEs);
-      input.placeholder = currentLang === 'es' ? placeholderEs : placeholderEn;
-      inputsContainer.appendChild(input);
-    });
-
-    removeBtn.addEventListener('click', () => {
-      const inputs = inputsContainer.querySelectorAll('input');
-      if (inputs.length > 0) {
-        inputsContainer.removeChild(inputs[inputs.length - 1]);
-      }
-    });
-    acceptBtn.addEventListener('click', () => {
-      const inputs = inputsContainer.querySelectorAll('input');
-      const currentSectionNameText = currentLang === 'es' ? sectionNameEs : sectionNameEn;
-      if (inputs.length === 0) {
-        alert(alertMessages.addEntry[currentLang].replace('{sectionName}', currentSectionNameText));
-        return;
-      }
-      inputs.forEach(inputField => inputField.disabled = true);
-      section.classList.add('completed');
-      acceptBtn.style.display = 'none';
-      editBtn.style.display = 'inline-block';
-      addBtn.disabled = true;
-      removeBtn.disabled = true;
-    });
-
-    editBtn.addEventListener('click', () => {
-      const inputs = inputsContainer.querySelectorAll('input');
-      inputs.forEach(inputField => inputField.disabled = false);
-      section.classList.remove('completed');
-      acceptBtn.style.display = 'inline-block';
-      editBtn.style.display = 'none';
-      addBtn.disabled = false;
-      removeBtn.disabled = false;
-    });
-  });
+  // Logic for '#join-modal .form-section' (i.e. the complex dynamic fields)
+  // was specific to the standalone joinus.html page (now joinus/index.html and its script joinus/script.js).
+  // The #join-modal in index.html is simpler and does not use this structure.
+  // This entire block has been moved to joinus/script.js.
+  // document.querySelectorAll('#join-modal .form-section').forEach(section => {
+  //   ...
+  // });
 
   // ================================================================
   // 8) SERVICE WORKER REGISTRATION (was 10, renumbered)
