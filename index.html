@@ -7,12 +7,31 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>OPS Solutions Services</title>
+  <meta name="description" content="OPS Solutions Services offers empowering remote solutions including Business Operations, Contact Center, IT Support, and access to top-tier Professionals.">
+  <meta name="keywords" content="remote solutions, business operations, contact center, IT support, professional services, OPS Solutions, BPO, customer service, technical support">
   <!-- Global CSS (Desktop-First) -->
   <link rel="stylesheet" href="css/global.css">
   <!-- Additional overrides for small screens -->
   <link rel="stylesheet" media="(max-width: 768px)" href="css/small-screens.css">
   <!-- Font Awesome Stylesheet -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <!-- Security Meta Tags -->
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self';
+                 script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://www.google.com https://www.gstatic.com;
+                 style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com;
+                 img-src 'self' data: https:;
+                 font-src 'self' https://cdnjs.cloudflare.com;
+                 frame-src https://www.google.com https://www.gstatic.com;
+                 connect-src 'self' ws: wss:;
+                 object-src 'none';
+                 base-uri 'self';
+                 form-action 'self';
+                 frame-ancestors 'none';">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="X-Frame-Options" content="DENY">
+  <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+  <!-- End Security Meta Tags -->
   <link rel="stylesheet" href="contactus/style.css"> <!-- Contact Us CSS -->
   <link rel="stylesheet" href="joinus-modal/style.css"> <!-- Join Us Modal CSS -->
   <link rel="manifest" href="manifest.json">
@@ -335,12 +354,19 @@
   <!-- Hidden Mobile Services Menu -->
   <div class="mobile-services-menu" id="mobile-services-menu">
     <ul>
-      <li><a href="business-operations.html">Business Operations</a></li>
+      <li><a href="business-operations.html" data-en="Business Operations" data-es="Operaciones Empresariales">Business Operations</a></li>
       <li><a href="contact-center.html">Contact Center</a></li>
       <li><a href="it-support.html">IT Support</a></li>
       <li><a href="professionals.html">Professionals</a></li>
     </ul>
   </div>
+
+  <!-- ==================================================================
+       Floating Action Button (FAB) for Chatbot
+       ================================================================== -->
+  <button id="chatbot-fab" class="floating-icon" aria-label="Open Chat" tabindex="0">
+    <i class="fas fa-comment-alt"></i>
+  </button>
 
   <!-- ==================================================================
        JavaScript: Main Functionality & Mobile Menu Toggle
@@ -349,5 +375,30 @@
   <script src="contactus/script.js" defer></script> <!-- Contact Us JS -->
   <script src="joinus-modal/script.js" defer></script> <!-- Join Us Modal JS -->
   <script src="js/service-worker.js" defer></script>
+
+  <!-- Chatbot Container -->
+  <div id="chat-container" style="display: none;">
+    <div id="chat-header">
+      <h2>AI Chatbot</h2>
+      <button id="chatbot-close-button-main" aria-label="Close Chat">&times;</button>
+    </div>
+    <div id="chat-messages">
+      <!-- Messages will appear here -->
+    </div>
+    <div id="chat-input-area">
+      <div id="recaptcha-placeholder" style="margin-bottom: 10px;">
+        <!-- ReCaptcha will be loaded here -->
+        <p><em>ReCaptcha placeholder</em></p>
+      </div>
+      <!-- Honeypot: hidden field for bots -->
+      <input type="text" id="honeypot-field" name="honeypot" style="display:none;" aria-hidden="true">
+
+      <input type="text" id="user-input" placeholder="Type your message..." autocomplete="off">
+      <button id="send-button">Send</button>
+    </div>
+  </div>
+  <!-- End Chatbot Container -->
+
+  <script src="js/chatbot.js" defer></script>
 </body>
 </html>
