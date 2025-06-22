@@ -75,11 +75,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // if (langToggleElement) {
     //     langToggleElement.addEventListener('click', toggleLang);
     // }
-
     // Initial language setup - this will run on page load and use localStorage
     updateLanguageDisplay();
-
-
     // Dynamic Form Sections Logic (from original joinus.html)
     document.querySelectorAll('.form-section').forEach(section => {
         const addBtn = section.querySelector('.add');
@@ -190,11 +187,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Close button for the modal (if it's part of this standalone page)
     const closeModalButton = document.querySelector('.close-modal');
-    const modalOverlay = document.getElementById('join-modal'); // Assuming this is the ID of the overlay
-    if(closeModalButton && modalOverlay) {
+    const modalOverlay = document.getElementById('join-modal'); // This is the overlay for the joinus/index.html page
+
+    // For the 'X' close button
+    if(closeModalButton && modalOverlay) { // closeModalButton is already defined as document.querySelector('.close-modal')
         closeModalButton.addEventListener('click', () => {
-            // Redirect to the main page (index.html in the parent directory)
             window.location.href = '../index.html';
+        });
+    }
+
+    // For clicking outside the .modal-content (i.e., on .modal-overlay itself)
+    if (modalOverlay) {
+        modalOverlay.addEventListener('click', function(event) {
+            // Check if the direct target of the click is the overlay itself
+            if (event.target === modalOverlay) {
+                window.location.href = '../index.html';
+            }
         });
     }
 });
