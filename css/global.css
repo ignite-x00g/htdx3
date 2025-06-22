@@ -165,11 +165,11 @@ footer {
    ================================================================== */
 .floating-icons {
   position: fixed;
-  bottom: 110px;
+  bottom: 20px; /* Adjusted to be lower */
   right: 20px;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 10px; /* Adjusted gap */
   z-index: 2000;
 }
 
