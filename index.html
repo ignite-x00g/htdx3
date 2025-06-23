@@ -34,6 +34,7 @@
   <!-- End Security Meta Tags -->
   <link rel="stylesheet" href="contactus/style.css"> <!-- Contact Us CSS -->
   <link rel="stylesheet" href="joinus-modal/style.css"> <!-- Join Us Modal CSS -->
+  <link rel="stylesheet" href="chatbot/chatbot.css"> <!-- Chatbot CSS -->
   <link rel="manifest" href="manifest.json">
   <link rel="icon" href="assets/favicon.ico">
 </head>
@@ -372,29 +373,10 @@
   <script src="joinus-modal/script.js" defer></script> <!-- Join Us Modal JS -->
   <script src="js/service-worker.js" defer></script>
 
-  <!-- Chatbot Container -->
-  <div id="chat-container" style="display: none;">
-    <div id="chat-header">
-      <h2>AI Chatbot</h2>
-      <button id="chatbot-close-button-main" aria-label="Close Chat">&times;</button>
-    </div>
-    <div id="chat-messages">
-      <!-- Messages will appear here -->
-    </div>
-    <div id="chat-input-area">
-      <div id="recaptcha-placeholder" style="margin-bottom: 10px;">
-        <!-- ReCaptcha will be loaded here -->
-        <p><em>ReCaptcha placeholder</em></p>
-      </div>
-      <!-- Honeypot: hidden field for bots -->
-      <input type="text" id="honeypot-field" name="honeypot" style="display:none;" aria-hidden="true">
-
-      <input type="text" id="user-input" placeholder="Type your message..." autocomplete="off">
-      <button id="send-button">Send</button>
-    </div>
-  </div>
-  <!-- End Chatbot Container -->
+  <!-- Chatbot will be loaded here -->
+  <div id="chatbot-placeholder"></div>
 
   <script src="js/chatbot.js" defer></script>
+  <script src="chatbot/chatbot.js" defer></script>
 </body>
 </html>

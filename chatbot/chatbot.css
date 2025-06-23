@@ -1,0 +1,208 @@
+/* chatbot/chatbot.css */
+
+/* Main chat container - initially hidden, managed by JS */
+#chat-container {
+    display: none; /* Hidden by default, JS changes to 'flex' */
+    flex-direction: column;
+    width: 360px; /* Adjusted width */
+    max-width: 90%; /* Responsive for smaller screens */
+    height: auto; /* Content determines height */
+    max-height: calc(100vh - 40px - 50px); /* Adjusted max-height */
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+    overflow: hidden; /* Contains children, allows internal scroll */
+    position: fixed;
+    bottom: 20px; /* Aligns with the bottom of the floating icons */
+    right: 85px; /* Positions 5px to the left of the 60px wide floating icons (which are 20px from edge) */
+    z-index: 9999; /* High z-index to float above other content */
+    font-family: sans-serif; /* Basic font */
+    color: #333;
+}
+
+/* Chat Header */
+#chat-header {
+    background-color: #6a0dad; /* Purple shade */
+    color: white;
+    padding: 10px 15px; /* Reduced padding a bit */
+    text-align: center;
+    border-bottom: 1px solid #5a0cac; /* Slightly darker border */
+    display: flex; /* To align title and close button */
+    justify-content: space-between; /* Puts title left, button right */
+    align-items: center;
+}
+
+#chat-header h2 {
+    margin: 0;
+    font-size: 1.1em; /* Slightly smaller font for header */
+}
+
+/* Close button in chat header */
+#chatbot-close-button-main {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5em; /* Larger for easier clicking */
+    cursor: pointer;
+    padding: 0 5px; /* Add some padding for easier click */
+}
+#chatbot-close-button-main:hover {
+    opacity: 0.8;
+}
+
+/* Messages Area */
+#chat-messages {
+    flex-grow: 1;
+    padding: 15px;
+    overflow-y: auto;
+    min-height: 250px; /* Increased min-height */
+    max-height: 400px; /* Increased max-height */
+    background-color: #f0e6f6; /* Lighter purple shade for message area */
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* Space between messages */
+}
+
+/* Individual Messages */
+.message { /* General message styling */
+    padding: 8px 12px;
+    border-radius: 15px;
+    max-width: 75%; /* Slightly wider max-width */
+    word-wrap: break-word;
+    line-height: 1.4;
+}
+
+.user-message {
+    background-color: #8A2BE2; /* Brighter Purple for user */
+    color: white;
+    align-self: flex-end;
+    border-bottom-right-radius: 5px; /* Chat bubble tail */
+}
+
+.bot-message {
+    background-color: #e9d8f2; /* Softer purple for bot */
+    color: #333;
+    align-self: flex-start;
+    border-bottom-left-radius: 5px; /* Chat bubble tail */
+}
+
+/* Input Area */
+#chat-input-area {
+    display: flex;
+    align-items: center; /* Vertically align items in input area */
+    padding: 10px 15px; /* Consistent padding */
+    border-top: 1px solid #ddd;
+    background-color: #fff; /* White background for input area */
+}
+
+/* User Input Field */
+#user-input {
+    flex-grow: 1;
+    padding: 10px 15px; /* More padding */
+    border: 1px solid #ccc;
+    border-radius: 20px; /* Rounded corners */
+    margin-right: 10px;
+    font-size: 0.95em; /* Slightly adjusted font size */
+}
+
+#user-input:focus {
+    outline: none;
+    border-color: #6a0dad; /* Theme color on focus */
+    box-shadow: 0 0 0 2px rgba(106, 13, 173, 0.2); /* Subtle glow */
+}
+
+/* Send Button */
+#send-button {
+    padding: 10px 20px;
+    background-color: #6a0dad; /* Theme purple */
+    color: white;
+    border: none;
+    border-radius: 20px; /* Rounded corners */
+    cursor: pointer;
+    font-size: 0.95em;
+    transition: background-color 0.2s ease;
+}
+
+#send-button:hover {
+    background-color: #5a0cac; /* Darker purple on hover */
+}
+#send-button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+/* ReCaptcha Placeholder Styling */
+#recaptcha-placeholder {
+    font-size: 0.85em; /* Smaller text */
+    color: #666; /* Grey text */
+    text-align: center;
+    padding: 5px 0; /* Some padding */
+}
+#recaptcha-placeholder em {
+    font-style: italic;
+}
+
+/* Dark mode considerations for chat container and its contents */
+body[data-theme="dark"] #chat-container {
+    background-color: #2c2c2c; /* Darker background for chat container */
+    color: #e0e0e0; /* Light text for dark mode */
+    border: 1px solid #444; /* Subtle border */
+}
+
+body[data-theme="dark"] #chat-header {
+    background-color: #5a0cac; /* Slightly adjusted dark theme header */
+    border-bottom-color: #480687;
+}
+body[data-theme="dark"] #chatbot-close-button-main {
+    color: #e0e0e0;
+}
+
+body[data-theme="dark"] #chat-messages {
+    background-color: #222; /* Very dark background for messages area */
+}
+
+body[data-theme="dark"] .user-message {
+    background-color: #7e3ff2; /* Dark mode user message color */
+    color: #fff; /* Ensuring text is light */
+}
+
+body[data-theme="dark"] .bot-message {
+    background-color: #3a3a3a; /* Dark mode bot message color */
+    color: #e0e0e0;
+}
+
+body[data-theme="dark"] #chat-input-area {
+    background-color: #2c2c2c; /* Match container background */
+    border-top-color: #444;
+}
+
+body[data-theme="dark"] #user-input {
+    background-color: #3a3a3a; /* Dark input field */
+    border-color: #555;
+    color: #e0e0e0; /* Light text in input */
+}
+
+body[data-theme="dark"] #user-input::placeholder {
+    color: #aaa; /* Lighter placeholder text for dark mode */
+}
+
+body[data-theme="dark"] #user-input:focus {
+    border-color: #7e3ff2; /* Dark mode theme focus color */
+    box-shadow: 0 0 0 2px rgba(126, 63, 242, 0.3);
+}
+
+body[data-theme="dark"] #send-button {
+    background-color: #7e3ff2; /* Dark mode send button */
+    color: #fff;
+}
+body[data-theme="dark"] #send-button:hover {
+    background-color: #6a2ee0;
+}
+body[data-theme="dark"] #send-button:disabled {
+    background-color: #555;
+    color: #999;
+}
+
+body[data-theme="dark"] #recaptcha-placeholder {
+    color: #bbb; /* Lighter text for recaptcha placeholder in dark mode */
+}
