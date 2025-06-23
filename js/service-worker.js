@@ -22,10 +22,11 @@ const urlsToCache = [
   '/chatbot/chatbot.html',
 
   // Join Us page (separate) assets
+  '/joinus/',
   '/joinus/index.html',
   '/joinus/script.js',
   '/joinus/style.css',
- // Font Awesome
+  // Font Awesome
   'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css',
 ];
 

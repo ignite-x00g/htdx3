@@ -1,13 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OPS Online Support</title>
-    <link rel="stylesheet" href="css/theme.css">
-    <link rel="stylesheet" href="css/style.css">
-    <!-- Font Awesome CDN -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<!-- ==================================================================
+       Document Metadata & External Resources
+       ================================================================== -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OPS Solutions Services</title>
+  <meta name="description" content="OPS Solutions Services offers empowering remote solutions including Business Operations, Contact Center, IT Support, and access to top-tier Professionals.">
+  <meta name="keywords" content="remote solutions, business operations, contact center, IT support, professional services, OPS Solutions, BPO, customer service, technical support">
+  <!-- Global CSS (Desktop-First) -->
+  <link rel="stylesheet" href="css/global.css">
+  <!-- Additional overrides for small screens -->
+  <link rel="stylesheet" media="(max-width: 768px)" href="css/small-screens.css">
+  <!-- Font Awesome Stylesheet -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <!-- Security Meta Tags -->
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self';
+                 script-src 'self' https://cdnjs.cloudflare.com https://www.google.com https://www.gstatic.com;
+                 style-src 'self' https://cdnjs.cloudflare.com;
+                 img-src 'self' data: https:;
+                 font-src 'self' https://cdnjs.cloudflare.com;
+                 frame-src https://www.google.com https://www.gstatic.com;
+                 connect-src 'self' ws: wss:;
+                 object-src 'none';
+                 base-uri 'self';
+                 form-action 'self';
+                 frame-ancestors 'none';">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="X-Frame-Options" content="DENY">
+  <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+  <!-- End Security Meta Tags -->
+  <link rel="stylesheet" href="chatbot/chatbot.css"> <!-- Chatbot CSS -->
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="assets/favicon.ico">
 </head>
 <body class="landing-page dark-theme">
     <a href="#services" class="skip-link" style="position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;">Skip to main content</a>
@@ -139,93 +166,53 @@
             </form>
         </div>
     </div>
-    <!-- Contact Us Modal -->
-    <div id="contact-us-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="contactModalTitle" style="display: none;">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h3 id="contactModalTitle" data-en="Contact Us" data-es="Contáctenos">Contact Us</h3>
-          <button class="close-modal" data-close-modal="contact-us-modal" aria-label="Close">&times;</button>
-        </div>
-        <div class="modal-body">
-          <form id="contact-form">
-            <div class="form-row">
-              <div class="form-cell">
-                <label for="contact-name" data-en="Name" data-es="Nombre">Name</label>
-                <input type="text" id="contact-name" data-placeholder-en="Enter your name" data-placeholder-es="Ingrese su Nombre" required>
-              </div>
-              <div class="form-cell">
-                <label for="contact-email" data-en="Email" data-es="Correo Electrónico">Email</label>
-                <input type="email" id="contact-email" data-placeholder-en="Enter your email" data-placeholder-es="Ingrese su correo electrónico" required>
-              </div>
-            </div>
-            <div class="form-row">
-              <div class="form-cell">
-                <label for="contact-number" data-en="Contact Number" data-es="Número de Contacto">Contact Number</label>
-                <input type="tel" id="contact-number" data-placeholder-en="Enter your contact number" data-placeholder-es="Ingrese su número" required>
-              </div>
-              <div class="form-cell">
-                <label for="contact-date" data-en="Preferred Date" data-es="Fecha Preferida">Preferred Date</label>
-                <input type="date" id="contact-date" data-placeholder-en="Preferred Date" data-placeholder-es="Fecha Preferida" required>
-              </div>
-            </div>
-            <div class="form-row">
-              <div class="form-cell">
-                <label for="contact-time" data-en="Preferred Time" data-es="Hora Preferida">Preferred Time</label>
-                <input type="time" id="contact-time" data-placeholder-en="Preferred Time" data-placeholder-es="Hora Preferida" required>
-              </div>
-              <div class="form-cell">
-                <label for="contact-interest" data-en="What are you interested about?" data-es="¿En qué está interesado?">What are you interested about?</label>
-                <select id="contact-interest" required>
-                  <option value="" disabled selected data-en="Select an option" data-es="Seleccione una opción">Select an option</option>
-                  <option data-en="Business Operations" data-es="Gestión">Business Operations</option>
-                  <option data-en="Contact Center" data-es="Centro de Servicios">Contact Center</option>
-                  <option data-en="IT Support" data-es="Soporte Técnico">IT Support</option>
-                  <option data-en="Professionals" data-es="Profesionales">Professionals</option>
-                </select>
-              </div>
-            </div>
-            <div class="form-row">
-              <div class="form-cell" style="flex: 1 1 100%;">
-                <label for="contact-comments" data-en="Comments" data-es="Comentarios">Comments</label>
-                <textarea id="contact-comments" rows="4" data-placeholder-en="What service are you interested in?" data-placeholder-es="En qué servicio está interesado?" required></textarea>
-              </div>
-            </div>
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button type="submit" form="contact-form" class="submit-button" data-en="Send" data-es="Enviar">Send</button>
-        </div>
-      </div>
-    </div>
+  </section>
 
-    <!-- Service Modals -->
-    <div id="business-operations-modal" class="modal-overlay service-modal-center" style="display:none;">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 data-en="Business Operations" data-es="Gestión">Business Operations</h3>
-                <button class="close-modal" data-close-modal="business-operations-modal" aria-label="Close">&times;</button>
-            </div>
-            <div class="modal-body" data-en="Content for Business Operations..." data-es="Contenido para Gestión...">
-                Content for Business Operations...
-            </div>
-        </div>
-    </div>
-    <div id="contact-center-modal" class="modal-overlay service-modal-center" style="display:none;">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 data-en="Contact Center" data-es="Centro de Servicios">Contact Center</h3>
-                <button class="close-modal" data-close-modal="contact-center-modal" aria-label="Close">&times;</button>
-            </div>
-            <div class="modal-body" data-en="Content for Contact Center..." data-es="Contenido para Centro de Servicios...">
-                Content for Contact Center...
-            </div>
-        </div>
-    </div>
-    <div id="it-support-modal" class="modal-overlay service-modal-center" style="display:none;">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 data-en="IT Support" data-es="Soporte Técnico">IT Support</h3>
-                <button class="close-modal" data-close-modal="it-support-modal" aria-label="Close">&times;</button>
+  <!-- ==================================================================
+       Footer Section
+       ================================================================== -->
+  <footer>
+    <p>&copy; 2025 OPS Solutions Services. All rights reserved.</p>
+  </footer>
+
+  <!-- ==================================================================
+       Floating Icons (Triggers for Modals)
+       ================================================================== -->
+  <div class="floating-icons">
+    <a href="joinus/" class="floating-icon" aria-label="Join Us" tabindex="0">
+      <i class="fas fa-user-plus"></i>
+    </a>
+    <button class="floating-icon" data-modal="contact-modal" aria-label="Contact Us" tabindex="0">
+      <i class="fas fa-envelope-open-text"></i>
+    </button>
+    <button id="chatbot-fab" class="floating-icon" aria-label="Open Chat" tabindex="0">
+      <i class="fas fa-comment-alt"></i>
+    </button>
+  </div>
+
+  <!-- ==================================================================
+       Contact Modal
+       ================================================================== -->
+  <div id="contact-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="contactModalTitle">
+    <div class="modal-content">
+      <!-- Modal Header: Title & Close Button -->
+      <div class="modal-header">
+        <h3 id="contactModalTitle" data-en="Contact Us" data-es="Contáctenos">Contact Us</h3>
+        <button class="close-modal" data-close aria-label="Close">&times;</button>
+      </div>
+      <!-- Modal Body: Form with Grid (Table-like) Layout -->
+      <div class="modal-body">
+        <form id="contact-form">
+          <!-- Row 1 -->
+          <div class="form-row">
+            <div class="form-cell">
+              <label for="contact-name" data-en="Name" data-es="Nombre">Name</label>
+              <input 
+                type="text" 
+                id="contact-name" 
+                placeholder="Enter your name / Ingrese su Nombre" 
+                required
+              >
             </div>
             <div class="modal-body" data-en="Content for IT Support..." data-es="Contenido para Soporte Técnico...">
                 Content for IT Support...
@@ -264,40 +251,40 @@
         </div>
     </div>
 
-    <footer>
-        <p data-en="© 2025 OPS Online Support" data-es="© 2025 OPS Online Support">&copy; 2025 OPS Online Support</p>
-    </footer>
-    <!-- Mobile Navigation -->
-    <nav class="mobile-nav" id="mobile-bottom-nav">
-        <a href="index.html" class="mobile-nav-item">
-            <i class="fas fa-home"></i>
-            <span data-en="Home" data-es="Inicio">Home</span>
-        </a>
-        <button class="mobile-nav-item" id="mobile-services-toggle">
-            <i class="fas fa-bars"></i>
-            <span data-en="Services" data-es="Servicios">Services</span>
-        </button>
-        <button class="mobile-nav-item" id="mobile-language-toggle" data-en="ES" data-es="EN">ES</button>
-        <button class="mobile-nav-item" id="mobile-theme-toggle" data-en="Light" data-es="Claro">Light</button>
-        <a href="#" id="mobile-chat-link" class="mobile-nav-item" data-modal-target="chatbot-modal">
-            <i class="fas fa-comment-alt"></i>
-            <span data-en="Chat" data-es="Chat">Chat</span>
-        </a>
-    </nav>
-    <div class="mobile-services-menu" id="mobile-services-panel">
-        <ul>
-            <li><button data-service-target="business-operations-modal" data-en="Business Operations" data-es="Gestión">Business Operations</button></li>
-            <li><button data-service-target="contact-center-modal" data-en="Contact Center" data-es="Centro de Servicios">Contact Center</button></li>
-            <li><button data-service-target="it-support-modal" data-en="IT Support" data-es="Soporte Técnico">IT Support</button></li>
-            <li><button data-service-target="professionals-modal" data-en="Professionals" data-es="Profesionales">Professionals</button></li>
-        </ul>
-    </div>
-    <!-- JS -->
-    <script src="js/theme-switcher.js" defer></script>
-    <script src="js/language-switcher.js" defer></script>
-    <script src="js/dynamic-modal-manager.js" defer></script>
-    <script src="js/contact-form-handler.js" defer></script>
-    <script src="js/mobile-menu.js" defer></script>
-    <script src="js/script.js" defer></script>
+    <!-- Language Toggle (Mobile) -->
+    <button class="mobile-nav-item" id="mobile-language-toggle">EN</button>
+
+    <!-- Theme Toggle (Mobile) -->
+    <button class="mobile-nav-item" id="mobile-theme-toggle">Light</button>
+
+    <!-- Chat Link -->
+    <a href="#" id="mobile-chat-link" class="mobile-nav-item">
+      <i class="fas fa-comment-alt"></i>
+      <span data-en="Chat" data-es="Chat">Chat</span>
+    </a>
+  </nav>
+
+  <!-- Hidden Mobile Services Menu -->
+  <div class="mobile-services-menu" id="mobile-services-menu">
+    <ul>
+      <li><a href="business-operations.html" data-en="Business Operations" data-es="Operaciones Empresariales">Business Operations</a></li>
+      <li><a href="contact-center.html">Contact Center</a></li>
+      <li><a href="it-support.html">IT Support</a></li>
+      <li><a href="professionals.html">Professionals</a></li>
+    </ul>
+  </div>
+
+  <!-- ==================================================================
+       JavaScript: Main Functionality & Mobile Menu Toggle
+       ================================================================== -->
+  <script src="js/main.js" defer></script>
+  <script src="contactus/script.js" defer></script> <!-- Contact Us JS -->
+  <script src="js/service-worker.js" defer></script>
+
+  <!-- Chatbot will be loaded here -->
+  <div id="chatbot-placeholder"></div>
+
+  <script src="js/chatbot.js" defer></script>
+  <script src="chatbot/chatbot.js" defer></script>
 </body>
 </html>
