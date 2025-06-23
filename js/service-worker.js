@@ -1,16 +1,32 @@
 // js/service-worker.js
 
-const CACHE_NAME = 'ops-solutions-cache-v1';
+const CACHE_NAME = 'ops-solutions-cache-v3'; // Incremented cache version
 const urlsToCache = [
+  // Core index.html and its immediate assets
   '/',
   '/index.html',
   '/css/global.css',
   '/css/small-screens.css',
   '/js/main.js',
   '/assets/images/hero-image.jpg',
+  '/assets/images/logo.png',
   '/assets/favicon.ico',
-  '/manifest.json'
-  // Add other important assets here, especially those needed for offline fallback
+  '/manifest.json',
+
+  // Contact Us modal assets
+  '/contactus/script.js',
+  // Chatbot assets
+  '/js/chatbot.js',
+  '/chatbot/chatbot.js',
+  '/chatbot/chatbot.css',
+  '/chatbot/chatbot.html',
+
+  // Join Us page (separate) assets
+  '/joinus/index.html',
+  '/joinus/script.js',
+  '/joinus/style.css',
+ // Font Awesome
+  'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css',
 ];
 
 // Install event: Open cache and add core assets
