@@ -1,6 +1,6 @@
 // js/service-worker.js
 
-const CACHE_NAME = 'ops-solutions-cache-v2'; // Incremented cache version
+const CACHE_NAME = 'ops-solutions-cache-v3'; // Incremented cache version
 const urlsToCache = [
   // Core index.html and its immediate assets
   '/',
@@ -9,14 +9,12 @@ const urlsToCache = [
   '/css/small-screens.css',
   '/js/main.js',
   '/assets/images/hero-image.jpg',
-  '/assets/images/logo.png', // Added logo
+  '/assets/images/logo.png',
   '/assets/favicon.ico',
   '/manifest.json',
 
   // Contact Us modal assets
   '/contactus/script.js',
-  // '/contactus/style.css', // This file is empty and planned for deletion
-
   // Chatbot assets
   '/js/chatbot.js',
   '/chatbot/chatbot.js',
@@ -24,13 +22,11 @@ const urlsToCache = [
   '/chatbot/chatbot.html',
 
   // Join Us page (separate) assets
-  '/joinus/', // Or '/joinus/index.html'
   '/joinus/index.html',
   '/joinus/script.js',
   '/joinus/style.css',
-
-  // Font Awesome (consider caching if network is unreliable, but it's a CDN link)
-  // 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css',
+ // Font Awesome
+  'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css',
 ];
 
 // Install event: Open cache and add core assets
