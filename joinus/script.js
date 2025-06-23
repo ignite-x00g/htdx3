@@ -1,208 +1,183 @@
-// Script for Join Us page (joinus/index.html)
+// Set your desired language here: 'en' or 'es'
+let currentLang = 'en';
 
-document.addEventListener('DOMContentLoaded', () => {
-    let currentLang = localStorage.getItem('language') || 'en';
-    const bodyElement = document.body; // For setting theme and lang attribute
-
-    // Theme initialization (basic, assuming theme might be set globally)
-    let currentTheme = localStorage.getItem('theme') || 'light';
-    bodyElement.setAttribute('data-theme', currentTheme);
-    // No theme toggle button is present on joinus/index.html, so no event listener for it here.
-
-    const alertMessages = {
-        addEntry: {
-          en: "Please add at least one entry in {sectionName}.",
-          es: "Agrega al menos una entrada en {sectionName}."
-        },
-        formSubmitted: {
-          en: "Form submitted. Thank you!", // Slightly modified from main.js
-          es: "Formulario enviado ¡Gracias!" // From original joinus.html script
+// Language update for all data-en/data-es elements and select/option placeholders
+function updateLang() {
+  document.querySelectorAll('[data-en]').forEach(el => {
+    // Check if the element is part of the collapsible interest section, handle separately if needed
+    const parentInterestSection = el.closest('.interest-section-collapsible');
+    if (parentInterestSection && el.tagName !== 'H4' && !el.classList.contains('collapsible-header-title')) { // H4 is the header, don't change its text content here
+         // For checkboxes and their labels inside collapsible
+        if (el.tagName === 'LABEL' || (el.tagName === 'SPAN' && !el.classList.contains('collapsible-arrow'))) {
+             el.textContent = el.getAttribute(`data-${currentLang}`);
         }
-    };
-
-    function updateLanguageDisplay() {
-        document.querySelectorAll('[data-en]').forEach(el => {
-            const text = el.getAttribute(`data-${currentLang}`);
-            if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
-                if (el.placeholder && el.hasAttribute(`data-placeholder-${currentLang}`)) {
-                    el.placeholder = el.getAttribute(`data-placeholder-${currentLang}`);
-                } else if (el.placeholder && el.hasAttribute('data-en') && !el.hasAttribute(`data-placeholder-${currentLang}`)) {
-                     el.placeholder = el.getAttribute(`data-${currentLang}`); // Fallback for simple placeholders
-                }
-            } else {
-              if (text) el.textContent = text;
-            }
-        });
-
-        // Update ARIA labels if any (none in current joinus.html structure but good practice)
-        document.querySelectorAll('[data-aria-label-en], [data-aria-label-es]').forEach(el => {
-          const ariaLabel = el.getAttribute(`data-aria-label-${currentLang}`);
-          if (ariaLabel) el.setAttribute('aria-label', ariaLabel);
-        });
-        // Removed specific update for local langToggleModalEl as the element is removed
-        // const langToggleModalEl = document.querySelector('.lang-toggle');
-        // if (langToggleModalEl) {
-        //     langToggleModalEl.textContent = currentLang === 'en' ? 'EN | ES' : 'ES | EN';
-        // }
-
-        const pageTitleTag = document.querySelector('title[data-en]');
-        if (pageTitleTag) {
-            document.title = pageTitleTag.getAttribute(`data-${currentLang}`);
-        }
-        bodyElement.setAttribute('lang', currentLang);
+    } else if (el.tagName !== 'TITLE' && !el.closest('.collapsible-checkbox-content')) { // Avoid touching title and checkbox labels again
+      el.textContent = el.getAttribute(`data-${currentLang}`);
     }
+  });
 
-    function toggleLang() {
-        currentLang = currentLang === 'en' ? 'es' : 'en';
-        localStorage.setItem('language', currentLang);
-        updateLanguageDisplay();
-        // After language change, re-evaluate placeholders for dynamically added inputs
-        document.querySelectorAll('.form-section').forEach(section => {
-            const sectionTitleElement = section.querySelector('h2');
-            const sectionNameEn = sectionTitleElement ? sectionTitleElement.getAttribute('data-en') : 'info';
-            const sectionNameEs = sectionTitleElement ? sectionTitleElement.getAttribute('data-es') : 'información';
-            section.querySelectorAll('.inputs input[type="text"]').forEach(input => {
-                // Update placeholder based on the new currentLang
-                input.placeholder = currentLang === 'es'
-                    ? `Ingresa ${sectionNameEs}`
-                    : `Enter ${sectionNameEn}`;
-            });
+  // Update page title separately
+  const pageTitleTag = document.querySelector('title[data-en]');
+  if (pageTitleTag) {
+      document.title = pageTitleTag.getAttribute(`data-${currentLang}`);
+  }
+
+  // Interest dropdown options (original code, will be adapted for checkboxes)
+  // This part needs to be changed when interest-select is replaced by checkboxes
+  document.querySelectorAll('#interest-select option').forEach(opt => { // KEEPING FOR NOW, will be removed/changed in step 4
+    opt.textContent = opt.getAttribute(`data-${currentLang}`) || opt.textContent;
+  });
+
+  // Update label for textarea
+  let aboutLabel = document.querySelector('.about-section label');
+  if (aboutLabel) aboutLabel.textContent = aboutLabel.getAttribute(`data-${currentLang}`);
+  // Update placeholder for textarea
+  let aboutTextarea = document.getElementById('about-textarea');
+  if (aboutTextarea) {
+    aboutTextarea.placeholder = currentLang === 'es'
+      ? 'Escribe una breve introducción sobre ti.'
+      : 'Write a short introduction about you.';
+  }
+  // Section input placeholders
+  document.querySelectorAll('.form-section').forEach(section => {
+    const sectionH2 = section.querySelector('h2');
+    if (sectionH2) {
+        const sectionName = sectionH2.getAttribute(`data-${currentLang}`);
+        section.querySelectorAll('.inputs input').forEach(input => {
+          input.placeholder = currentLang === 'es'
+            ? `Ingrese ${sectionName}`
+            : `Enter ${sectionName} info`;
         });
     }
-    // Removed event listener for the local .lang-toggle as the element is removed.
-    // The page will now rely on localStorage for language setting.
-    // const langToggleElement = document.querySelector('.lang-toggle');
-    // if (langToggleElement) {
-    //     langToggleElement.addEventListener('click', toggleLang);
-    // }
-    // Initial language setup - this will run on page load and use localStorage
-    updateLanguageDisplay();
-    // Dynamic Form Sections Logic (from original joinus.html)
-    document.querySelectorAll('.form-section').forEach(section => {
-        const addBtn = section.querySelector('.add');
-        const removeBtn = section.querySelector('.remove');
-        const acceptBtn = section.querySelector('.accept-btn');
-        const editBtn = section.querySelector('.edit-btn');
-        const inputsContainer = section.querySelector('.inputs');
-        const sectionTitleElement = section.querySelector('h2');
+  });
 
-        // Ensure all elements are found before proceeding
-        if (!addBtn || !removeBtn || !acceptBtn || !editBtn || !inputsContainer || !sectionTitleElement) {
-            console.warn('Skipping section setup, missing one or more elements:', section);
-            return;
-        }
+  // Update texts for the new collapsible interest section (will be fully handled in step 4)
+  const interestHeaderTitle = document.querySelector('.collapsible-header-title');
+  if (interestHeaderTitle) {
+    interestHeaderTitle.textContent = interestHeaderTitle.getAttribute(`data-${currentLang}`);
+  }
+  document.querySelectorAll('.collapsible-checkbox-content label').forEach(label => {
+    label.textContent = label.getAttribute(`data-${currentLang}`);
+  });
 
-        const sectionNameEn = sectionTitleElement.getAttribute('data-en') || 'info';
-        const sectionNameEs = sectionTitleElement.getAttribute('data-es') || 'información';
+}
 
-        addBtn.addEventListener('click', () => {
-            const input = document.createElement('input');
-            input.type = 'text';
-            const placeholderEn = `Enter ${sectionNameEn}`; // Simpler placeholder
-            const placeholderEs = `Ingresa ${sectionNameEs}`;
-            input.setAttribute('data-placeholder-en', placeholderEn);
-            input.setAttribute('data-placeholder-es', placeholderEs);
-            input.placeholder = currentLang === 'es' ? placeholderEs : placeholderEn;
-            inputsContainer.appendChild(input);
-        });
+// Initialize all add/remove/accept/edit handlers and auto-sample input
+document.querySelectorAll('.form-section').forEach(section => {
+  const addBtn = section.querySelector('.add');
+  const removeBtn = section.querySelector('.remove');
+  const acceptBtn = section.querySelector('.accept-btn');
+  const editBtn = section.querySelector('.edit-btn');
+  const inputsContainer = section.querySelector('.inputs');
+  const sectionH2 = section.querySelector('h2');
 
-        removeBtn.addEventListener('click', () => {
-            const inputs = inputsContainer.querySelectorAll('input');
-            if (inputs.length > 0) {
-                inputsContainer.removeChild(inputs[inputs.length - 1]);
-            }
-        });
+  if (!addBtn || !removeBtn || !acceptBtn || !editBtn || !inputsContainer || !sectionH2) {
+    console.warn("Skipping section setup, missing elements in: ", section);
+    return;
+  }
+  const sectionNameEn = sectionH2.getAttribute('data-en'); // Always use EN as base
 
-        acceptBtn.addEventListener('click', () => {
-            const inputs = inputsContainer.querySelectorAll('input');
-            const currentSectionNameText = currentLang === 'es' ? sectionNameEs : sectionNameEn;
-            if (inputs.length === 0) {
-                alert(alertMessages.addEntry[currentLang].replace('{sectionName}', currentSectionNameText));
-                return;
-            }
-            inputs.forEach(inputField => inputField.disabled = true);
-            section.classList.add('completed');
-            acceptBtn.style.display = 'none';
-            editBtn.style.display = 'inline-block';
-            addBtn.disabled = true;
-            removeBtn.disabled = true;
+  addBtn.addEventListener('click', () => {
+    const input = document.createElement('input');
+    input.type = 'text';
+    const currentSectionNameInLang = sectionH2.getAttribute(`data-${currentLang}`);
+    input.placeholder = currentLang === 'es'
+      ? `Ingrese ${currentSectionNameInLang}`
+      : `Enter ${currentSectionNameInLang} info`;
+    // Add a sample value for demo
+    // input.value = currentLang === 'es'
+    //   ? (sectionNameEn === 'Skills' ? 'Liderazgo' : sectionNameEn === 'Education' ? 'Universidad Central' : '')
+    //   : (sectionNameEn === 'Skills' ? 'Leadership' : sectionNameEn === 'Education' ? 'Central University' : '');
+    inputsContainer.appendChild(input);
+    // updateLang(); // Update placeholder in new input - this might be too broad, handled by specific placeholder setting
+  });
 
-            // Update accept button text to its completed state if defined, or keep as is
-            const completedText = acceptBtn.getAttribute(`data-${currentLang}-completed`);
-            if (completedText) acceptBtn.textContent = completedText;
-        });
-
-        editBtn.addEventListener('click', () => {
-            const inputs = inputsContainer.querySelectorAll('input');
-            inputs.forEach(inputField => inputField.disabled = false);
-            section.classList.remove('completed');
-            acceptBtn.style.display = 'inline-block';
-            editBtn.style.display = 'none';
-            addBtn.disabled = false;
-            removeBtn.disabled = false;
-
-            // Restore accept button text to its original state
-            const originalText = acceptBtn.getAttribute(`data-${currentLang}`);
-            if(originalText) acceptBtn.textContent = originalText;
-        });
-    });
-
-    // Form Submission Logic (from original joinus.html and main.js)
-    const joinForm = document.getElementById('join-form');
-    if (joinForm) {
-        joinForm.addEventListener('submit', function(event) {
-            event.preventDefault();
-            alert(alertMessages.formSubmitted[currentLang]);
-
-            // Reset basic form fields (name, email, phone, comment)
-            joinForm.reset();
-
-            // Reset dynamic sections
-            document.querySelectorAll('.form-section').forEach(section => {
-                const inputsContainer = section.querySelector('.inputs');
-                if (inputsContainer) inputsContainer.innerHTML = ''; // Clear dynamic inputs
-
-                section.classList.remove('completed');
-                const acceptBtn = section.querySelector('.accept-btn');
-                const editBtn = section.querySelector('.edit-btn');
-                const addBtn = section.querySelector('.circle-btn.add');
-                const removeBtn = section.querySelector('.circle-btn.remove');
-
-                if (acceptBtn) {
-                    acceptBtn.style.display = 'inline-block';
-                    const originalText = acceptBtn.getAttribute(`data-${currentLang}`);
-                    if(originalText) acceptBtn.textContent = originalText; // Restore original text
-                    acceptBtn.disabled = false;
-                }
-                if (editBtn) editBtn.style.display = 'none';
-                if (addBtn) addBtn.disabled = false;
-                if (removeBtn) removeBtn.disabled = false;
-            });
-
-            // Optionally, close the modal if it's designed to be closable
-            // const modalOverlay = document.getElementById('join-modal'); // Assuming this is the ID of the overlay
-            // if (modalOverlay) modalOverlay.style.display = 'none';
-        });
+  removeBtn.addEventListener('click', () => {
+    const inputs = inputsContainer.querySelectorAll('input');
+    if (inputs.length > 0) {
+      inputsContainer.removeChild(inputs[inputs.length - 1]);
     }
+  });
 
-    // Close button for the modal (if it's part of this standalone page)
-    const closeModalButton = document.querySelector('.close-modal');
-    const modalOverlay = document.getElementById('join-modal'); // This is the overlay for the joinus/index.html page
-
-    // For the 'X' close button
-    if(closeModalButton && modalOverlay) { // closeModalButton is already defined as document.querySelector('.close-modal')
-        closeModalButton.addEventListener('click', () => {
-            window.location.href = '../index.html';
-        });
+  acceptBtn.addEventListener('click', () => {
+    const inputs = inputsContainer.querySelectorAll('input');
+    if (inputs.length === 0) {
+      alert(currentLang === 'es'
+        ? `Agregue al menos una entrada de ${sectionH2.getAttribute('data-es')} antes de aceptar.`
+        : `Please add at least one ${sectionH2.getAttribute('data-en')} entry before accepting.`);
+      return;
     }
+    inputs.forEach(input => input.disabled = true);
+    section.classList.add('completed');
+    acceptBtn.style.display = 'none';
+    editBtn.style.display = 'inline-block';
+  });
 
-    // For clicking outside the .modal-content (i.e., on .modal-overlay itself)
-    if (modalOverlay) {
-        modalOverlay.addEventListener('click', function(event) {
-            // Check if the direct target of the click is the overlay itself
-            if (event.target === modalOverlay) {
-                window.location.href = '../index.html';
-            }
-        });
-    }
+  editBtn.addEventListener('click', () => {
+    const inputs = inputsContainer.querySelectorAll('input');
+    inputs.forEach(input => input.disabled = false);
+    section.classList.remove('completed');
+    acceptBtn.style.display = 'inline-block';
+    editBtn.style.display = 'none';
+  });
 });
+
+// Submit handler
+const joinForm = document.getElementById('join-form');
+if (joinForm) {
+    joinForm.onsubmit = function(e) {
+        e.preventDefault();
+        alert(currentLang === 'es'
+          ? "¡Formulario enviado! (Esto es una demostración, los datos están listos para enviar)."
+          : "Form submitted! (This is a demo, data is ready to send.)"
+        );
+        // Here you would collect and process the data, e.g. send to server or display summary
+    };
+}
+
+// Close modal button functionality (from new HTML)
+const closeModalButton = document.querySelector('.close-modal');
+const modalOverlay = document.getElementById('join-modal');
+
+if (closeModalButton && modalOverlay) {
+    closeModalButton.onclick = function() { // Changed to direct assignment from new HTML
+        modalOverlay.style.display = 'none';
+    };
+}
+
+
+// Call once on page load
+// Ensure this is called after DOM is ready, or wrap in DOMContentLoaded
+document.addEventListener('DOMContentLoaded', () => {
+    updateLang();
+
+    // Collapsible interest section
+    const collapsibleHeader = document.querySelector('.collapsible-header');
+    const collapsibleContent = document.querySelector('.collapsible-checkbox-content');
+    const collapsibleArrow = document.querySelector('.collapsible-arrow');
+
+    if (collapsibleHeader && collapsibleContent && collapsibleArrow) {
+        collapsibleHeader.addEventListener('click', () => {
+            const isVisible = collapsibleContent.style.display === 'block';
+            collapsibleContent.style.display = isVisible ? 'none' : 'block';
+            collapsibleArrow.classList.toggle('open', !isVisible);
+        });
+    }
+
+    // Language update needs to handle the new collapsible section title and checkbox labels correctly
+    // The updateLang function was already modified to query for these new elements.
+    // Ensure that the initial call to updateLang() correctly sets the text for these elements.
+
+    // Example: switch to Spanish after 1 second for demo:
+    // setTimeout(() => { currentLang = 'es'; updateLang(); }, 1000);
+
+    // Any other JS that needs to run on load and depends on the DOM for this page
+});
+
+// Note: The `updateLang` function in the provided script directly manipulates textContent.
+// It was slightly adjusted to better handle the page title and avoid conflicts with
+// elements that might be dynamically added or have complex structures like the planned collapsible section.
+// The logic for updating #interest-select options will be revised in step 4.
+// The sample value logic in addBtn was commented out as it's for demo purposes.
+// Ensured form submission and modal close are attached to existing elements.
+// Wrapped initial updateLang call in DOMContentLoaded.
