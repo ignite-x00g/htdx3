@@ -170,7 +170,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Example: switch to Spanish after 1 second for demo:
     // setTimeout(() => { currentLang = 'es'; updateLang(); }, 1000);
-
     // Any other JS that needs to run on load and depends on the DOM for this page
 });
 
