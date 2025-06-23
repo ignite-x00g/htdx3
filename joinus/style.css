@@ -195,10 +195,79 @@ textarea {
   box-sizing: border-box;
 }
 
+/* New styles for the overall two-column form layout */
+.form-columns-wrapper {
+  display: flex;
+  flex-wrap: wrap; /* Allow wrapping for responsiveness */
+  gap: 2rem; /* Space between columns */
+  align-items: flex-start; /* Align items to the top of each column */
+}
+
+.form-column {
+  flex: 1; /* Each column takes equal width */
+  min-width: 300px; /* Minimum width before wrapping on smaller screens */
+  display: flex;
+  flex-direction: column;
+  gap: 1rem; /* Space between items within a column */
+}
+
+.form-column .form-row,
+.form-column .form-section {
+  width: 100%; /* Ensure items within a column take full width of the column */
+  margin-bottom: 0; /* Remove default margin-bottom if set by .form-row or .form-section */
+}
+/* End of new styles */
+
 .form-field-wrapper label {
     display: block;
     margin-bottom: 0.25rem;
 }
+
+/* Styles for Floating Label */
+.form-field-float-label-wrapper {
+  position: relative;
+}
+
+.form-field-float-label-wrapper label {
+  position: absolute;
+  left: 0.6rem; /* Aligns with textarea padding */
+  top: 0.8rem;  /* Adjust for vertical centering-like appearance in textarea padding */
+  color: #aaa; /* Placeholder-like color */
+  pointer-events: none; /* Allows click-through to the textarea */
+  transition: all 0.2s ease-out;
+  font-weight: normal; /* Override default bold label style */
+  background-color: transparent; /* Ensure no background interferes when floated */
+  padding: 0 0.25rem; /* Padding for when label is on the border */
+  margin-bottom: 0; /* Override default label margin */
+}
+
+.form-field-float-label-wrapper textarea {
+  /* Ensure padding is enough for the label to sit inside initially and when floated */
+  padding: 1.2rem 0.6rem 0.6rem 0.6rem; /* More top padding for floated label */
+  margin-top: 0; /* Remove default margin as wrapper handles spacing */
+}
+
+/* State when textarea is focused or has content (class added by JS) */
+.form-field-float-label-wrapper.is-focused label,
+.form-field-float-label-wrapper.has-value label {
+  top: -0.75em; /* Move label up above the textarea border */
+  left: 0.5rem;
+  font-size: 0.75em; /* Smaller font size */
+  color: #9b87f5; /* Theme color for active/focused label */
+  background-color: white; /* Background to hide the textarea border underneath */
+}
+
+body[data-theme="dark"] .form-field-float-label-wrapper.is-focused label,
+body[data-theme="dark"] .form-field-float-label-wrapper.has-value label {
+  color: #bb86fc; /* Dark mode theme color for active/focused label */
+  background-color: #1e1e1e; /* Match dark mode modal content background */
+}
+
+body[data-theme="dark"] .form-field-float-label-wrapper label {
+  /* Initial state for dark mode if different color needed for placeholder */
+  color: #777;
+}
+
 
 .form-field-wrapper input[type="text"],
 .form-field-wrapper input[type="email"],

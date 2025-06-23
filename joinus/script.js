@@ -205,4 +205,36 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+
+    // Floating label logic for "Cuéntanos sobre ti"
+    const commentTextarea = document.getElementById('comment');
+    if (commentTextarea) {
+        const commentWrapper = commentTextarea.closest('.form-field-float-label-wrapper');
+
+        if (commentWrapper) {
+            // Function to update label state based on content
+            const updateLabelState = () => {
+                if (commentTextarea.value) {
+                    commentWrapper.classList.add('has-value');
+                } else {
+                    commentWrapper.classList.remove('has-value');
+                }
+            };
+
+            // Initial check in case of pre-filled values (e.g., browser auto-fill)
+            updateLabelState();
+
+            commentTextarea.addEventListener('focus', () => {
+                commentWrapper.classList.add('is-focused');
+            });
+
+            commentTextarea.addEventListener('blur', () => {
+                commentWrapper.classList.remove('is-focused');
+                // Value check on blur is important: if user focuses, types, then clears and blurs.
+                updateLabelState();
+            });
+
+            commentTextarea.addEventListener('input', updateLabelState);
+        }
+    }
 });
