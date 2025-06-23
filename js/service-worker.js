@@ -15,7 +15,6 @@ const urlsToCache = [
 
   // Contact Us modal assets
   '/contactus/script.js',
-
   // Chatbot assets
   '/js/chatbot.js',
   '/chatbot/chatbot.js',
@@ -27,7 +26,6 @@ const urlsToCache = [
   '/joinus/index.html',
   '/joinus/script.js',
   '/joinus/style.css',
-
   // Font Awesome
   'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css',
 ];
