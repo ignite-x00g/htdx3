@@ -1,182 +1,230 @@
-// Set your desired language here: 'en' or 'es'
-let currentLang = 'en';
-
-// Language update for all data-en/data-es elements and select/option placeholders
-function updateLang() {
-  document.querySelectorAll('[data-en]').forEach(el => {
-    // Check if the element is part of the collapsible interest section, handle separately if needed
-    const parentInterestSection = el.closest('.interest-section-collapsible');
-    if (parentInterestSection && el.tagName !== 'H4' && !el.classList.contains('collapsible-header-title')) { // H4 is the header, don't change its text content here
-         // For checkboxes and their labels inside collapsible
-        if (el.tagName === 'LABEL' || (el.tagName === 'SPAN' && !el.classList.contains('collapsible-arrow'))) {
-             el.textContent = el.getAttribute(`data-${currentLang}`);
-        }
-    } else if (el.tagName !== 'TITLE' && !el.closest('.collapsible-checkbox-content')) { // Avoid touching title and checkbox labels again
-      el.textContent = el.getAttribute(`data-${currentLang}`);
-    }
-  });
-
-  // Update page title separately
-  const pageTitleTag = document.querySelector('title[data-en]');
-  if (pageTitleTag) {
-      document.title = pageTitleTag.getAttribute(`data-${currentLang}`);
-  }
-
-  // Interest dropdown options (original code, will be adapted for checkboxes)
-  // This part needs to be changed when interest-select is replaced by checkboxes
-  document.querySelectorAll('#interest-select option').forEach(opt => { // KEEPING FOR NOW, will be removed/changed in step 4
-    opt.textContent = opt.getAttribute(`data-${currentLang}`) || opt.textContent;
-  });
-
-  // Update label for textarea
-  let aboutLabel = document.querySelector('.about-section label');
-  if (aboutLabel) aboutLabel.textContent = aboutLabel.getAttribute(`data-${currentLang}`);
-  // Update placeholder for textarea
-  let aboutTextarea = document.getElementById('about-textarea');
-  if (aboutTextarea) {
-    aboutTextarea.placeholder = currentLang === 'es'
-      ? 'Escribe una breve introducción sobre ti.'
-      : 'Write a short introduction about you.';
-  }
-  // Section input placeholders
-  document.querySelectorAll('.form-section').forEach(section => {
-    const sectionH2 = section.querySelector('h2');
-    if (sectionH2) {
-        const sectionName = sectionH2.getAttribute(`data-${currentLang}`);
-        section.querySelectorAll('.inputs input').forEach(input => {
-          input.placeholder = currentLang === 'es'
-            ? `Ingrese ${sectionName}`
-            : `Enter ${sectionName} info`;
-        });
-    }
-  });
-
-  // Update texts for the new collapsible interest section (will be fully handled in step 4)
-  const interestHeaderTitle = document.querySelector('.collapsible-header-title');
-  if (interestHeaderTitle) {
-    interestHeaderTitle.textContent = interestHeaderTitle.getAttribute(`data-${currentLang}`);
-  }
-  document.querySelectorAll('.collapsible-checkbox-content label').forEach(label => {
-    label.textContent = label.getAttribute(`data-${currentLang}`);
-  });
-
-}
-
-// Initialize all add/remove/accept/edit handlers and auto-sample input
-document.querySelectorAll('.form-section').forEach(section => {
-  const addBtn = section.querySelector('.add');
-  const removeBtn = section.querySelector('.remove');
-  const acceptBtn = section.querySelector('.accept-btn');
-  const editBtn = section.querySelector('.edit-btn');
-  const inputsContainer = section.querySelector('.inputs');
-  const sectionH2 = section.querySelector('h2');
-
-  if (!addBtn || !removeBtn || !acceptBtn || !editBtn || !inputsContainer || !sectionH2) {
-    console.warn("Skipping section setup, missing elements in: ", section);
-    return;
-  }
-  const sectionNameEn = sectionH2.getAttribute('data-en'); // Always use EN as base
-
-  addBtn.addEventListener('click', () => {
-    const input = document.createElement('input');
-    input.type = 'text';
-    const currentSectionNameInLang = sectionH2.getAttribute(`data-${currentLang}`);
-    input.placeholder = currentLang === 'es'
-      ? `Ingrese ${currentSectionNameInLang}`
-      : `Enter ${currentSectionNameInLang} info`;
-    // Add a sample value for demo
-    // input.value = currentLang === 'es'
-    //   ? (sectionNameEn === 'Skills' ? 'Liderazgo' : sectionNameEn === 'Education' ? 'Universidad Central' : '')
-    //   : (sectionNameEn === 'Skills' ? 'Leadership' : sectionNameEn === 'Education' ? 'Central University' : '');
-    inputsContainer.appendChild(input);
-    // updateLang(); // Update placeholder in new input - this might be too broad, handled by specific placeholder setting
-  });
-
-  removeBtn.addEventListener('click', () => {
-    const inputs = inputsContainer.querySelectorAll('input');
-    if (inputs.length > 0) {
-      inputsContainer.removeChild(inputs[inputs.length - 1]);
-    }
-  });
-
-  acceptBtn.addEventListener('click', () => {
-    const inputs = inputsContainer.querySelectorAll('input');
-    if (inputs.length === 0) {
-      alert(currentLang === 'es'
-        ? `Agregue al menos una entrada de ${sectionH2.getAttribute('data-es')} antes de aceptar.`
-        : `Please add at least one ${sectionH2.getAttribute('data-en')} entry before accepting.`);
-      return;
-    }
-    inputs.forEach(input => input.disabled = true);
-    section.classList.add('completed');
-    acceptBtn.style.display = 'none';
-    editBtn.style.display = 'inline-block';
-  });
-
-  editBtn.addEventListener('click', () => {
-    const inputs = inputsContainer.querySelectorAll('input');
-    inputs.forEach(input => input.disabled = false);
-    section.classList.remove('completed');
-    acceptBtn.style.display = 'inline-block';
-    editBtn.style.display = 'none';
-  });
-});
-
-// Submit handler
-const joinForm = document.getElementById('join-form');
-if (joinForm) {
-    joinForm.onsubmit = function(e) {
-        e.preventDefault();
-        alert(currentLang === 'es'
-          ? "¡Formulario enviado! (Esto es una demostración, los datos están listos para enviar)."
-          : "Form submitted! (This is a demo, data is ready to send.)"
-        );
-        // Here you would collect and process the data, e.g. send to server or display summary
-    };
-}
-
-// Close modal button functionality (from new HTML)
-const closeModalButton = document.querySelector('.close-modal');
-const modalOverlay = document.getElementById('join-modal');
-
-if (closeModalButton && modalOverlay) {
-    closeModalButton.onclick = function() { // Changed to direct assignment from new HTML
-        modalOverlay.style.display = 'none';
-    };
-}
-
-
-// Call once on page load
-// Ensure this is called after DOM is ready, or wrap in DOMContentLoaded
+// joinus/script.js
 document.addEventListener('DOMContentLoaded', () => {
-    updateLang();
+  let currentLang = localStorage.getItem('language') || 'en';
+  const bodyElement = document.body; // For setting overall page lang attribute
+  const theme = localStorage.getItem('theme') || 'light'; // Get theme from localStorage
 
-    // Collapsible interest section
-    const collapsibleHeader = document.querySelector('.collapsible-header');
-    const collapsibleContent = document.querySelector('.collapsible-checkbox-content');
-    const collapsibleArrow = document.querySelector('.collapsible-arrow');
+  // Apply theme immediately
+  bodyElement.setAttribute('data-theme', theme);
 
-    if (collapsibleHeader && collapsibleContent && collapsibleArrow) {
-        collapsibleHeader.addEventListener('click', () => {
-            const isVisible = collapsibleContent.style.display === 'block';
-            collapsibleContent.style.display = isVisible ? 'none' : 'block';
-            collapsibleArrow.classList.toggle('open', !isVisible);
+
+  const langToggleBtn = document.getElementById('lang-toggle-joinus-page');
+
+  function updateLanguageDisplay() {
+    bodyElement.setAttribute('lang', currentLang);
+    // Update text content for elements with data-en/data-es
+    document.querySelectorAll('[data-en]').forEach(el => {
+      const text = el.getAttribute(`data-${currentLang}`);
+      if (text) { // Ensure text is not null
+        // Handle specific elements like button text or placeholders if needed
+        if ((el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') && el.placeholder) {
+             // For inputs/textareas, data-en/es might be for the label,
+             // so we need a specific data-placeholder-en/es or handle it carefully.
+             // The current joinus/index.html doesn't use data-placeholder for inputs in dynamic sections.
+             // It's handled in the section input placeholder update below.
+             // For the main "about-textarea", we'll use specific attributes.
+        } else if (el.id === 'lang-toggle-joinus-page') {
+            el.textContent = el.getAttribute(`data-${currentLang === 'en' ? 'es' : 'en'}_text`) || (currentLang === 'en' ? 'ES' : 'EN');
+        }
+        else {
+          el.textContent = text;
+        }
+      }
+    });
+
+    // Specifically update placeholders for inputs within .form-section
+    document.querySelectorAll('.form-section').forEach(section => {
+      const sectionTitleElement = section.querySelector('h2[data-en]');
+      if (sectionTitleElement) {
+        const sectionNameInCurrentLang = sectionTitleElement.getAttribute(`data-${currentLang}`);
+        section.querySelectorAll('.inputs input[type="text"]').forEach(input => {
+          if (!input.disabled) { // Only update placeholder if not disabled (i.e., not part of an accepted section)
+            input.placeholder = currentLang === 'es'
+              ? `Ingrese ${sectionNameInCurrentLang}`
+              : `Enter ${sectionNameInCurrentLang} info`;
+          }
         });
+      }
+    });
+
+    // Update textarea placeholder using specific data attributes
+    const aboutTextarea = document.getElementById('about-textarea');
+    if (aboutTextarea) {
+      const placeholderText = aboutTextarea.getAttribute(`data-placeholder-${currentLang}`);
+      if (placeholderText) {
+        aboutTextarea.placeholder = placeholderText;
+      }
     }
 
-    // Language update needs to handle the new collapsible section title and checkbox labels correctly
-    // The updateLang function was already modified to query for these new elements.
-    // Ensure that the initial call to updateLang() correctly sets the text for these elements.
+    // Update lang toggle button text (already handled above by its own data-en/es logic if set up that way)
+    // Re-confirming for the new attribute convention:
+    if (langToggleBtn) {
+      langToggleBtn.textContent = langToggleBtn.getAttribute(`data-${currentLang === 'en' ? 'es' : 'en'}_text`) || (currentLang === 'en' ? 'ES' : 'EN');
+      // Also update its data attributes for the next toggle
+      langToggleBtn.setAttribute('data-en_text', 'ES');
+      langToggleBtn.setAttribute('data-es_text', 'EN');
+    }
 
-    // Example: switch to Spanish after 1 second for demo:
-    // setTimeout(() => { currentLang = 'es'; updateLang(); }, 1000);
-    // Any other JS that needs to run on load and depends on the DOM for this page
+    // Update page title
+    const pageTitleTag = document.querySelector('title[data-en]');
+    if (pageTitleTag) {
+        document.title = pageTitleTag.getAttribute(`data-${currentLang}`);
+    }
+  }
+
+  function toggleLang() {
+    currentLang = currentLang === 'en' ? 'es' : 'en';
+    localStorage.setItem('language', currentLang);
+    updateLanguageDisplay();
+  }
+
+  if (langToggleBtn) {
+    langToggleBtn.addEventListener('click', toggleLang);
+     // Set initial data attributes for the button text switching
+    langToggleBtn.setAttribute('data-en_text', 'ES');
+    langToggleBtn.setAttribute('data-es_text', 'EN');
+  }
+
+  // Initialize all add/remove/accept/edit handlers
+  document.querySelectorAll('.form-section').forEach(section => {
+    const addBtn = section.querySelector('.circle-btn.add');
+    const removeBtn = section.querySelector('.circle-btn.remove');
+    const acceptBtn = section.querySelector('.accept-btn');
+    const editBtn = section.querySelector('.edit-btn');
+    const inputsContainer = section.querySelector('.inputs');
+    const sectionTitleElement = section.querySelector('h2[data-en]'); // Ensure h2 has data-en
+
+    if (addBtn) {
+      addBtn.addEventListener('click', () => {
+        const input = document.createElement('input');
+        input.type = 'text';
+        if (sectionTitleElement) {
+            const sectionNameInCurrentLang = sectionTitleElement.getAttribute(`data-${currentLang}`);
+            input.placeholder = currentLang === 'es'
+              ? `Ingrese ${sectionNameInCurrentLang}`
+              : `Enter ${sectionNameInCurrentLang} info`;
+        }
+        inputsContainer.appendChild(input);
+      });
+    }
+
+    if (removeBtn) {
+      removeBtn.addEventListener('click', () => {
+        const inputs = inputsContainer.querySelectorAll('input:not([type="month"]), textarea'); // Exclude month inputs from simple removal if they are paired
+        if (inputs.length > 0) {
+          inputsContainer.removeChild(inputs[inputs.length - 1]);
+        }
+      });
+    }
+
+    if (acceptBtn && editBtn) {
+      acceptBtn.addEventListener('click', () => {
+        const inputs = inputsContainer.querySelectorAll('input:not([type="month"]), textarea');
+        let hasValue = false;
+        if (inputs.length === 0 && inputsContainer.querySelectorAll('input[type="month"]').length === 0) { // Also check month inputs for experience
+            hasValue = true; // Allow accepting empty sections
+        } else {
+            inputs.forEach(input => {
+                if (input.value.trim() !== '') hasValue = true;
+            });
+            // Add check for month inputs if this section is "Experience"
+            if (sectionTitleElement && sectionTitleElement.getAttribute('data-en') === "Experience") {
+                 inputsContainer.querySelectorAll('input[type="month"]').forEach(monthInput => {
+                     if(monthInput.value.trim() !== '') hasValue = true;
+                 });
+            }
+        }
+
+        if (!hasValue && (inputs.length > 0 || (sectionTitleElement && sectionTitleElement.getAttribute('data-en') === "Experience" && inputsContainer.querySelectorAll('input[type="month"]').length > 0))) {
+          const titleText = sectionTitleElement ? sectionTitleElement.getAttribute(`data-${currentLang}`) : "esta sección";
+          const alertMsg = currentLang === 'es'
+            ? `Agregue al menos una entrada en "${titleText}" o deje la sección vacía para continuar.`
+            : `Please add at least one entry in "${titleText}" or leave the section empty to continue.`;
+          alert(alertMsg);
+          return;
+        }
+
+        inputsContainer.querySelectorAll('input, textarea').forEach(input => input.disabled = true);
+        section.classList.add('completed');
+        if(sectionTitleElement) {
+            sectionTitleElement.classList.add('section-accepted');
+            let checkmark = sectionTitleElement.querySelector('.accept-checkmark');
+            if (!checkmark) {
+                checkmark = document.createElement('span');
+                checkmark.classList.add('accept-checkmark');
+                checkmark.innerHTML = '&#10004;'; // Checkmark icon
+                sectionTitleElement.appendChild(checkmark);
+            }
+        }
+
+        acceptBtn.style.display = 'none';
+        editBtn.style.display = 'inline-block';
+        if(addBtn) addBtn.style.display = 'none';
+        if(removeBtn) removeBtn.style.display = 'none';
+      });
+
+      editBtn.addEventListener('click', () => {
+        inputsContainer.querySelectorAll('input, textarea').forEach(input => input.disabled = false);
+        section.classList.remove('completed');
+        if(sectionTitleElement) {
+            sectionTitleElement.classList.remove('section-accepted');
+            const checkmark = sectionTitleElement.querySelector('.accept-checkmark');
+            if(checkmark) sectionTitleElement.removeChild(checkmark);
+        }
+
+        acceptBtn.style.display = 'inline-block';
+        editBtn.style.display = 'none';
+        if(addBtn) addBtn.style.display = 'inline-flex';
+        if(removeBtn) removeBtn.style.display = 'inline-flex';
+        const allInputs = inputsContainer.querySelectorAll('input:not([type="month"]), textarea');
+        if (allInputs.length > 0) allInputs[allInputs.length-1].focus();
+      });
+    }
+  });
+
+  // Collapsible interest section
+  const collapsibleHeader = document.querySelector('.collapsible-header');
+  const collapsibleContent = document.querySelector('.collapsible-checkbox-content');
+  const collapsibleArrow = document.querySelector('.collapsible-arrow');
+
+  if (collapsibleHeader && collapsibleContent && collapsibleArrow) {
+      collapsibleHeader.addEventListener('click', () => {
+          const isVisible = collapsibleContent.style.display === 'block';
+          collapsibleContent.style.display = isVisible ? 'none' : 'block';
+          collapsibleArrow.classList.toggle('open', !isVisible);
+      });
+  }
+
+  const joinForm = document.getElementById('join-form');
+  if (joinForm) {
+    joinForm.onsubmit = function(e) {
+      e.preventDefault();
+      let allAccepted = true;
+      document.querySelectorAll('.form-section').forEach(s => {
+          if (!s.classList.contains('completed')) {
+              allAccepted = false;
+          }
+      });
+
+      if (!allAccepted) {
+          alert(currentLang === 'es' ? "Por favor, complete (acepte) todas las secciones antes de enviar." : "Please complete (accept) all sections before submitting.");
+          return;
+      }
+
+      alert(currentLang === 'es'
+        ? "¡Formulario enviado! (Esto es una demostración, los datos están listos para enviar)."
+        : "Form submitted! (This is a demo, data is ready to send.)"
+      );
+    };
+  }
+
+  updateLanguageDisplay();
+
+  document.querySelectorAll('.form-section .edit-btn').forEach(btn => {
+    btn.style.display = 'none';
+  });
+  document.querySelectorAll('.form-section .circle-btn.add, .form-section .circle-btn.remove').forEach(btn => {
+    btn.style.display = 'inline-flex';
+  });
+
 });
-
-// Note: The `updateLang` function in the provided script directly manipulates textContent.
-// It was slightly adjusted to better handle the page title and avoid conflicts with
-// elements that might be dynamically added or have complex structures like the planned collapsible section.
-// The logic for updating #interest-select options will be revised in step 4.
-// The sample value logic in addBtn was commented out as it's for demo purposes.
-// Ensured form submission and modal close are attached to existing elements.
-// Wrapped initial updateLang call in DOMContentLoaded.

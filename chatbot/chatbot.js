@@ -28,15 +28,25 @@ function simulateRecaptcha() {
     if (!recaptchaPlaceholder || !userInput || !sendButton) return;
     recaptchaPlaceholder.innerHTML = '<em>ReCaptcha: Click to verify (simulated)</em>';
     recaptchaPlaceholder.style.cursor = 'pointer';
-    recaptchaPlaceholder.onclick = () => {
+
+    // Define the click handler function
+    const recaptchaClickHandler = () => {
         recaptchaVerified = true;
         recaptchaPlaceholder.innerHTML = '<em>ReCaptcha: Verified! (simulated)</em>';
         recaptchaPlaceholder.style.color = 'green';
-        recaptchaPlaceholder.onclick = null;
+        // Remove the event listener after it has run once
+        recaptchaPlaceholder.removeEventListener('click', recaptchaClickHandler);
+        recaptchaPlaceholder.style.cursor = 'default'; // Optional: change cursor back
         if (userInput) userInput.disabled = false;
         if (sendButton) sendButton.disabled = false;
         if (userInput) userInput.focus();
     };
+
+    // Add the event listener
+    // Ensure to remove any old listener if this function could be called multiple times on the same element
+    // However, given innerHTML is set before, this might not be strictly necessary but good practice.
+    // For simplicity now, assuming innerHTML reset handles old listeners.
+    recaptchaPlaceholder.addEventListener('click', recaptchaClickHandler);
 }
 
 async function handleSendMessage() {
