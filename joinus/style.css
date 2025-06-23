@@ -195,6 +195,29 @@ textarea {
   box-sizing: border-box;
 }
 
+/* New styles for the overall two-column form layout */
+.form-columns-wrapper {
+  display: flex;
+  flex-wrap: wrap; /* Allow wrapping for responsiveness */
+  gap: 2rem; /* Space between columns */
+  align-items: flex-start; /* Align items to the top of each column */
+}
+
+.form-column {
+  flex: 1; /* Each column takes equal width */
+  min-width: 300px; /* Minimum width before wrapping on smaller screens */
+  display: flex;
+  flex-direction: column;
+  gap: 1rem; /* Space between items within a column */
+}
+
+.form-column .form-row,
+.form-column .form-section {
+  width: 100%; /* Ensure items within a column take full width of the column */
+  margin-bottom: 0; /* Remove default margin-bottom if set by .form-row or .form-section */
+}
+/* End of new styles */
+
 .form-field-wrapper label {
     display: block;
     margin-bottom: 0.25rem;
