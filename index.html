@@ -18,8 +18,8 @@
   <!-- Security Meta Tags -->
   <meta http-equiv="Content-Security-Policy"
         content="default-src 'self';
-                 script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://www.google.com https://www.gstatic.com;
-                 style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com;
+                 script-src 'self' https://cdnjs.cloudflare.com https://www.google.com https://www.gstatic.com;
+                 style-src 'self' https://cdnjs.cloudflare.com;
                  img-src 'self' data: https:;
                  font-src 'self' https://cdnjs.cloudflare.com;
                  frame-src https://www.google.com https://www.gstatic.com;
@@ -32,8 +32,6 @@
   <meta http-equiv="X-Frame-Options" content="DENY">
   <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
   <!-- End Security Meta Tags -->
-  <link rel="stylesheet" href="contactus/style.css"> <!-- Contact Us CSS -->
-  <link rel="stylesheet" href="joinus-modal/style.css"> <!-- Join Us Modal CSS -->
   <link rel="stylesheet" href="chatbot/chatbot.css"> <!-- Chatbot CSS -->
   <link rel="manifest" href="manifest.json">
   <link rel="icon" href="assets/favicon.ico">
@@ -128,113 +126,6 @@
     <button id="chatbot-fab" class="floating-icon" aria-label="Open Chat" tabindex="0">
       <i class="fas fa-comment-alt"></i>
     </button>
-  </div>
-
-  <!-- ==================================================================
-       Join Modal
-       ================================================================== -->
-  <div id="join-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="joinModalTitle">
-    <div class="modal-content">
-      <!-- Modal Header: Title & Close Button -->
-      <div class="modal-header">
-        <h3 id="joinModalTitle" data-en="Join Us" data-es="Únete a Nosotros">Join Us</h3>
-        <button class="close-modal" data-close aria-label="Close">&times;</button>
-      </div>
-      <!-- Modal Body: Form with Grid (Table-like) Layout -->
-      <div class="modal-body">
-        <form id="join-form">
-          <!-- Row 1 -->
-          <div class="form-row">
-            <div class="form-cell">
-              <label for="join-name" data-en="Name" data-es="Nombre">Name</label>
-              <label for="join-name" data-en="Name" data-es="Nombre"></label>
-                <input type="text" id="join-name" name="name" autocomplete="name" maxlength="80" placeholder="Enter your name / Ingrese su Nombre" 
-  data-en="Name" data-es="Nombre" required>
-            </div>
-            <div class="form-cell">
-              <label for="join-email" data-en="Email" data-es="Correo Electrónico">Email</label>
-              <input 
-                type="email" 
-                id="join-email" 
-                placeholder="Enter your email / Ingrese su correo electrónico" 
-                required
-              >
-            </div>
-          </div>
-          <!-- Row 2 -->
-          <div class="form-row">
-            <div class="form-cell">
-              <label for="join-contact" data-en="Contact Number" data-es="Número de Contacto">Contact Number</label>
-              <input 
-                type="tel" 
-                id="join-contact" 
-                placeholder="Enter your contact number / Ingrese su número" 
-                required
-              >
-            </div>
-            <div class="form-cell">
-              <label for="join-date" data-en="Date" data-es="Fecha">Date</label>
-              <input 
-                type="date" 
-                id="join-date" 
-                required
-              >
-            </div>
-          </div>
-          <!-- Row 3 -->
-          <div class="form-row">
-            <div class="form-cell">
-              <label for="join-time" data-en="Time" data-es="Hora">Time</label>
-              <input 
-                type="time" 
-                id="join-time" 
-                required
-              >
-            </div>
-            <div class="form-cell">
-              <label for="join-resume" data-en="Upload Your Resume" data-es="Sube tu Currículum">Upload Your Resume</label>
-              <input 
-                type="file" 
-                id="join-resume" 
-                accept=".pdf,.doc,.docx" 
-                required
-              >
-            </div>
-          </div>
-          <!-- Row 4 -->
-          <div class="form-row">
-            <div class="form-cell">
-              <label for="join-cover" data-en="Upload Your Cover Letter" data-es="Sube tu Carta de Presentación">Upload Your Cover Letter</label>
-              <input 
-                type="file" 
-                id="join-cover" 
-                accept=".pdf,.doc,.docx" 
-                required
-              >
-            </div>
-            <div class="form-cell">
-              <label for="join-comment" data-en="Comment" data-es="Comentario">Comment</label>
-              <textarea 
-                id="join-comment" 
-                rows="4" 
-                placeholder="Tell us about yourself" 
-                required
-              ></textarea>
-            </div>
-          </div>
-        </form>
-      </div>
-      <!-- Modal Footer: Submit Button -->
-      <div class="modal-footer">
-        <button 
-          type="submit" 
-          form="join-form" 
-          class="submit-button" 
-          data-en="Submit" 
-          data-es="Enviar"
-        >Submit</button>
-      </div>
-    </div>
   </div>
 
   <!-- ==================================================================
@@ -370,7 +261,6 @@
        ================================================================== -->
   <script src="js/main.js" defer></script>
   <script src="contactus/script.js" defer></script> <!-- Contact Us JS -->
-  <script src="joinus-modal/script.js" defer></script> <!-- Join Us Modal JS -->
   <script src="js/service-worker.js" defer></script>
 
   <!-- Chatbot will be loaded here -->
