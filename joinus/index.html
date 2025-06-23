@@ -4,7 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title data-en="Join Us" data-es="Únete a Nosotros">Join Us</title>
-  <style>
+  <link rel="stylesheet" href="style.css">
+  <!-- <style>
     body {
       font-family: Arial, sans-serif;
       background: linear-gradient(120deg, #7e5bef 0%, #e4e1ff 100%);
@@ -307,14 +308,16 @@
       font-size: 1rem;
       margin-bottom: 0; /* Override general label margin */
     }
-  </style>
+  </style> -->
 </head>
 <body>
 <div class="modal-overlay" id="join-modal">
   <div class="modal-content">
     <div class="modal-header">
       <h3 data-en="Join Us" data-es="Únete a Nosotros">Join Us</h3>
-      <button class="close-modal" onclick="document.getElementById('join-modal').style.display='none'">&times;</button>
+      <!-- Language Toggle Button -->
+      <button id="lang-toggle-joinus-page" class="lang-toggle-joinus" data-en="ES" data-es="EN">ES</button>
+      <!-- <button class="close-modal" onclick="document.getElementById('join-modal').style.display='none'">&times;</button> -->
     </div>
     <form id="join-form" autocomplete="off">
       <div class="form-columns">

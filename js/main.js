@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
   const bodyElement = document.body;
-  const chatbotUi = document.getElementById('chatbot-ui'); // Ensure chatbot UI element is accessible
+  let chatbotUi = null; // Will be fetched after chatbot loads or when needed
 
   // ================================================================
   // 1) THEME TOGGLE (Desktop & Mobile)
@@ -137,12 +137,13 @@ document.addEventListener('DOMContentLoaded', function() {
       const modalId = icon.getAttribute('data-modal');
       const modalElement = document.getElementById(modalId);
       if (modalElement) {
-        // --- START FIX ---
-        // If opening contact-modal, ensure chatbot is hidden.
-        if (modalId === 'contact-modal' && chatbotUi) {
-            chatbotUi.style.display = 'none';
+        // If opening contact-modal, try to get the chatbot container and hide it.
+        if (modalId === 'contact-modal') {
+            chatbotUi = document.getElementById('chat-container'); // Attempt to get it
+            if (chatbotUi && chatbotUi.style.display !== 'none') {
+                chatbotUi.style.display = 'none';
+            }
         }
-        // --- END FIX ---
         modalElement.classList.add('active');
         modalElement.focus();
       }
